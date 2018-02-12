@@ -25,10 +25,13 @@ function loginUser(req, res, next) {
       } else if (!user) {
         res.status(401).send("invalid username/password");
       } else if (user) {
+          console.log('after')
         req.logIn(user, function(err) {
           if (err) {
+              console.log('error......')
             res.status(500).send("error");
           } else {
+              console.log('now')
             res.status(200).send(user);
           }
         });
