@@ -1,7 +1,7 @@
-DROP DATABASE IF EXISTS test;
-CREATE DATABASE test;
+DROP DATABASE IF EXISTS instant5;
+CREATE DATABASE instant5;
 
-\c test;
+\c instant5;
 
 CREATE TABLE users (
   ID SERIAL PRIMARY KEY,
