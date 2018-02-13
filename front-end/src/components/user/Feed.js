@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import axios from 'axios'
 
 class Feed extends Component {
   constructor(){
@@ -10,7 +11,7 @@ class Feed extends Component {
 
   componentDidMount = () => {
     axios
-      .get('/users/all')
+      .get('/users/feed')
       .then(data => {
         console.log(data)
       })
@@ -22,3 +23,5 @@ class Feed extends Component {
     )
   }
 }
+
+export default Feed
