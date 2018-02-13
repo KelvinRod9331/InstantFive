@@ -121,7 +121,7 @@ class Registration extends React.Component {
             <p>{message}</p>
           </div>
           <div class='login-box'>
-            Have an account? <Link to="/Login">Log in</Link>
+            Have an account? <Link to="/login">Log in</Link>
           </div>
         </div>
       </div>

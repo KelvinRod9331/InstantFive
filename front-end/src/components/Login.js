@@ -29,7 +29,7 @@ class LoginUser extends React.Component {
     const { usernameInput, passwordInput } = this.state;
 
     axios
-      .post("/user/login", {
+      .post('/users/login', {
         username: usernameInput,
         password: passwordInput
       })
@@ -86,7 +86,7 @@ class LoginUser extends React.Component {
                     <p>{message}</p>
                 </div>
                 <div class='login-box'>
-                Don't have an account? <Link to="/Registration">Sign Up</Link>
+                Don't have an account? <Link to="/registration">Sign Up</Link>
                 </div>
             </div>
         </div>
