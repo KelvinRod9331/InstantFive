@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router';
 import { Route, Link, Switch } from 'react-router-dom'
 import './App.css';
-import Home from './Links/Home';
-import Login from './Links/Login';
-import Registration from './Links/Registration';
+import Home from './components/Home';
+import Login from './components/Login';
+import Registration from './components/Registration';
+import User from './components/user/User'
 
 
 
@@ -21,8 +22,9 @@ class App extends Component {
                 </nav>
                 <Route exact path="/" component={Home}/>
                 <Route exact path="/login" component={Login}/>
-                <Route exact path="/registration" component={Registration}/>                
-                <Route path="/user" />
+                <Route exact path="/registration" component={Registration}/>
+                <Route exact path="/user" component={User} />
+                
             </div>
         )
     }

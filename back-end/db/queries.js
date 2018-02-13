@@ -130,23 +130,6 @@ function loginUser(req, res, next) {
       }
     })(req, res, next);
 
-
-  passport.authenticate("local", (err, user, info) => {
-    if (err) {
-      res.status(500).send("error while trying to log in");
-    } else if (!user) {
-      res.status(401).send("invalid username/password");
-    } else if (user) {
-      req.logIn(user, function (err) {
-        if (err) {
-          res.status(500).send("error");
-        } else {
-          res.status(200).send(user);
-        }
-      });
-    }
-  })(req, res, next);
-
 }
 
 function logoutUser(req, res, next) {
