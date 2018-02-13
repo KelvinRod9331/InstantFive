@@ -1,37 +1,31 @@
-.App {
+body {
+  background-image: url('https://ressources.blogdumoderateur.com/2016/05/instagram-noir.jpg');
+  background-size: 100%;
+}
+.login-container {
+  float: right;
+}
+.login-box {
+  background-color: white;
+  width: 450px; 
   text-align: center;
+  border: solid black 2px;
+  margin: 5px;
+  margin-right: 50px;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+#top-header{
+  background-color: rgb(226, 226, 226);
 }
 
-.App-header {
-  /* padding-top: 0; */
-  background-color: #222;
-  height: 30px;
-  padding: 20px;
-  color: white;
+label {
+  display: block;
 }
 
-.App-title {
-  float: left;
-  font-size: 1.5em;
+input {
+  font-size: 25px;
 }
 
-.fa-instagram {
-  top: 4px;
-  position: absolute;
-  /* margin-right: 12px;
-  margin-top: -4px;
-  max-width: 100%;
-  overflow: hidden;
-  position: relative; */
-  /* background-color: crimson; */
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+submit {
+  font-size: 25px;
 }
