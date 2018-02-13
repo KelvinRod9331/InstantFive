@@ -18,11 +18,14 @@ passport.use(
         const user = rows[0];
         console.log("user: ", user);
         if (!user) {
+            console.log('!user')
           return done(null, false);
         }
         if (!authHelpers.comparePass(password, user.password_digest)) {
+            console.log('here')
           return done(null, false);
         } else {
+            console.log('there')
           return done(null, user);
         }
       })
