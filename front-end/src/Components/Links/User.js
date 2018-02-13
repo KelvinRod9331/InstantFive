@@ -73,7 +73,6 @@ retrieveUserInfo = () => {
                 {User_Data.map(user => {
                     return (
                         <div>
-                            <p>{user.id}</p>
                             <img src={user.url} alt='' width={'300px'} />
                         </div>
                     )
