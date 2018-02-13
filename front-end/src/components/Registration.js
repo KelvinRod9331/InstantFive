@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-class NewUser extends React.Component {
+class Registration extends React.Component {
   state = { emailInput: '', fullNameInput: '', usernameInput: '', passwordInput: '', confirmInput: '', message: '' };
 
   handleUsernameChange = e => {
@@ -129,4 +129,4 @@ class NewUser extends React.Component {
   }
 }
 
-export default NewUser;
+export default Registration;
