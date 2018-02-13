@@ -101,6 +101,10 @@ function getAllUsers(req, res, next) {
 
 function loginUser(req, res, next) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> b57a65cd448eaed8a0a1b5bfc8112e4bf4bd526b
     
     passport.authenticate("local", (err, user, info) => {
       if (err) {
@@ -120,7 +124,11 @@ function loginUser(req, res, next) {
         });
       }
     })(req, res, next);
+<<<<<<< HEAD
 =======
+=======
+
+>>>>>>> b57a65cd448eaed8a0a1b5bfc8112e4bf4bd526b
 
   passport.authenticate("local", (err, user, info) => {
     if (err) {
@@ -137,7 +145,11 @@ function loginUser(req, res, next) {
       });
     }
   })(req, res, next);
+<<<<<<< HEAD
 >>>>>>> 48f9cb1724f8c1d7e8dd5863d52654f3eafafe9b
+=======
+
+>>>>>>> b57a65cd448eaed8a0a1b5bfc8112e4bf4bd526b
 }
 
 function logoutUser(req, res, next) {
