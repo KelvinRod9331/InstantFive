@@ -101,6 +101,27 @@ function getAllUsers(req, res, next) {
 
 function loginUser(req, res, next) {
 
+    
+    passport.authenticate("local", (err, user, info) => {
+      if (err) {
+        res.status(500).send("error while trying to log in");
+      } else if (!user) {
+        res.status(401).send("invalid username/password");
+      } else if (user) {
+          console.log('after')
+        req.logIn(user, function(err) {
+          if (err) {
+              console.log('error......')
+            res.status(500).send("error");
+          } else {
+              console.log('now')
+            res.status(200).send(user);
+          }
+        });
+      }
+    })(req, res, next);
+
+
   passport.authenticate("local", (err, user, info) => {
     if (err) {
       res.status(500).send("error while trying to log in");
@@ -116,6 +137,7 @@ function loginUser(req, res, next) {
       });
     }
   })(req, res, next);
+
 }
 
 function logoutUser(req, res, next) {
