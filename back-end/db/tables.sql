@@ -24,3 +24,10 @@ CREATE TABLE likes (
   user_ID INTEGER REFERENCES users,
   photo_ID  INTEGER REFERENCES photos
 );
+
+
+INSERT INTO users (ID, username, password_digest) 
+VALUES ('1','Kelstar809','$2a$10$brAZfSmByFeZmPZ/MH5zne9YDhugjW9CtsBGgXqGfix0g1tcooZWq');
+
+INSERT INTO photos (ID, user_ID, url) 
+VALUES ('1','1','https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/model/one-off/centenario/slider/centenario.jpg')

@@ -18,7 +18,8 @@ const getAllPhotos = (req, res, next) => {
 
 const getUserPhotos = (req, res, next) => {
   db
-    .any('select * from photos where user_ID = ${id}', { id: user.id })
+   // .any('select * from photos where user_ID = ${id}', { id: user.id })
+   .any('select * from photos ')
     .then(data => {
       res.status(200).json({
         status: 'success',
