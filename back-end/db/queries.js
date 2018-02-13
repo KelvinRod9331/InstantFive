@@ -52,6 +52,7 @@ const getUserFollowing = (req, res, next) => {
 }
 
 const getFollowingPhotos = (req, res, next) => {
+  console.log("hi", req.user)
   db
     .any('select * from photos join follows on photos.user_ID = follows.user_ID where follower_ID=${userid}', {userid: user.id})
     .then(data => {
@@ -157,6 +158,7 @@ function registerUser(req, res, next) {
       })(req, res, next);
     })
     .catch(err => {
+      console.log(error)
       res.status(500).json({
         status: "error",
         error: err

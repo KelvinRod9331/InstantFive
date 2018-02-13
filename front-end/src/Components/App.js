@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Route, Link, Switch } from 'react-router-dom';
 import './App.css';
 import Home from './Links/Home';
+import Feed from './user/Feed';
+
 class App extends Component {
     render(){
         return (
@@ -11,8 +13,10 @@ class App extends Component {
                     <Link to="/user/following">Following</Link> {/*Will be Accessed Through Clicking On A Button*/}
                     <Link to="/user/followers">Followers</Link> {/*Will be Accessed Through Clicking On A Button*/}
                 </nav>
-                <Route exact path="/" component={Home}/>
-                <Route path="/user" />
+                <Switch>
+                  <Route exact path="/" component={Home}/>
+                  <Route path="/feed" component={Feed}/>
+                </Switch>
             </div>
         )
     }

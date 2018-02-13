@@ -12,9 +12,10 @@ class Feed extends Component {
   componentDidMount = () => {
     axios
       .get('/users/feed')
-      .then(data => {
-        console.log(data)
+      .then(res => {
+        console.log('feed', res.data)
       })
+      .catch(err => console.log(err))
   }
 
   render(){
