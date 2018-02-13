@@ -3,19 +3,6 @@ const db = require("./index");
 const authHelpers = require("../auth/helpers");
 const passport = require("../auth/local");
 
-const getAllPhotos = (req, res, next) => {
-  db
-    .any('select * from photos')
-    .then(data => {
-      res.status(200).json({
-        status: 'success',
-        data: data,
-        message: 'Retrieved all photos'
-      });
-    })
-    .catch(err => next(err))
-}
-
 const getUserPhotos = (req, res, next) => {
   db
     .any('select * from photos where user_ID = ${id}', { id: user.id })
@@ -29,7 +16,16 @@ const getUserPhotos = (req, res, next) => {
     .catch(err => next(err))
 }
 
-const getUserFollowing = (req, res, next) => {
+const followUser = (req, res, next) => {
+  db
+    .none('insert into follows (user_ID, follower_ID) values ($userid}, ${followid})', {userid, followid})
+    .then(() => {
+      res.send('Follow success')
+    })
+    .catch(err => next(err))
+}
+
+const getUserFollowers = (req, res, next) => {
   db
     .any('select * from follows where follower_ID = ${id}', { id: user.id })
     .then(data => {
@@ -42,7 +38,7 @@ const getUserFollowing = (req, res, next) => {
     .catch(err => next(err))
 }
 
-const getUserFollowers = (req, res, next) => {
+const getUserFollowing = (req, res, next) => {
   db
     .any('select * from follows where user_ID = ${id}', { id: user.id })
     .then(data => {
@@ -57,10 +53,15 @@ const getUserFollowers = (req, res, next) => {
 
 const getFollowingPhotos = (req, res, next) => {
   db
-    .any('select * from photos join follows on photos.userid = follows.userid where follows.user_ID = ${id}')
-    .then(() => {
-
+    .any('select * from photos join follows on photos.user_ID = follows.user_ID where follower_ID=${userid}', {userid: user.id})
+    .then(data => {
+      res.status(200).json({
+        status: 'success',
+        data: data,
+        message: 'Retrieved all following photos'
+      })
     })
+    .catch(err => next(err))
 }
 
 const getPhotoLikes = (req, res, next) => {
@@ -90,25 +91,13 @@ const uploadPhoto = (req, res, next) => {
 const likePhoto = (req, res, next) => {
   db.
     none('insert into likes (user_ID, photo_ID) values (${userid}, ${photoid})', req.body)
-}
-
-function getAllUsers(req, res, next) {
-  db
-    .any("select * from users")
-    .then(function (data) {
-      res.status(200).json({
-        status: "success",
-        data: data,
-        message: "Retrieved ALL users"
-      });
+    then(() => {
+      res.send('Like success')
     })
-    .catch(function (err) {
-      return next(err);
-    });
+    .catch(err => next(err))
 }
 
 function loginUser(req, res, next) {
-
 
     passport.authenticate("local", (err, user, info) => {
       if (err) {
@@ -119,7 +108,7 @@ function loginUser(req, res, next) {
           console.log('after')
         req.logIn(user, function(err) {
           if (err) {
-              console.log('error......')
+              console.log('error')
             res.status(500).send("error");
           } else {
               console.log('now')
@@ -176,7 +165,6 @@ function registerUser(req, res, next) {
 }
 
 module.exports = {
-  getAllPhotos,
   getUserPhotos,
   getUserFollowers,
   getUserFollowing,
@@ -184,7 +172,6 @@ module.exports = {
   getPhotoLikes,
   uploadPhoto,
   likePhoto,
-  getAllUsers,
   registerUser,
   loginUser,
   logoutUser,

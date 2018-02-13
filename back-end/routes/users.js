@@ -4,10 +4,16 @@ var router = express.Router();
 const { loginRequired } = require("../auth/helpers");
 
 
-router.get("/new", db.getAllUsers)
 router.post("/new", db.registerUser);
 router.post("/login", db.loginUser);
 router.get("/logout", loginRequired, db.logoutUser);
 
-module.exports = router;
+router.post("/upload", db.uploadPhoto);
 
+router.get("/all", db.getFollowingPhotos)
+router.get("/photos", db.getUserPhotos);
+router.get("/photo/likes", db.getPhotoLikes);
+router.get("/followers",db.getUserFollowers)
+router.get("/following", db.getUserFollowing)
+
+module.exports = router;
