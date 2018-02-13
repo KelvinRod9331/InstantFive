@@ -18,7 +18,8 @@ const getAllPhotos = (req, res, next) => {
 
 const getUserPhotos = (req, res, next) => {
   db
-    .any('select * from photos where user_ID = ${id}', { id: user.id })
+   // .any('select * from photos where user_ID = ${id}', { id: user.id })
+   .any('select * from photos ')
     .then(data => {
       res.status(200).json({
         status: 'success',
@@ -29,7 +30,7 @@ const getUserPhotos = (req, res, next) => {
     .catch(err => next(err))
 }
 
-const getUserFollowers = (req, res, next) => {
+const getUserFollowing = (req, res, next) => {
   db
     .any('select * from follows where follower_ID = ${id}', { id: user.id })
     .then(data => {
@@ -42,7 +43,7 @@ const getUserFollowers = (req, res, next) => {
     .catch(err => next(err))
 }
 
-const getUserFollowing = (req, res, next) => {
+const getUserFollowers = (req, res, next) => {
   db
     .any('select * from follows where user_ID = ${id}', { id: user.id })
     .then(data => {
@@ -53,6 +54,14 @@ const getUserFollowing = (req, res, next) => {
       });
     })
     .catch(err => next(err))
+}
+
+const getFollowingPhotos = (req, res, next) => {
+  db
+    .any('select * from photos join follows on photos.userid = follows.userid where follows.user_ID = ${id}')
+    .then(() => {
+
+    })
 }
 
 const getPhotoLikes = (req, res, next) => {
@@ -120,23 +129,6 @@ function loginUser(req, res, next) {
         });
       }
     })(req, res, next);
-
-
-  passport.authenticate("local", (err, user, info) => {
-    if (err) {
-      res.status(500).send("error while trying to log in");
-    } else if (!user) {
-      res.status(401).send("invalid username/password");
-    } else if (user) {
-      req.logIn(user, function (err) {
-        if (err) {
-          res.status(500).send("error");
-        } else {
-          res.status(200).send(user);
-        }
-      });
-    }
-  })(req, res, next);
 
 }
 
