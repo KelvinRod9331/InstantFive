@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './Components/App';
+import App from './App';
 // import reducer from './reducer/rootreducer';
 // import { createStore } from 'redux';
 import registerServiceWorker from './registerServiceWorker';
@@ -13,10 +13,8 @@ import { BrowserRouter } from 'react-router-dom';
 //   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 // );
 
-ReactDOM.render(
-    //   <Provider store={store}>
-    //   </Provider>
-
+// {/*<Provider store={store}></Provider>*/}
+ReactDOM.render( 
     <BrowserRouter>
         <App />
     </BrowserRouter>,
