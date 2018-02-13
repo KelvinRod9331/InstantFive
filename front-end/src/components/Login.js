@@ -4,6 +4,7 @@ import { Redirect } from "react-router";
 import { Link } from 'react-router-dom';
 import Home from './Home'
 class LoginUser extends React.Component {
+
   state = {
     usernameInput: '',
     passwordInput: '',
@@ -41,9 +42,9 @@ class LoginUser extends React.Component {
       })
       .catch(err => {
         this.setState({
-          usernameInput: "",
-          passwordInput: "",
-          message: "username/password not found"
+          usernameInput: '',
+          passwordInput: '',
+          message: 'username/password not found'
         });
       });
       
@@ -52,6 +53,7 @@ class LoginUser extends React.Component {
   render() {
     const { usernameInput, passwordInput, message, loggedIn } = this.state;
 console.log({UserInput: usernameInput, UserPass: passwordInput, Message: message, LoggedIN: loggedIn})
+
     if (loggedIn) {
       // return <Redirect to="/user" />;
       return <Home loggedIn = {loggedIn} />
@@ -96,4 +98,4 @@ console.log({UserInput: usernameInput, UserPass: passwordInput, Message: message
   }
 }
 
-export default LoginUser;
+export default Login;
