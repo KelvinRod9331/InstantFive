@@ -8,7 +8,6 @@ class Home extends React.Component{
             <div>
                 Hello
             </div>
-    
         )
     }
     
