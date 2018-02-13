@@ -30,7 +30,7 @@ const getUserPhotos = (req, res, next) => {
     .catch(err => next(err))
 }
 
-const getUserFollowers = (req, res, next) => {
+const getUserFollowing = (req, res, next) => {
   db
     .any('select * from follows where follower_ID = ${id}', { id: user.id })
     .then(data => {
@@ -43,7 +43,7 @@ const getUserFollowers = (req, res, next) => {
     .catch(err => next(err))
 }
 
-const getUserFollowing = (req, res, next) => {
+const getUserFollowers = (req, res, next) => {
   db
     .any('select * from follows where user_ID = ${id}', { id: user.id })
     .then(data => {
@@ -54,6 +54,14 @@ const getUserFollowing = (req, res, next) => {
       });
     })
     .catch(err => next(err))
+}
+
+const getFollowingPhotos = (req, res, next) => {
+  db
+    .any('select * from photos join follows on photos.userid = follows.userid where follows.user_ID = ${id}')
+    .then(() => {
+
+    })
 }
 
 const getPhotoLikes = (req, res, next) => {
