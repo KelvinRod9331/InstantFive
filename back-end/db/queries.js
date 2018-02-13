@@ -109,7 +109,7 @@ function getAllUsers(req, res, next) {
 
 function loginUser(req, res, next) {
 
-    
+
     passport.authenticate("local", (err, user, info) => {
       if (err) {
         res.status(500).send("error while trying to log in");
@@ -180,6 +180,7 @@ module.exports = {
   getUserPhotos,
   getUserFollowers,
   getUserFollowing,
+  getFollowingPhotos,
   getPhotoLikes,
   uploadPhoto,
   likePhoto,
@@ -188,4 +189,3 @@ module.exports = {
   loginUser,
   logoutUser,
 };
-
