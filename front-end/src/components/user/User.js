@@ -9,6 +9,9 @@ class UserProfile extends React.Component {
             userInfo: [],
             userData: [],
             loggedIn: true,
+            uploadClicked: false,
+            inputURL: '',
+            message:''
         }
     }
 
@@ -22,7 +25,7 @@ class UserProfile extends React.Component {
         axios
             .get('/users/getUserInfo')
             .then(res => {
-                console.log(res.data)
+                console.log("UserInfo:", res.data)
                 this.setState({
                     userInfo: res.data
                 })
@@ -38,9 +41,10 @@ class UserProfile extends React.Component {
      * @var userData
       * Will hold all User's Data such as Photos in an Array
      */
+
     retriveUserPhotos = () => {
         axios
-            .get('/users/user')
+            .get('/users/userData')
             .then(res => {
                 console.log("Photos:", res.data.data)
                 this.setState({
@@ -51,6 +55,18 @@ class UserProfile extends React.Component {
                 console.log("Error:", err)
             })
     }
+
+
+    componentDidMount() {
+        this.retrieveUserInfo()
+        this.retriveUserPhotos()
+    }
+    /**
+         * @func handleLogOut
+         * This Will Log Out User And Redirect to 
+         * @var userData
+          * Will hold all User's Data such as Photos in an Array
+         */
 
     handleLogOut = () => {
         axios
@@ -63,39 +79,92 @@ class UserProfile extends React.Component {
             .catch(err => {
                 console.log("Error:", err)
             })
-      
+
     }
 
-    componentDidMount() {
-        this.retrieveUserInfo()
-        this.retriveUserPhotos()
+
+    handleInputUrl = e => {
+        this.setState({
+            inputURL: e.target.value
+        })
     }
+
+    handleButtonClicked = () => {
+        this.setState({
+            uploadClicked: true
+        })
+    }
+
+    handlePhotoSubmit = (e) => {
+        e.preventDefault();
+        const {userInfo,inputURL} = this.state
+        console.log({URL: inputURL})
+        axios
+        .post('/users/upload',{
+            userID: '3',
+            inputURL: inputURL
+        })
+        .then(res => {
+            this.setState({
+              inputURL: ''
+            });
+          })
+          .catch(err => {
+            this.setState({
+              inputURL: '',
+              message: 'Error'
+            });
+          });
+    }
+
 
     render() {
-        const { userData, userInfo, loggedIn} = this.state
+        const { userData, userInfo, loggedIn, inputURL, uploadClicked, message } = this.state
 
         console.log("User Data:", userData, "User Info:", userInfo, "Logged In:", loggedIn)
-        if(!loggedIn){
-            return <Home loggedIn = {false} />
+        if (!loggedIn) {
+            return <Home loggedIn={false} />
         }
         return (
             <div>
                 <div>
                     <button onClick={this.handleLogOut}>Log Out</button>
                 </div>
-                <div>
-                    {userInfo.map(user => {
-                        return (
-                            <div>
-                                <p>{user.username}</p>
-                            </div>
-                        )
-                    })}
+
+                <div id="uploadButton">
+                    {!uploadClicked ?
+                        <button onClick={this.handleButtonClicked}>Upload</button>
+                        : ''}
                 </div>
-                <div>
+
+                <div id='inputURL'>
+                    {uploadClicked ?
+                        <form onSubmit={this.handlePhotoSubmit}>
+                            Upload Photos:
+                     <input
+                                type='text'
+                                value={inputURL}
+                                placeholder="Upload A Photo URL"
+                                onChange={this.handleInputUrl}
+                            />
+                            <input
+                                type="submit"
+                            />
+                        </form>
+                        :
+                        ""
+                    }
+                </div>
+                <p>{message}</p>
+                <div id="usernameContainer">
+                   <h2> {userInfo.username} </h2>
+                </div>
+
+
+                <div id='photoContainer'>
                     {userData.map(user => {
                         return (
-                            <div>
+                            <div className='individualPhotos'>
                                 <img src={user.url} alt='' width={'300px'} />
                             </div>
                         )

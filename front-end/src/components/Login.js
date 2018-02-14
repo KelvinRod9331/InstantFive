@@ -52,8 +52,6 @@ class Login extends React.Component {
 
   render() {
     const { usernameInput, passwordInput, message, loggedIn } = this.state;
-console.log({UserInput: usernameInput, UserPass: passwordInput, Message: message, LoggedIN: loggedIn})
-
     if (loggedIn) {
       // return <Redirect to="/user" />;
       return <Home loggedIn = {loggedIn} />

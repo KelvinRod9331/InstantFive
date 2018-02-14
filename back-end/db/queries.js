@@ -18,8 +18,8 @@ const getAllPhotos = (req, res, next) => {
 
 const getUserPhotos = (req, res, next) => {
   db
-   // .any('select * from photos where user_ID = ${id}', { id: user.id })
-   .any('select * from photos ')
+  .any('select * from photos where username = ${username}', { username: req.user })
+  // .any('select * from photos ')
     .then(data => {
       res.status(200).json({
         status: 'success',
@@ -79,7 +79,7 @@ const getPhotoLikes = (req, res, next) => {
 
 const uploadPhoto = (req, res, next) => {
   db
-    .none('insert into photos (user_ID, url) values (${id}, ${url})', req.body)
+    .none('insert into photos (user_ID, url) values (${id}, ${url})', {id: req.userID, url: req.inputURL})
     .then(() => {
       res.send('Photo successfully uploaded.')
     })
