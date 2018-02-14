@@ -11,8 +11,8 @@ class Home extends React.Component {
         console.log(this.props)
         if (this.props.loggedIn) {
             return <Redirect to="/user" />
-        }else{
-            return <Redirect to='/registration' /> 
+        } else {
+            return <Redirect to='/login' /> 
         }
        
     }

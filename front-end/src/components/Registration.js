@@ -1,9 +1,18 @@
 import React from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { Redirect } from "react-router"
 
 class Registration extends React.Component {
-  state = { emailInput: '', fullNameInput: '', usernameInput: '', passwordInput: '', confirmInput: '', message: '' };
+  state = { 
+    emailInput: '', 
+    fullNameInput: '', 
+    usernameInput: '', 
+    passwordInput: '', 
+    confirmInput: '', 
+    message: '', 
+    registered: false 
+  };
 
   handleUsernameChange = e => {
     this.setState({
@@ -37,7 +46,7 @@ class Registration extends React.Component {
 
   submitForm = e => {
     e.preventDefault();
-    const { usernameInput, passwordInput, confirmInput, emailInput, fullNameInput } = this.state;
+    const { usernameInput, passwordInput, confirmInput, emailInput, fullNameInput, registered } = this.state;
 
     if (passwordInput.length <= 6) {
       this.setState({
@@ -66,8 +75,10 @@ class Registration extends React.Component {
           confirmInput: '',
           emailInput: '',
           fullNameInput: '',
+          registered: true,
           message: `Welcome to the site ${this.state.usernameInput}`
         });
+        return <Redirect to='/user'/>
       })
       .catch(err => {
         console.log('error: ', err);
@@ -83,7 +94,10 @@ class Registration extends React.Component {
   };
 
   render() {
-    const { emailInput, fullNameInput, usernameInput, passwordInput, confirmInput, message } = this.state;
+    const { emailInput, fullNameInput, usernameInput, passwordInput, confirmInput, message, registered } = this.state;
+    if (registered) {
+      return <Redirect to='/user' />
+    }
     return (
       <div>
         <div class='login-container'>
