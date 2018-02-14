@@ -11,7 +11,7 @@ router.get("/getUserInfo", loginRequired, (req, res) => {
     res.json(req.user)
 });
 router.post("/upload", db.uploadPhoto)
-router.post("/logout", db.logoutUser);
+router.get("/logout", db.logoutUser);
 router.get("/userData", db.getUserPhotos)
 router.get("/followers",db.getUserFollowers)
 router.get("/following", db.getUserFollowing)
