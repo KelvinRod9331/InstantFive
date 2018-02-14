@@ -78,7 +78,6 @@ class Registration extends React.Component {
           registered: true,
           message: `Welcome to the site ${this.state.usernameInput}`
         });
-        return <Redirect to='/user'/>
       })
       .catch(err => {
         console.log('error: ', err);
@@ -95,9 +94,9 @@ class Registration extends React.Component {
 
   render() {
     const { emailInput, fullNameInput, usernameInput, passwordInput, confirmInput, message, registered } = this.state;
-    if (registered) {
-      return <Redirect to='/user' />
-    }
+    // if (registered) {
+    //   return <Redirect to='/user' />
+    // }
     return (
       <div>
         <div class='login-container'>
