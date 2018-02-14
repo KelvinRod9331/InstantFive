@@ -11,7 +11,10 @@ class User extends React.Component {
     this.state = {
       userInfo: [],
       userData: [],
-      loggedIn: true
+      loggedIn: true,
+      uploadClicked: false,
+      inputURL: '',
+      message:''
     };
   }
 
@@ -21,19 +24,19 @@ class User extends React.Component {
       @var userInfo 
       * Will hold all User's Info in an Array
      */
-  retrieveUserInfo = () => {
-    axios
-      .get("/users/getUserInfo")
-      .then(res => {
-        console.log(res.data);
-        this.setState({
-          userInfo: res.data
-        });
-      })
-      .catch(err => {
-        console.log("Error:", err);
-      });
-  };
+    retrieveUserInfo = () => {
+        axios
+            .get('/users/getUserInfo')
+            .then(res => {
+                console.log("UserInfo:", res.data.data[0])
+                this.setState({
+                    userInfo: res.data.data[0]
+                })
+            })
+            .catch(err => {
+                console.log("Error:", err)
+            })
+    }
 
   /**
      * @func retriveUserPhotos
@@ -47,7 +50,7 @@ class User extends React.Component {
       .then(res => {
         console.log("Photos:", res.data.data);
         this.setState({
-          userData: [...res.data.data]
+          userData: [...res.data.data].reverse()
         });
       })
       .catch(err => {
@@ -74,11 +77,50 @@ class User extends React.Component {
   }
 
   renderUserProfile = () =>{
-    const { userData, userInfo } = this.state;
+    const { userData, userInfo, loggedIn, uploadClicked, message, inputURL } = this.state;
 
-    return <UserProfile userData = {userData} userInfo = {userInfo} handleLogOut={this.handleLogOut} />
+    return <UserProfile userData = {userData} userInfo = {userInfo} loggedIn={loggedIn} handleLogOut={this.handleLogOut}  inputURL={inputURL}
+                            uploadClicked={uploadClicked} handleButtonClicked={this.handleButtonClicked} message={message} handlePhotoSubmit={this.handlePhotoSubmit}
+                            handleInputUrl={this.handleInputUrl}/>
 
   }
+
+  handleButtonClicked = () => {
+    this.setState({
+        uploadClicked: true
+    })
+}
+
+handleInputUrl = e => {
+  console.log(this.state.inputURL)
+  this.setState({
+      inputURL: e.target.value
+  })
+}
+
+handlePhotoSubmit = (e) => {
+  e.preventDefault();
+  const {userInfo,inputURL} = this.state
+  console.log({URL: inputURL})
+  axios
+  .post('/users/upload',{
+      userID: userInfo.id,
+      inputURL: inputURL
+  })
+  .then(res => {
+      this.setState({
+        inputURL: '',
+        message:  "You're Photo Has Been Uploaded"
+      });
+    })
+    .catch(err => {
+      this.setState({
+        inputURL: '',
+        message: 'Error'
+      });
+    });
+}
+
 
   renderFollowers = () =>{
     return <Followers />
