@@ -11,10 +11,6 @@ class User extends React.Component {
     this.state = {
       userInfo: [],
       userData: [],
-      loggedIn: true,
-      uploadClicked: false,
-      inputURL: '',
-      message:''
     };
   }
 
@@ -46,7 +42,7 @@ class User extends React.Component {
      */
   retriveUserPhotos = () => {
     axios
-      .get("/users/user")
+      .get("/users/userData")
       .then(res => {
         console.log("Photos:", res.data.data);
         this.setState({
@@ -58,18 +54,6 @@ class User extends React.Component {
       });
   };
 
-  handleLogOut = () => {
-    axios
-      .get("/users/logout")
-      .then(res => {
-        this.setState({
-          loggedIn: false
-        });
-      })
-      .catch(err => {
-        console.log("Error:", err);
-      });
-  };
 
   componentDidMount() {
     this.retrieveUserInfo();
@@ -77,49 +61,13 @@ class User extends React.Component {
   }
 
   renderUserProfile = () =>{
-    const { userData, userInfo, loggedIn, uploadClicked, message, inputURL } = this.state;
+    const { userData, userInfo } = this.state;
 
-    return <UserProfile userData = {userData} userInfo = {userInfo} loggedIn={loggedIn} handleLogOut={this.handleLogOut}  inputURL={inputURL}
-                            uploadClicked={uploadClicked} handleButtonClicked={this.handleButtonClicked} message={message} handlePhotoSubmit={this.handlePhotoSubmit}
-                            handleInputUrl={this.handleInputUrl}/>
+    return <UserProfile userData = {userData} userInfo = {userInfo} />
 
   }
 
-  handleButtonClicked = () => {
-    this.setState({
-        uploadClicked: true
-    })
-}
-
-handleInputUrl = e => {
-  console.log(this.state.inputURL)
-  this.setState({
-      inputURL: e.target.value
-  })
-}
-
-handlePhotoSubmit = (e) => {
-  e.preventDefault();
-  const {userInfo,inputURL} = this.state
-  console.log({URL: inputURL})
-  axios
-  .post('/users/upload',{
-      userID: userInfo.id,
-      inputURL: inputURL
-  })
-  .then(res => {
-      this.setState({
-        inputURL: '',
-        message:  "You're Photo Has Been Uploaded"
-      });
-    })
-    .catch(err => {
-      this.setState({
-        inputURL: '',
-        message: 'Error'
-      });
-    });
-}
+ 
 
 
   renderFollowers = () =>{
@@ -134,12 +82,9 @@ handlePhotoSubmit = (e) => {
       userData,
       "User Info:",
       userInfo,
-      "Logged In:",
-      loggedIn
+
     );
-    if (!loggedIn) {
-      return <Home loggedIn={false} />;
-    }
+    
     return (
         <div>
           <Switch>
