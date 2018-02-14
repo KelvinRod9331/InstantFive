@@ -1,9 +1,18 @@
 import React from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { Redirect } from "react-router"
 
 class Registration extends React.Component {
-  state = { emailInput: '', fullNameInput: '', usernameInput: '', passwordInput: '', confirmInput: '', message: '' };
+  state = { 
+    emailInput: '', 
+    fullNameInput: '', 
+    usernameInput: '', 
+    passwordInput: '', 
+    confirmInput: '', 
+    message: '', 
+    registered: false 
+  };
 
   handleUsernameChange = e => {
     this.setState({
@@ -37,7 +46,7 @@ class Registration extends React.Component {
 
   submitForm = e => {
     e.preventDefault();
-    const { usernameInput, passwordInput, confirmInput, emailInput, fullNameInput } = this.state;
+    const { usernameInput, passwordInput, confirmInput, emailInput, fullNameInput, registered } = this.state;
 
     if (passwordInput.length <= 6) {
       this.setState({
@@ -66,6 +75,7 @@ class Registration extends React.Component {
           confirmInput: '',
           emailInput: '',
           fullNameInput: '',
+          registered: true,
           message: `Welcome to the site ${this.state.usernameInput}`
         });
       })
@@ -83,9 +93,20 @@ class Registration extends React.Component {
   };
 
   render() {
-    const { emailInput, fullNameInput, usernameInput, passwordInput, confirmInput, message } = this.state;
+    const { emailInput, fullNameInput, usernameInput, passwordInput, confirmInput, message, registered } = this.state;
+    // if (registered) {
+    //   return <Redirect to='/user' />
+    // }
     return (
-      <div>
+      <div id='parent'>
+        <div class='photo-container'>
+          <div id='sl1'>
+              <img src='http://www.instagram.com/static/images/homepage/screenshot1.jpg/aafd8c6b005d.jpg' class="slide-number" /> 
+              <img src='http://www.instagram.com/static/images/homepage/screenshot5.jpg/f5ae123ab1e2.jpg' class="slide-number"/> 
+              <img src='http://www.instagram.com/static/images/homepage/screenshot2.jpg/2d9d7248af43.jpg' class="slide-number"/>
+              <img src='http://www.instagram.com/static/images/homepage/screenshot3.jpg/629d23a3c7b2.jpg' class="slide-number"/>
+          </div>
+        </div>
         <div class='login-container'>
           <div class='login-box'>
             <form onSubmit={this.submitForm}>
@@ -144,7 +165,7 @@ class Registration extends React.Component {
             Have an account? <Link to="/login">Log in</Link>
           </div>
         </div>
-      </div>
+      </div >
     );
   }
 }
