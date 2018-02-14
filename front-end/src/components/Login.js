@@ -2,8 +2,9 @@ import React from "react";
 import axios from "axios";
 import { Redirect } from "react-router";
 import { Link } from 'react-router-dom';
+import Home from './Home'
+class Login extends React.Component {
 
-class LoginUser extends React.Component {
   state = {
     usernameInput: '',
     passwordInput: '',
@@ -29,30 +30,33 @@ class LoginUser extends React.Component {
     const { usernameInput, passwordInput } = this.state;
 
     axios
-      .post("/user/login", {
+      .post('/users/login', {
         username: usernameInput,
         password: passwordInput
       })
       .then(res => {
-        this.props.setUser(res.data);
+        // this.props.setUser(res.data);
         this.setState({
           loggedIn: true
         });
       })
       .catch(err => {
         this.setState({
-          usernameInput: "",
-          passwordInput: "",
-          message: "username/password not found"
+          usernameInput: '',
+          passwordInput: '',
+          message: 'username/password not found'
         });
       });
+      
   };
 
   render() {
     const { usernameInput, passwordInput, message, loggedIn } = this.state;
+console.log({UserInput: usernameInput, UserPass: passwordInput, Message: message, LoggedIN: loggedIn})
 
     if (loggedIn) {
-      return <Redirect to="/user" />;
+      // return <Redirect to="/user" />;
+      return <Home loggedIn = {loggedIn} />
     }
 
     return (
@@ -86,7 +90,7 @@ class LoginUser extends React.Component {
                     <p>{message}</p>
                 </div>
                 <div class='login-box'>
-                Don't have an account? <Link to="/Registration">Sign Up</Link>
+                Don't have an account? <Link to="/registration">Sign Up</Link>
                 </div>
             </div>
         </div>
@@ -94,4 +98,4 @@ class LoginUser extends React.Component {
   }
 }
 
-export default LoginUser;
+export default Login;

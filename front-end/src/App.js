@@ -5,6 +5,7 @@ import './App.css';
 import Home from './components/Home';
 import Login from './components/Login';
 import Registration from './components/Registration';
+import User from './components/user/User'
 
 
 
@@ -14,15 +15,16 @@ class App extends Component {
         return (
             <div>
                 <nav>
-                    <Link to="/">Home</Link>
-                    <Link to="/user/following">Following</Link> {/*Will be Accessed Through Clicking On A Button*/}
-                    <Link to="/user/followers">Followers</Link> {/*Will be Accessed Through Clicking On A Button*/}
+                    <Link to="/">Home</Link>{'-'}
+                    <Link to="/user/following">Following</Link>{'-'} {/*Will be Accessed Through Clicking On A Button*/}
+                    <Link to="/user/followers">Followers</Link>{'-'} {/*Will be Accessed Through Clicking On A Button*/}
                           
                 </nav>
                 <Route exact path="/" component={Home}/>
                 <Route exact path="/login" component={Login}/>
-                <Route exact path="/registration" component={Registration}/>                
-                <Route path="/user" />
+                <Route exact path="/registration" component={Registration}/>
+                <Route exact path="/user" component={User} />
+                
             </div>
         )
     }
