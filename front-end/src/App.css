@@ -7,29 +7,27 @@ html{
   margin:0 auto;
   display: table;
   padding-top: 90px;
-  /* align-self: center; */
-  /* padding-left: 50px; */
 }
 
-.h1{
+h1{
   font-family: 'Pacifico', cursive;
 }
-.h2, .login-box{
+h2, .login-box{
   font-family: 'Karla', sans-serif;
 }
 
-.input{
+input{
   font-family: 'Abel', sans-serif;
 }
 
 .photo-container {
    background-image: url('https://www.instagram.com/static/images/homepage/home-phones.png/38825c9d5aa2.png' );
-  background-size: 454px 555px; 
+  background-size: 454px 568px; 
   /* background-color:mistyrose; */
   align-self: center;
   background-position: 0 0;
   flex-basis: 454px;
-  height: 550px;
+  height: 570px;
   width: 450px;
   margin:0 auto;
   float:left;
@@ -37,10 +35,6 @@ html{
 }
 
 #sl1 {
-  /* position: relative; */
-  height:360px;
-  width:250px;
-  /* margin:0 auto; */
   padding-top: 76px;
   margin-left: 147px
  
@@ -48,7 +42,7 @@ html{
 
 #sl1 img {
    position:absolute;
-   height:402px;
+   height:412px;
    width:250px;
    animation-name: sl1FadeInOut;
    animation-timing-function: ease-in-out;
