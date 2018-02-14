@@ -5,7 +5,7 @@ const passport = require("../auth/local");
 
 const getUserPhotos = (req, res, next) => {
   db
-    .any('select * from photos where username = ${username}', req.user)
+    .any('select * from photos full join users on photos.user_ID = users.id where username = ${username}', req.user)
     .then(data => {
       res.status(200).json({
         status: 'success',
@@ -55,8 +55,8 @@ const getUserFollowing = (req, res, next) => {
 const getFollowingPhotos = (req, res, next) => {
   console.log("hi", req.user)
   db
-    // .any('select * from photos join follows on photos.user_ID = follows.user_ID where follower_ID=${userid}', req.user)
-    .any('select * from photos join users on photos.user_ID = users.id')
+    // .any('select * from photos full join follows on photos.user_ID = follows.user_ID full join users on follows.user_ID = users.id where follower_ID=${userid}', req.user)
+    .any('select * from photos full join follows on photos.user_ID = follows.user_ID full join users on follows.user_ID = users.id', req.user)
     .then(data => {
       res.status(200).json({
         status: 'success',
