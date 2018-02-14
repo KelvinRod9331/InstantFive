@@ -93,14 +93,14 @@ const likePhoto = (req, res, next) => {
     none('insert into likes (user_ID, photo_ID) values (${userid}, ${photoid})', req.body)
 }
 
-function getAllUsers(req, res, next) {
+function getSingleUser(req, res, next) {
   db
-    .any("select * from users")
+    .any("select * from users where username=${username}", req.user)
     .then(function (data) {
       res.status(200).json({
         status: "success",
         data: data,
-        message: "Retrieved ALL users"
+        message: "Retrieved single users"
       });
     })
     .catch(function (err) {
@@ -129,7 +129,6 @@ function loginUser(req, res, next) {
       }
     })(req, res, next);
 
-<<<<<<< HEAD
   passport.authenticate("local", (err, user, info) => {
     if (err) {
       res.status(500).send("error while trying to log in");
@@ -146,8 +145,6 @@ function loginUser(req, res, next) {
     }
   })(req, res, next);
 
-=======
->>>>>>> a3d91c24123b1919ec2b1885b744bf56155026c9
 }
 
 function logoutUser(req, res, next) {
@@ -185,9 +182,8 @@ module.exports = {
   getPhotoLikes,
   uploadPhoto,
   likePhoto,
-  getAllUsers,
+  getSingleUser,
   registerUser,
   loginUser,
   logoutUser,
 };
-
