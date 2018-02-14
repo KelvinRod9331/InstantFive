@@ -18,20 +18,9 @@ const getUserPhotos = (req, res, next) => {
 
 const followUser = (req, res, next) => {
   db
-<<<<<<< HEAD
-  .any('select * from photos where username = ${username}', { username: req.user })
-  // .any('select * from photos ')
-    .then(data => {
-      res.status(200).json({
-        status: 'success',
-        data: data,
-        message: 'Retrieved all users\'s photos'
-      });
-=======
     .none('insert into follows (user_ID, follower_ID) values ($userid}, ${followid})', {userid: req.user, followid: followid})
     .then(() => {
       res.send('Follow success')
->>>>>>> b6f436238cf8eb46f2d58f22316d2ff52b478a09
     })
     .catch(err => next(err))
 }

@@ -4,12 +4,9 @@ var router = express.Router();
 const { loginRequired } = require("../auth/helpers");
 
 
-router.get("/getAllUsers", db.getAllUsers)
 router.post("/new", db.registerUser);
 router.post("/login", db.loginUser);
-router.get("/getUserInfo", loginRequired, (req, res) => {
-    res.json(req.user)
-});
+router.get("/getUserInfo", db.getSingleUser)
 router.post("/upload", db.uploadPhoto)
 router.get("/logout", db.logoutUser);
 router.get("/userData", db.getUserPhotos)

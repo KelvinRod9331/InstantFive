@@ -25,9 +25,9 @@ class UserProfile extends React.Component {
         axios
             .get('/users/getUserInfo')
             .then(res => {
-                console.log("UserInfo:", res.data)
+                console.log("UserInfo:", res.data.data[0])
                 this.setState({
-                    userInfo: res.data
+                    userInfo: res.data.data[0]
                 })
             })
             .catch(err => {
@@ -46,7 +46,7 @@ class UserProfile extends React.Component {
         axios
             .get('/users/userData')
             .then(res => {
-                console.log("Photos:", res.data.data)
+                console.log("Photos:", res.data)
                 this.setState({
                     userData: [...res.data.data]
                 })
@@ -101,7 +101,7 @@ class UserProfile extends React.Component {
         console.log({URL: inputURL})
         axios
         .post('/users/upload',{
-            userID: '3',
+            userID: userInfo.id,
             url: inputURL
         })
         .then(res => {
@@ -159,7 +159,7 @@ class UserProfile extends React.Component {
                 <p>{message}</p>
 
                 <div id="usernameContainer">
-                   <h2> {userInfo.username} </h2>
+                  {userInfo.username}
                 </div>
 
 
