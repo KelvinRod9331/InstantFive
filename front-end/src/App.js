@@ -6,7 +6,7 @@ import Home from './components/Home';
 import Login from './components/Login';
 import Registration from './components/Registration';
 import Feed from './components/user/Feed';
-
+import User from './components/user/User'
 
 
 class App extends Component {
@@ -25,7 +25,7 @@ class App extends Component {
                 <Route exact path="/login" component={Login}/>
                 <Route exact path="/registration" component={Registration}/>
                 <Route exact path="/feed" component={Feed}/>
-                <Route path="/user" />
+                <Route path="/user" component={User} />
             </div>
         )
     }

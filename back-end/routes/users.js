@@ -6,14 +6,12 @@ const { loginRequired } = require("../auth/helpers");
 
 router.post("/new", db.registerUser);
 router.post("/login", db.loginUser);
-router.post("/getUserInfo", loginRequired, (req, res) => {
-    res.json(req.user)
-});
-
-router.get("/logout", loginRequired, db.logoutUser);
-
+router.get("/getUserInfo", db.getSingleUser)
+router.post("/upload", db.uploadPhoto)
+router.get("/logout", db.logoutUser);
+router.get("/userData", db.getUserPhotos)
+router.get("/followers",db.getUserFollowers)
 router.post("/upload", db.uploadPhoto);
-
 router.post("/follow", db.followUser)
 router.post("/photo/:id/like", db.likePhoto);
 
