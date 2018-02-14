@@ -59,7 +59,16 @@ class Login extends React.Component {
     }
 
     return (
-        <div>
+        <div id='parent'>
+          <div class='photo-container'>
+          <div id='sl1'>
+              <img src='http://www.instagram.com/static/images/homepage/screenshot1.jpg/aafd8c6b005d.jpg' class="slide-number" /> 
+              <img src='http://www.instagram.com/static/images/homepage/screenshot5.jpg/f5ae123ab1e2.jpg' class="slide-number"/> 
+              <img src='http://www.instagram.com/static/images/homepage/screenshot2.jpg/2d9d7248af43.jpg' class="slide-number"/>
+              <img src='http://www.instagram.com/static/images/homepage/screenshot3.jpg/629d23a3c7b2.jpg' class="slide-number"/>
+          </div>
+          
+          </div>
             <div class='login-container' >
                 <div class='login-box'>
                 <h1>Instant Five</h1>
