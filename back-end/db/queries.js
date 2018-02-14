@@ -92,8 +92,17 @@ const uploadPhoto = (req, res, next) => {
 const likePhoto = (req, res, next) => {
   db.
     none('insert into likes (user_ID, photo_ID) values (${userid}, ${photoid})', req.body)
-    then(() => {
-      res.send('Like success')
+}
+
+function getSingleUser(req, res, next) {
+  db
+    .any("select * from users where username=${username}", req.user)
+    .then(function (data) {
+      res.status(200).json({
+        status: "success",
+        data: data,
+        message: "Retrieved single users"
+      });
     })
     .catch(err => next(err))
 }
@@ -156,6 +165,7 @@ module.exports = {
   getPhotoLikes,
   uploadPhoto,
   likePhoto,
+  getSingleUser,
   registerUser,
   loginUser,
   logoutUser,
