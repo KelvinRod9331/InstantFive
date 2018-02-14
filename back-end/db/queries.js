@@ -121,6 +121,19 @@ function getSingleUser(req, res, next) {
     .catch(err => next(err))
 }
 
+function getAllUsers(req, res, next) {
+  db
+    .any("select * from users")
+    .then(function (data) {
+      res.status(200).json({
+        status: "success",
+        data: data,
+        message: "Retrieved single users"
+      });
+    })
+    .catch(err => next(err))
+}
+
 function loginUser(req, res, next) {
 
     passport.authenticate("local", (err, user, info) => {
@@ -182,6 +195,7 @@ module.exports = {
   uploadPhoto,
   likePhoto,
   getSingleUser,
+  getAllUsers,
   registerUser,
   loginUser,
   logoutUser,

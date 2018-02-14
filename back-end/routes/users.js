@@ -17,7 +17,7 @@ router.post("/upload", db.uploadPhoto);
 router.post("/follow", db.followUser)
 router.post("/photo/:id/like", db.likePhoto);
 
-router.get("/all", db.getFollowingPhotos);
+router.get("/all", db.getAllUsers);
 router.get("/photos", db.getUserPhotos);
 router.get("/photo/:id/likes", db.getPhotoLikes);
 router.get("/photo/:id", db.getPhoto);
