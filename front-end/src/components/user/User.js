@@ -11,6 +11,7 @@ class User extends React.Component {
     this.state = {
       userInfo: [],
       userData: [],
+      searchInput: ''
     };
   }
 
@@ -69,11 +70,19 @@ class User extends React.Component {
 
   }
 
- 
-
-
   renderFollowers = () =>{
     return <Followers />
+  }
+
+  renderSearchInput = (e) => {
+    this.setState({
+        searchInput: e.target.value
+    })
+  }
+
+
+  renderSearchEngine = () => {
+        get('/users/all')
   }
 
   render() {
@@ -89,6 +98,7 @@ class User extends React.Component {
     
     return (
         <div>
+            Search: <input type="text" value={} />
           <Switch>
             <Route exact path="/user/" render={this.renderUserProfile} />
             <Route path="/user/followers" render={this.renderFollowers} />
