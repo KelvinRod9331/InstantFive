@@ -18,7 +18,7 @@ const getUserPhotos = (req, res, next) => {
 
 const followUser = (req, res, next) => {
   db
-    .none('insert into follows (user_ID, follower_ID) values ($userid}, ${followid})', {userid, followid})
+    .none('insert into follows (user_ID, follower_ID) values (${userid}, ${followid})', {userid, followid})
     .then(() => {
       res.send('Follow success')
     })
@@ -26,22 +26,21 @@ const followUser = (req, res, next) => {
 }
 
 const getUserFollowers = (req, res, next) => {
-  console.log('here', req.user)
-  // db
-    // .any('select * from follows where follower_ID = ${id}', req.user)
-    // .then(data => {
-    //   res.status(200).json({
-    //     status: 'success',
-    //     data: data,
-    //     message: 'Retrieved all users\'s followes'
-    //   });
-    // })
-    // .catch(err => next(err))
+  db
+    .any('select * from follows join users on follows.user_id = users.id where username = ${username}', req.user)
+    .then(data => {
+      res.status(200).json({
+        status: 'success',
+        data: data,
+        message: 'Retrieved all users\'s followers'
+      });
+    })
+    .catch(err => next(err))
 }
 
 const getUserFollowing = (req, res, next) => {
   db
-    .any('select * from follows where username = ${username}', req.user)
+    .any('select * from follows join users on follows.follower_ID = users.id where username = ${username}', req.user)
     .then(data => {
       res.status(200).json({
         status: 'success',
@@ -56,7 +55,7 @@ const getFollowingPhotos = (req, res, next) => {
   console.log("hi", req.user)
   db
     // .any('select * from photos full join follows on photos.user_ID = follows.user_ID full join users on follows.user_ID = users.id where follower_ID=${userid}', req.user)
-    .any('select * from photos full join follows on photos.user_ID = follows.user_ID full join users on follows.user_ID = users.id', req.user)
+    .any('SELECT * from follows join users on follows.follower_ID = users.id join photos on photos.user_id = follows.user_id where username = ${username}', req.user)
     .then(data => {
       res.status(200).json({
         status: 'success',
@@ -69,7 +68,20 @@ const getFollowingPhotos = (req, res, next) => {
 
 const getPhotoLikes = (req, res, next) => {
   db
-    .any('select * from likes where photo_ID = ${photoid}', { photoid: photo.id })
+    .any('select * from likes where photo_ID = ${id}', req.params)
+    .then(data => {
+      res.status(200).json({
+        status: 'success',
+        data: data,
+        message: 'Retrieved ALL photo likes'
+      })
+    })
+    .catch(err => next(err))
+}
+
+const getPhoto = (req, res, next) => {
+  db
+    .any('select * from photos where id = ${id}', req.params)
     .then(data => {
       res.status(200).json({
         status: 'success',
@@ -166,6 +178,7 @@ module.exports = {
   getUserFollowing,
   getFollowingPhotos,
   getPhotoLikes,
+  getPhoto,
   uploadPhoto,
   likePhoto,
   getSingleUser,
