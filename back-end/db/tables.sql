@@ -6,7 +6,9 @@ CREATE DATABASE instant5;
 CREATE TABLE users (
   ID SERIAL PRIMARY KEY,
   username VARCHAR,
-  password_digest VARCHAR
+  password_digest VARCHAR,
+  email VARCHAR,
+  full_name VARCHAR
 );
 
 CREATE TABLE photos (
@@ -26,9 +28,9 @@ CREATE TABLE likes (
 );
 
 
-INSERT INTO users (ID, username, password_digest) 
-VALUES ('1','Kelstar809','$2a$10$brAZfSmByFeZmPZ/MH5zne9YDhugjW9CtsBGgXqGfix0g1tcooZWq'),
-('2','lala809','$2a$10$brAZfSmByFeZmPZ/MH5zne9YDhugjW9CtsBGgXqGfix0g1tcooZWq');
+INSERT INTO users (ID, username, password_digest, email, full_name) 
+VALUES ('1','Kelstar809','$2a$10$brAZfSmByFeZmPZ/MH5zne9YDhugjW9CtsBGgXqGfix0g1tcooZWq', 'kelstar809@instant.five', 'Kel Star'),
+('2','lala809','$2a$10$brAZfSmByFeZmPZ/MH5zne9YDhugjW9CtsBGgXqGfix0g1tcooZWq', 'lala809@instant.five', 'Lala Land');
 
 INSERT INTO photos (ID, user_ID, url) 
 VALUES ('1','1','https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/model/one-off/centenario/slider/centenario.jpg'),
