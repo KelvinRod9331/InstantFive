@@ -57,6 +57,7 @@ class Registration extends React.Component {
         this.setState({
           usernameInput: '',
           passwordInput: '',
+          confirmInput: '',
           message: 'Error inserting user'
         });
       });

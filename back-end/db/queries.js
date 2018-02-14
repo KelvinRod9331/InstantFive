@@ -5,7 +5,7 @@ const passport = require("../auth/local");
 
 const getUserPhotos = (req, res, next) => {
   db
-    .any('select * from photos where user_ID = ${id}', { id: user.id })
+    .any('select * from photos where user_ID = ${id}', req.user)
     .then(data => {
       res.status(200).json({
         status: 'success',
@@ -18,7 +18,7 @@ const getUserPhotos = (req, res, next) => {
 
 const followUser = (req, res, next) => {
   db
-    .none('insert into follows (user_ID, follower_ID) values ($userid}, ${followid})', {userid, followid})
+    .none('insert into follows (user_ID, follower_ID) values ($userid}, ${followid})', {userid: req.user, followid: followid})
     .then(() => {
       res.send('Follow success')
     })
@@ -27,7 +27,7 @@ const followUser = (req, res, next) => {
 
 const getUserFollowers = (req, res, next) => {
   db
-    .any('select * from follows where follower_ID = ${id}', { id: user.id })
+    .any('select * from follows where follower_ID = ${id}', req.user)
     .then(data => {
       res.status(200).json({
         status: 'success',
@@ -40,7 +40,7 @@ const getUserFollowers = (req, res, next) => {
 
 const getUserFollowing = (req, res, next) => {
   db
-    .any('select * from follows where user_ID = ${id}', { id: user.id })
+    .any('select * from follows where user_ID = ${id}', req.user)
     .then(data => {
       res.status(200).json({
         status: 'success',
@@ -53,16 +53,16 @@ const getUserFollowing = (req, res, next) => {
 
 const getFollowingPhotos = (req, res, next) => {
   console.log("hi", req.user)
-  db
-    .any('select * from photos join follows on photos.user_ID = follows.user_ID where follower_ID=${userid}', {userid: user.id})
-    .then(data => {
-      res.status(200).json({
-        status: 'success',
-        data: data,
-        message: 'Retrieved all following photos'
-      })
-    })
-    .catch(err => next(err))
+  // db
+  //   .any('select * from photos join follows on photos.user_ID = follows.user_ID where follower_ID=${userid}', {userid: user.id})
+  //   .then(data => {
+  //     res.status(200).json({
+  //       status: 'success',
+  //       data: data,
+  //       message: 'Retrieved all following photos'
+  //     })
+  //   })
+  //   .catch(err => next(err))
 }
 
 const getPhotoLikes = (req, res, next) => {
@@ -118,24 +118,6 @@ function loginUser(req, res, next) {
         });
       }
     })(req, res, next);
-
-
-  passport.authenticate("local", (err, user, info) => {
-    if (err) {
-      res.status(500).send("error while trying to log in");
-    } else if (!user) {
-      res.status(401).send("invalid username/password");
-    } else if (user) {
-      req.logIn(user, function (err) {
-        if (err) {
-          res.status(500).send("error");
-        } else {
-          res.status(200).send(user);
-        }
-      });
-    }
-  })(req, res, next);
-
 }
 
 function logoutUser(req, res, next) {

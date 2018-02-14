@@ -11,7 +11,7 @@ class Feed extends Component {
 
   componentDidMount = () => {
     axios
-      .get('/users/feed')
+      .get('http://localhost:3100/users/feed')
       .then(res => {
         console.log('feed', res.data)
       })

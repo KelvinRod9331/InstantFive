@@ -18,6 +18,7 @@ class App extends Component {
                     <Link to="/">Home</Link>
                     <Link to="/user/following">Following</Link> {/*Will be Accessed Through Clicking On A Button*/}
                     <Link to="/user/followers">Followers</Link> {/*Will be Accessed Through Clicking On A Button*/}
+                    <Link to="/feed">Feed</Link> {/*Will be Accessed Through Clicking On A Button*/}
 
                 </nav>
                 <Route exact path="/" component={Home}/>

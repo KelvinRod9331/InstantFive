@@ -2,8 +2,10 @@ import React from "react";
 import axios from "axios";
 import { Redirect } from "react-router";
 import { Link } from 'react-router-dom';
+import Home from './Home'
 
 class Login extends React.Component {
+
   state = {
     usernameInput: '',
     passwordInput: '',
@@ -46,14 +48,16 @@ class Login extends React.Component {
           message: 'username/password not found'
         });
       });
+
   };
 
   render() {
     const { usernameInput, passwordInput, message, loggedIn } = this.state;
-    console.log({state: this.state})
-    console.log({props: this.props})
+console.log({UserInput: usernameInput, UserPass: passwordInput, Message: message, LoggedIN: loggedIn})
+
     if (loggedIn) {
-      return <Redirect to="/user" />;
+      // return <Redirect to="/user" />;
+      return <Home loggedIn = {loggedIn} />
     }
 
     return (
