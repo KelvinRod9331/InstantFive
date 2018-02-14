@@ -102,11 +102,12 @@ class UserProfile extends React.Component {
         axios
         .post('/users/upload',{
             userID: '3',
-            inputURL: inputURL
+            url: inputURL
         })
         .then(res => {
             this.setState({
-              inputURL: ''
+              inputURL: '',
+              message:  "You're Photo Has Been Uploaded"
             });
           })
           .catch(err => {
@@ -156,6 +157,7 @@ class UserProfile extends React.Component {
                     }
                 </div>
                 <p>{message}</p>
+
                 <div id="usernameContainer">
                    <h2> {userInfo.username} </h2>
                 </div>

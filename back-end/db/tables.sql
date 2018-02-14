@@ -11,7 +11,7 @@ CREATE TABLE users (
 
 CREATE TABLE photos (
   ID SERIAL PRIMARY KEY,
-  username VARCHAR,
+  user_ID INTEGER REFERENCES users,
   url VARCHAR
 );
 
@@ -24,12 +24,3 @@ CREATE TABLE likes (
   user_ID INTEGER REFERENCES users,
   photo_ID  INTEGER REFERENCES photos
 );
-
-
-INSERT INTO users (ID, username, password_digest) 
-VALUES ('1','Kelstar809','$2a$10$brAZfSmByFeZmPZ/MH5zne9YDhugjW9CtsBGgXqGfix0g1tcooZWq'),
-('2','lala809','$2a$10$brAZfSmByFeZmPZ/MH5zne9YDhugjW9CtsBGgXqGfix0g1tcooZWq');
-
-INSERT INTO photos (ID, username, url) 
-VALUES ('1','kelvin','https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/model/one-off/centenario/slider/centenario.jpg');
- 
