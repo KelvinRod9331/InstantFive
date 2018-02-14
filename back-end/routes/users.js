@@ -14,7 +14,13 @@ router.post("/upload", db.uploadPhoto)
 router.get("/logout", db.logoutUser);
 router.get("/userData", db.getUserPhotos)
 router.get("/followers",db.getUserFollowers)
-router.get("/following", db.getUserFollowing)
+router.post("/upload", db.uploadPhoto);
+router.post("/follow", db.followUser)
+router.get("/all", db.getFollowingPhotos);
+router.get("/photos", db.getUserPhotos);
+router.get("/photo/likes", db.getPhotoLikes);
+router.get("/following", loginRequired, db.getUserFollowing);
+// router.get("/feed", loginRequired, db.getFollowingPhotos)
+router.get("/feed", loginRequired, db.uploadPhoto);
 
 module.exports = router;
-

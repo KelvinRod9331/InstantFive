@@ -16,9 +16,7 @@ passport.use(
       .any("SELECT * FROM users WHERE username=$1", [username])
       .then(rows => {
         const user = rows[0];
-        console.log("user: ", user);
         if (!user) {
-            console.log('!user')
           return done(null, false);
         }
         if (!authHelpers.comparePass(password, user.password_digest)) {

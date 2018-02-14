@@ -3,23 +3,9 @@ const db = require("./index");
 const authHelpers = require("../auth/helpers");
 const passport = require("../auth/local");
 
-const getAllPhotos = (req, res, next) => {
-  db
-    .any('select * from photos')
-    .then(data => {
-      res.status(200).json({
-        status: 'success',
-        data: data,
-        message: 'Retrieved all photos'
-      });
-    })
-    .catch(err => next(err))
-}
-
 const getUserPhotos = (req, res, next) => {
   db
-  .any('select * from photos where username = ${username}', { username: req.user })
-  // .any('select * from photos ')
+    .any('select * from photos where user_ID = ${id}', req.user)
     .then(data => {
       res.status(200).json({
         status: 'success',
@@ -30,22 +16,43 @@ const getUserPhotos = (req, res, next) => {
     .catch(err => next(err))
 }
 
-const getUserFollowing = (req, res, next) => {
+const followUser = (req, res, next) => {
   db
-    .any('select * from follows where follower_ID = ${id}', { id: user.id })
+<<<<<<< HEAD
+  .any('select * from photos where username = ${username}', { username: req.user })
+  // .any('select * from photos ')
     .then(data => {
       res.status(200).json({
         status: 'success',
         data: data,
-        message: 'Retrieved all users\'s followes'
+        message: 'Retrieved all users\'s photos'
       });
+=======
+    .none('insert into follows (user_ID, follower_ID) values ($userid}, ${followid})', {userid: req.user, followid: followid})
+    .then(() => {
+      res.send('Follow success')
+>>>>>>> b6f436238cf8eb46f2d58f22316d2ff52b478a09
     })
     .catch(err => next(err))
 }
 
 const getUserFollowers = (req, res, next) => {
+  console.log('here', req.user)
+  // db
+    // .any('select * from follows where follower_ID = ${id}', req.user)
+    // .then(data => {
+    //   res.status(200).json({
+    //     status: 'success',
+    //     data: data,
+    //     message: 'Retrieved all users\'s followes'
+    //   });
+    // })
+    // .catch(err => next(err))
+}
+
+const getUserFollowing = (req, res, next) => {
   db
-    .any('select * from follows where user_ID = ${id}', { id: user.id })
+    .any('select * from follows where username = ${username}', req.user)
     .then(data => {
       res.status(200).json({
         status: 'success',
@@ -57,11 +64,17 @@ const getUserFollowers = (req, res, next) => {
 }
 
 const getFollowingPhotos = (req, res, next) => {
+  console.log("hi", req)
   db
-    .any('select * from photos join follows on photos.userid = follows.userid where follows.user_ID = ${id}')
-    .then(() => {
-
+    .any('select * from photos join follows on photos.user_ID = follows.user_ID where follower_ID=${userid}', req.user)
+    .then(data => {
+      res.status(200).json({
+        status: 'success',
+        data: data,
+        message: 'Retrieved all following photos'
+      })
     })
+    .catch(err => next(err))
 }
 
 const getPhotoLikes = (req, res, next) => {
@@ -79,7 +92,7 @@ const getPhotoLikes = (req, res, next) => {
 
 const uploadPhoto = (req, res, next) => {
   db
-    .none('insert into photos (user_ID, url) values (${id}, ${url})', {id: req.userID, url: req.inputURL})
+    .none('insert into photos (user_ID, url) values (${userID}, ${url})', req.body)
     .then(() => {
       res.send('Photo successfully uploaded.')
     })
@@ -93,24 +106,21 @@ const likePhoto = (req, res, next) => {
     none('insert into likes (user_ID, photo_ID) values (${userid}, ${photoid})', req.body)
 }
 
-function getAllUsers(req, res, next) {
+function getSingleUser(req, res, next) {
   db
-    .any("select * from users")
+    .any("select * from users where username=${username}", req.user)
     .then(function (data) {
       res.status(200).json({
         status: "success",
         data: data,
-        message: "Retrieved ALL users"
+        message: "Retrieved single users"
       });
     })
-    .catch(function (err) {
-      return next(err);
-    });
+    .catch(err => next(err))
 }
 
 function loginUser(req, res, next) {
 
-    
     passport.authenticate("local", (err, user, info) => {
       if (err) {
         res.status(500).send("error while trying to log in");
@@ -120,7 +130,7 @@ function loginUser(req, res, next) {
           console.log('after')
         req.logIn(user, function(err) {
           if (err) {
-              console.log('error......')
+              console.log('error')
             res.status(500).send("error");
           } else {
               console.log('now')
@@ -129,7 +139,6 @@ function loginUser(req, res, next) {
         });
       }
     })(req, res, next);
-
 }
 
 function logoutUser(req, res, next) {
@@ -152,6 +161,7 @@ function registerUser(req, res, next) {
       })(req, res, next);
     })
     .catch(err => {
+      console.log(error)
       res.status(500).json({
         status: "error",
         error: err
@@ -160,16 +170,16 @@ function registerUser(req, res, next) {
 }
 
 module.exports = {
-  getAllPhotos,
   getUserPhotos,
+  followUser,
   getUserFollowers,
   getUserFollowing,
+  getFollowingPhotos,
   getPhotoLikes,
   uploadPhoto,
   likePhoto,
-  getAllUsers,
+  getSingleUser,
   registerUser,
   loginUser,
   logoutUser,
 };
-

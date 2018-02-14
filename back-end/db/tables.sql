@@ -24,3 +24,5 @@ CREATE TABLE likes (
   user_ID INTEGER REFERENCES users,
   photo_ID  INTEGER REFERENCES photos
 );
+
+
