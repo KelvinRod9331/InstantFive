@@ -4,7 +4,7 @@ var router = express.Router();
 const { loginRequired } = require("../auth/helpers");
 
 
-router.get("/new", db.getAllUsers)
+// router.get("/new", db.getAllUsers)
 router.post("/new", db.registerUser);
 router.post("/login", db.loginUser);
 router.post("/getUserInfo", loginRequired, (req, res) => {

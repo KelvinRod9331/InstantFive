@@ -98,4 +98,4 @@ console.log({UserInput: usernameInput, UserPass: passwordInput, Message: message
   }
 }
 
-export default LoginUser;
+export default Login;
