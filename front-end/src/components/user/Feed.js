@@ -11,16 +11,29 @@ class Feed extends Component {
 
   componentDidMount = () => {
     axios
-      .get('http://localhost:3100/users/feed')
+      .get('/users/feed')
       .then(res => {
-        console.log('feed', res.data)
+        console.log('feed', res)
       })
-      .catch(err => console.log(err))
+      .catch(err => console.log("err", err))
+  }
+
+  followUser = () => {
+    axios
+      .post('/users/follow', {
+        
+      })
+      .then(res => {
+        console.log('feed', res)
+      })
+      .catch(err => console.log("err", err))
   }
 
   render(){
     return(
-        <div>hi</div>
+        <div>
+          <button onClick={this.followUser}>follow user 1</button>
+        </div>
     )
   }
 }

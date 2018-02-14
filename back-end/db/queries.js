@@ -26,21 +26,22 @@ const followUser = (req, res, next) => {
 }
 
 const getUserFollowers = (req, res, next) => {
-  db
-    .any('select * from follows where follower_ID = ${id}', req.user)
-    .then(data => {
-      res.status(200).json({
-        status: 'success',
-        data: data,
-        message: 'Retrieved all users\'s followes'
-      });
-    })
-    .catch(err => next(err))
+  console.log('here', req.user)
+  // db
+    // .any('select * from follows where follower_ID = ${id}', req.user)
+    // .then(data => {
+    //   res.status(200).json({
+    //     status: 'success',
+    //     data: data,
+    //     message: 'Retrieved all users\'s followes'
+    //   });
+    // })
+    // .catch(err => next(err))
 }
 
 const getUserFollowing = (req, res, next) => {
   db
-    .any('select * from follows where user_ID = ${id}', req.user)
+    .any('select * from follows where username = ${username}', req.user)
     .then(data => {
       res.status(200).json({
         status: 'success',
@@ -52,17 +53,17 @@ const getUserFollowing = (req, res, next) => {
 }
 
 const getFollowingPhotos = (req, res, next) => {
-  console.log("hi", req.user)
-  // db
-  //   .any('select * from photos join follows on photos.user_ID = follows.user_ID where follower_ID=${userid}', {userid: user.id})
-  //   .then(data => {
-  //     res.status(200).json({
-  //       status: 'success',
-  //       data: data,
-  //       message: 'Retrieved all following photos'
-  //     })
-  //   })
-  //   .catch(err => next(err))
+  console.log("hi", req)
+  db
+    .any('select * from photos join follows on photos.user_ID = follows.user_ID where follower_ID=${userid}', req.user)
+    .then(data => {
+      res.status(200).json({
+        status: 'success',
+        data: data,
+        message: 'Retrieved all following photos'
+      })
+    })
+    .catch(err => next(err))
 }
 
 const getPhotoLikes = (req, res, next) => {
@@ -80,7 +81,7 @@ const getPhotoLikes = (req, res, next) => {
 
 const uploadPhoto = (req, res, next) => {
   db
-    .none('insert into photos (user_ID, url) values (${id}, ${url})', req.body)
+    .none('insert into photos (user_ID, url) values (${userID}, ${url})', req.body)
     .then(() => {
       res.send('Photo successfully uploaded.')
     })
@@ -159,6 +160,7 @@ function registerUser(req, res, next) {
 
 module.exports = {
   getUserPhotos,
+  followUser,
   getUserFollowers,
   getUserFollowing,
   getFollowingPhotos,
