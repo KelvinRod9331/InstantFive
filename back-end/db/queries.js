@@ -93,14 +93,14 @@ const likePhoto = (req, res, next) => {
     none('insert into likes (user_ID, photo_ID) values (${userid}, ${photoid})', req.body)
 }
 
-function getAllUsers(req, res, next) {
+function getSingleUser(req, res, next) {
   db
-    .any("select * from users")
+    .any("select * from users where username=${username}", req.user)
     .then(function (data) {
       res.status(200).json({
         status: "success",
         data: data,
-        message: "Retrieved ALL users"
+        message: "Retrieved single users"
       });
     })
     .catch(function (err) {
@@ -109,7 +109,6 @@ function getAllUsers(req, res, next) {
 }
 
 function loginUser(req, res, next) {
-
     
     passport.authenticate("local", (err, user, info) => {
       if (err) {
@@ -129,6 +128,22 @@ function loginUser(req, res, next) {
         });
       }
     })(req, res, next);
+
+  passport.authenticate("local", (err, user, info) => {
+    if (err) {
+      res.status(500).send("error while trying to log in");
+    } else if (!user) {
+      res.status(401).send("invalid username/password");
+    } else if (user) {
+      req.logIn(user, function (err) {
+        if (err) {
+          res.status(500).send("error");
+        } else {
+          res.status(200).send(user);
+        }
+      });
+    }
+  })(req, res, next);
 
 }
 
@@ -167,9 +182,8 @@ module.exports = {
   getPhotoLikes,
   uploadPhoto,
   likePhoto,
-  getAllUsers,
+  getSingleUser,
   registerUser,
   loginUser,
   logoutUser,
 };
-

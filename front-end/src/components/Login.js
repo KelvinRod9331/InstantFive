@@ -3,7 +3,7 @@ import axios from "axios";
 import { Redirect } from "react-router";
 import { Link } from 'react-router-dom';
 import Home from './Home'
-class LoginUser extends React.Component {
+class Login extends React.Component {
 
   state = {
     usernameInput: '',
