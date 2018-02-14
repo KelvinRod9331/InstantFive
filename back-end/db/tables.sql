@@ -6,7 +6,9 @@ CREATE DATABASE instant5;
 CREATE TABLE users (
   ID SERIAL PRIMARY KEY,
   username VARCHAR,
-  password_digest VARCHAR
+  password_digest VARCHAR,
+  email VARCHAR,
+  full_name VARCHAR
 );
 
 CREATE TABLE photos (
@@ -24,5 +26,8 @@ CREATE TABLE likes (
   user_ID INTEGER REFERENCES users,
   photo_ID  INTEGER REFERENCES photos
 );
+
+
+
 
 

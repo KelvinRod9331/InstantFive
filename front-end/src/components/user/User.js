@@ -48,7 +48,7 @@ class UserProfile extends React.Component {
             .then(res => {
                 console.log("Photos:", res.data)
                 this.setState({
-                    userData: [...res.data.data]
+                    userData: [...res.data.data].reverse()
                 })
             })
             .catch(err => {
@@ -96,7 +96,7 @@ class UserProfile extends React.Component {
     }
 
     handlePhotoSubmit = (e) => {
-        e.preventDefault();
+        
         const {userInfo,inputURL} = this.state
         console.log({URL: inputURL})
         axios
