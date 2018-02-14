@@ -5,7 +5,7 @@ class Feed extends Component {
   constructor(){
     super();
     this.state = {
-
+      feedPhotos: []
     }
   }
 
@@ -13,7 +13,7 @@ class Feed extends Component {
     axios
       .get('/users/feed')
       .then(res => {
-        console.log('feed', res)
+        this.setState({feedPhotos: res.data.data})
       })
       .catch(err => console.log("err", err))
   }
@@ -21,10 +21,10 @@ class Feed extends Component {
   followUser = () => {
     axios
       .post('/users/follow', {
-        
+
       })
       .then(res => {
-        console.log('feed', res)
+        this.setState({feedPhotos: res.data.data})
       })
       .catch(err => console.log("err", err))
   }
@@ -33,6 +33,7 @@ class Feed extends Component {
     return(
         <div>
           <button onClick={this.followUser}>follow user 1</button>
+          {this.state.feedPhotos.map(v => <img className="feed-img" src={v.url}/>)}
         </div>
     )
   }
