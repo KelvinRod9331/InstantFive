@@ -1,6 +1,7 @@
+
 import React from 'react';
 
-class Following extends React.Component {
+class UserProfile extends React.Component {
     
   
     render() {
@@ -34,4 +35,4 @@ class Following extends React.Component {
     }
   }
   
-  export default Following;
+  export default UserProfile;
