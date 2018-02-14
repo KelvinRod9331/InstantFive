@@ -60,7 +60,8 @@ console.log({UserInput: usernameInput, UserPass: passwordInput, Message: message
     }
 
     return (
-        <div>
+        <div id='parent'>
+          <div class='photo-container'></div>
             <div class='login-container' >
                 <div class='login-box'>
                 <h1>Instant Five</h1>
