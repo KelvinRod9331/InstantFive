@@ -39,7 +39,7 @@ class UserProfile extends React.Component {
   handlePhotoSubmit = e => {
     e.preventDefault()
     const { inputURL } = this.state;
-    const {userInfo} = this.props
+    const {userInfo, retriveUserPhotos} = this.props
     console.log({ URL: inputURL });
     axios
       .post("/users/upload", {
@@ -51,6 +51,7 @@ class UserProfile extends React.Component {
           inputURL: "",
           message: "You're Photo Has Been Uploaded"
         });
+        retriveUserPhotos()
       })
       .catch(err => {
         this.setState({
@@ -66,7 +67,7 @@ class UserProfile extends React.Component {
     if (!loggedIn) {
       return <Home loggedIn={false} />;
     }
-    console.log({userData: this.props.userInfo})
+    console.log({userData: this.props.userData})
     return (
       <div>
         <div>
