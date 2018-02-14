@@ -37,6 +37,7 @@ class UserProfile extends React.Component {
   };
 
   handlePhotoSubmit = e => {
+    e.preventDefault()
     const { inputURL } = this.state;
     const {userInfo} = this.props
     console.log({ URL: inputURL });

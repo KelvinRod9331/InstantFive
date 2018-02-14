@@ -17,7 +17,6 @@ router.get("/all", db.getFollowingPhotos);
 router.get("/photos", db.getUserPhotos);
 router.get("/photo/likes", db.getPhotoLikes);
 router.get("/following", loginRequired, db.getUserFollowing);
-// router.get("/feed", loginRequired, db.getFollowingPhotos)
-router.get("/feed", loginRequired, db.uploadPhoto);
+router.get("/feed", loginRequired, db.getFollowingPhotos)
 
 module.exports = router;

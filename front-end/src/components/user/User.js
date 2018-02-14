@@ -60,6 +60,10 @@ class User extends React.Component {
     this.retriveUserPhotos();
   }
 
+  componentDidUpdate(){
+    this.retriveUserPhotos();
+  }
+
   renderUserProfile = () =>{
     const { userData, userInfo } = this.state;
 
