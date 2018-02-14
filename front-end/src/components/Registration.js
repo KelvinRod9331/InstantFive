@@ -22,9 +22,22 @@ class Registration extends React.Component {
       confirmInput: e.target.value
     });
   };
+
+  handleEmailChange = e => {
+    this.setState({
+      emailInput: e.target.value
+    });
+  };
+
+  handleFullNameChange = e => {
+    this.setState({
+      fullNameInput: e.target.value
+    });
+  };
+
   submitForm = e => {
     e.preventDefault();
-    const { usernameInput, passwordInput, confirmInput } = this.state;
+    const { usernameInput, passwordInput, confirmInput, emailInput, fullNameInput } = this.state;
 
     if (passwordInput.length <= 6) {
       this.setState({
@@ -41,7 +54,9 @@ class Registration extends React.Component {
     axios
       .post('/users/new', {
         username: usernameInput,
-        password: passwordInput
+        password: passwordInput,
+        email: emailInput,
+        full_name: fullNameInput
       })
       .then(res => {
         console.log(res.data);
@@ -49,6 +64,8 @@ class Registration extends React.Component {
           usernameInput: '',
           passwordInput: '',
           confirmInput: '',
+          emailInput: '',
+          fullNameInput: '',
           message: `Welcome to the site ${this.state.usernameInput}`
         });
       })
@@ -58,6 +75,8 @@ class Registration extends React.Component {
           usernameInput: '',
           passwordInput: '',
           confirmInput: '',
+          emailInput: '',
+          usernameInput: '',
           message: 'Error inserting user'
         });
       });
@@ -78,7 +97,7 @@ class Registration extends React.Component {
                   name='Email'
                   placeholder='Email'
                   value={emailInput}
-                  onChange={''}
+                  onChange={this.handleEmailChange}
                 />
               </label>
               <label>
@@ -87,7 +106,7 @@ class Registration extends React.Component {
                   name='Full name'
                   placeholder='Full name'
                   value={fullNameInput}
-                  onChange={''}
+                  onChange={this.handleFullNameChange}
                 />
               </label>
               <label>
