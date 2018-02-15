@@ -3,7 +3,25 @@ import { Route, Link, Switch } from 'react-router-dom';
 import axios from 'axios';
 
 class Member extends React.Component {
-    state = {user: null, message: ''}
+    state = {
+      user: null,
+      message: '',
+      following: false
+    }
+
+    componentDidMount() {
+      this.getUser()
+
+      axios
+        .get(`/following`)
+        .then(res => {
+            console.log(res.data.data);
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+
     getUser = () => {
         let username = this.props.match.params.member;
         axios.get(`/users/${username}`)
@@ -20,9 +38,22 @@ class Member extends React.Component {
             })
         })
     }
-    componentDidMount() {
-        this.getUser()
+
+    handleFollow = (e) => {
+      axios.get('/users/getUserInfo')
+      .then(res => {
+        console.log('userID', res.data.data[0].id, 'followid', this.state.user.id)
+          axios.post('/users/follow', {userid: res.data.data[0].id, followid: this.state.user.id})
+          .then(res => {
+              res.send('success')
+          }).catch(err => {
+              console.log(err)
+          })
+      }).catch(err => {
+          console.log(err)
+      })
     }
+
     render() {
         console.log(this.props.match.params.member)
         let { user, message } = this.state
@@ -38,7 +69,8 @@ class Member extends React.Component {
                     <div id="userBanner">
                     <img src={user.profile_pic} width={'150px'}/>
                     <span id="username">{user.username}</span>
-                    
+                    <button onClick={this.handleFollow}>follow</button>
+
                     </div>
 
                     {/* <div id="photoContainer">
