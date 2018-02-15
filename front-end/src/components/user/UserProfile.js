@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios"
 import Home from '../Home'
+import { Redirect } from "react-router";
 class UserProfile extends React.Component {
   state = {
     uploadClicked: false,
