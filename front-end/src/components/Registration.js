@@ -47,12 +47,19 @@ class Registration extends React.Component {
   submitForm = e => {
     e.preventDefault();
     const { usernameInput, passwordInput, confirmInput, emailInput, fullNameInput, registered } = this.state;
-
-    if (passwordInput.length <= 6) {
+    if (!usernameInput || !passwordInput || !confirmInput || !emailInput || !fullNameInput) {
       this.setState({
         passwordInput: '',
         confirmInput: '',
-        message: 'Password length must be at least 7 characters'
+        message: 'Please complete all required fields'
+      })
+      return;
+    }
+    if (passwordInput.length <= 7) {
+      this.setState({
+        passwordInput: '',
+        confirmInput: '',
+        message: 'Password length must be at least 8 characters'
       });
       return;
     }
