@@ -50,12 +50,16 @@ class Registration extends React.Component {
 
     if (passwordInput.length <= 6) {
       this.setState({
+        passwordInput: '',
+        confirmInput: '',
         message: 'Password length must be at least 7 characters'
       });
       return;
     }
     if (passwordInput !== confirmInput) {
       this.setState({
+        passwordInput: '',
+        confirmInput: '',
         message: 'Passwords do not match!'
       });
       return;
@@ -70,11 +74,6 @@ class Registration extends React.Component {
       .then(res => {
         console.log(res.data);
         this.setState({
-          usernameInput: '',
-          passwordInput: '',
-          confirmInput: '',
-          emailInput: '',
-          fullNameInput: '',
           registered: true,
           message: `Welcome to the site ${this.state.usernameInput}`
         });
@@ -90,13 +89,31 @@ class Registration extends React.Component {
           message: 'Error inserting user'
         });
       });
+      
   };
 
   render() {
     const { emailInput, fullNameInput, usernameInput, passwordInput, confirmInput, message, registered } = this.state;
-    // if (registered) {
-    //   return <Redirect to='/user' />
-    // }
+    if (registered) {
+      console.log('foo')
+      axios
+      .post('/users/login', {
+        username: usernameInput,
+        password: passwordInput
+      })
+      .then(res => {
+        this.setState({
+          message: 'success'
+        });
+      })
+      .catch(err => {
+        this.setState({
+          message: 'username/password not found'
+        });
+      });
+      console.log('bar')
+      return <Redirect to='/user' />
+    }
     return (
       <div id='parent'>
         <div class='photo-container'>

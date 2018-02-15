@@ -7,11 +7,11 @@ import Home from './Home'
 class Login extends React.Component {
 
   state = {
-    usernameInput: '',
-    passwordInput: '',
+    usernameInput: this.props.usernameInput || '',
+    passwordInput: this.props.passwordInput || '',
     confirmInput: '',
     message: '',
-    loggedIn: false
+    user: null
   };
 
   handleUsernameChange = e => {
@@ -25,7 +25,14 @@ class Login extends React.Component {
       passwordInput: e.target.value
     });
   };
-
+  getUser = () => {
+    axios.get('/users/getUserInfo')
+    .then(res => {
+        this.setState({
+            user: res.data.data[0]
+        })
+    })
+  }
   submitForm = e => {
     e.preventDefault();
     const { usernameInput, passwordInput } = this.state;
@@ -50,12 +57,17 @@ class Login extends React.Component {
       });
 
   };
-
+  componentDidMount() {
+    this.getUser()
+  }
   render() {
-    const { usernameInput, passwordInput, message, loggedIn } = this.state;
+    const { usernameInput, passwordInput, message, loggedIn, user } = this.state;
+    if (user) {
+      return <Redirect to='/user' />
+    }
     if (loggedIn) {
-      // return <Redirect to="/user" />;
-      return <Home loggedIn = {true} />
+      return <Redirect to="/user" />;
+      // return <Home loggedIn = {true} />
     }
 
     return (
