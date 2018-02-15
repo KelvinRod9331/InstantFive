@@ -8,7 +8,8 @@ CREATE TABLE users (
   username VARCHAR,
   password_digest VARCHAR,
   email VARCHAR,
-  full_name VARCHAR
+  full_name VARCHAR,
+  user_photo VARCHAR DEFAULT 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
 );
 
 CREATE TABLE photos (
