@@ -4,6 +4,7 @@ import { Redirect, Route, Switch, Link } from "react-router-dom";
 import Home from "../Home";
 import UserProfile from "./UserProfile";
 import Followers from "./Followers";
+import { userInfo } from "os";
 
 class User extends React.Component {
     constructor() {
@@ -43,8 +44,10 @@ class User extends React.Component {
         * Will hold all User's Data such as Photos in an Array
        */
     retriveUserPhotos = () => {
+        const {userInfo} = this.state
+        console.log(userInfo.username)
         axios
-            .get("/users/userData")
+            .get(`/users/userData/${userInfo.username}`)
             .then(res => {
                 console.log("Photos:", res.data.data);
                 this.setState({
@@ -72,9 +75,13 @@ class User extends React.Component {
 
     componentDidMount() {
         this.retrieveUserInfo();
-        this.retriveUserPhotos();
         this.renderSearchEngine();
+        this.retriveUserPhotos();
     }
+
+    // componentDidUpdate(){
+    //     this.retriveUserPhotos();
+    // }
 
     renderSearchInput = (e) => {
         this.setState({
@@ -93,6 +100,21 @@ class User extends React.Component {
         return <Followers />
     }
 
+    getUserSelected = (e) => {
+        console.log("Test")
+            axios
+            .get(`/users/getSelectedUser/${e.target.name}`)
+            .then(res => {
+                this.setState({
+                    userInfo: res.data.data[0]
+                })
+                this.retriveUserPhotos()
+            })
+            .catch(err => {
+                console.log("Error:", err)
+            })
+    }
+
 
 
 
@@ -105,7 +127,7 @@ class User extends React.Component {
             "User Data:",
             userData,
             "User Info:",
-            userInfo,
+            userInfo.username,
             "all users",
             userWorldWide
 
@@ -119,7 +141,10 @@ class User extends React.Component {
                 <div className="searchResultBox">
                     {usersArr.map(user => {
                         if (user.includes(searchInput) && searchInput) {
-                            return <p>{user}</p>
+                            return <button 
+                            name={user}
+                            onClick={this.getUserSelected}
+                            >{user}</button>
                         }
                     })}
                 </div>
