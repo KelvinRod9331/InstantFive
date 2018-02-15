@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios"
 import Home from '../Home'
-import { Redirect } from "react-router";
+// import { Redirect } from "react-router";
 class UserProfile extends React.Component {
   state = {
     uploadClicked: false,
@@ -31,7 +31,6 @@ class UserProfile extends React.Component {
   };
 
   handleInputUrl = e => {
-    console.log(this.state.inputURL);
     this.setState({
       inputURL: e.target.value
     });
@@ -41,7 +40,6 @@ class UserProfile extends React.Component {
     e.preventDefault()
     const { inputURL } = this.state;
     const {userInfo, retriveUserPhotos} = this.props
-    console.log({ URL: inputURL });
     axios
       .post("/users/upload", {
         userID: userInfo.id,
@@ -62,6 +60,9 @@ class UserProfile extends React.Component {
       });
   };
 
+ 
+  
+
   render() {
     const {userData , userInfo} = this.props
     const { loggedIn, inputURL, uploadClicked, message } = this.state
@@ -72,9 +73,9 @@ class UserProfile extends React.Component {
     console.log({userData: this.props.userData})
     return (
       <div>
-        <div>
-          <button onClick={this.handleLogOut}>Log Out</button>
-        </div>
+       
+          <button id="logoutBtn" onClick={this.handleLogOut}>Log Out</button>
+          
 
         <div id="uploadButton">
           {!uploadClicked ? (

@@ -58,6 +58,9 @@ VALUES ('1','1','https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/m
 
 
 INSERT INTO follows (user_id, follower_id) 
-VALUES ('1','4'),
- ('1','2'),
-('1','3');
+VALUES ('6','3'),
+ ('6','2'),
+('6','4'),
+('2','3'),
+('3','1'),
+('3','2');
