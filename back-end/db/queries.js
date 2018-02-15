@@ -17,8 +17,9 @@ const getUserPhotos = (req, res, next) => {
 }
 
 const followUser = (req, res, next) => {
+  console.log(req.body)
   db
-    .none('insert into follows (user_ID, follower_ID) values (${userid}, ${followid})', {userid, followid})
+    .none('insert into follows (user_ID, follower_ID) values (${followid}, ${userid})', req.body)
     .then(() => {
       res.send('Follow success')
     })
@@ -27,7 +28,7 @@ const followUser = (req, res, next) => {
 
 const getUserFollowers = (req, res, next) => {
   db
-    .any('select * from follows join users on follows.user_id = users.id where username = ${username}', req.user)
+    .any('select * from users where id = (select follower_id from follows join users on follows.user_id = users.id where username = ${req.user})', req.user)
     .then(data => {
       res.status(200).json({
         status: 'success',
