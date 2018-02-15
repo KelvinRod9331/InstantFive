@@ -10,7 +10,7 @@ class Follows extends Component {
 
   render(){
     return(
-      <div className="followModal" onClick={this.modalOut}></div>
+      
     )
   }
 }

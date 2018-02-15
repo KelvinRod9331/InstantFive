@@ -4,6 +4,7 @@ import { Redirect, Route, Switch, Link } from "react-router-dom";
 import Home from "../Home";
 import UserProfile from "./UserProfile";
 import Followers from "./Followers";
+import Following from "./Following";
 
 class User extends React.Component {
   constructor() {
@@ -70,8 +71,20 @@ class User extends React.Component {
 
   }
 
+  renderUser = () => {
+    axios
+      .get('/users/:username')
+      .then(data => {
+        console.log(data)
+      })
+  }
+
   renderFollowers = () =>{
     return <Followers />
+  }
+
+  renderFollowing = () =>{
+    return <Following />
   }
 
   renderSearchInput = (e) => {
