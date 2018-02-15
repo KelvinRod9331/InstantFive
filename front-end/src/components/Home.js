@@ -5,16 +5,14 @@ import { Route, Link } from 'react-router-dom'
 import { Redirect } from "react-router"
 
 class Home extends React.Component {
-  
-    render() {
 
-        console.log(this.props)
+    render() {
         if (this.props.loggedIn) {
             return <Redirect to="/user" />
-        } else {
-            return <Redirect to='/login' /> 
+        }else{
+            return <Redirect to="/login" />
         }
-       
+
     }
 }
 
