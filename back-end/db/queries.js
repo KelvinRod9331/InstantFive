@@ -5,7 +5,7 @@ const passport = require("../auth/local");
 
 const getUserPhotos = (req, res, next) => {
   db
-    .any('select * from photos full join users on photos.user_ID = users.id where username = ${username}', req.user)
+    .any('select * from photos full join users on photos.user_ID = users.id where username = ${username}', req.params)
     .then(data => {
       res.status(200).json({
         status: 'success',
@@ -121,6 +121,19 @@ function getSingleUser(req, res, next) {
     .catch(err => next(err))
 }
 
+function getSelectedUser(req, res, next) {
+  db
+    .any("select * from users where username=${username}", req.params)
+    .then(function (data) {
+      res.status(200).json({
+        status: "success",
+        data: data,
+        message: "Retrieved single users"
+      });
+    })
+    .catch(err => next(err))
+}
+
 function getAllUsers(req, res, next) {
   db
     .any("select * from users")
@@ -198,4 +211,5 @@ module.exports = {
   registerUser,
   loginUser,
   logoutUser,
+  getSelectedUser
 };
