@@ -13,9 +13,13 @@ router.get("/userData", db.getUserPhotos)
 router.get("/followers",db.getUserFollowers)
 router.post("/upload", db.uploadPhoto);
 router.post("/follow", db.followUser)
-router.get("/all", db.getFollowingPhotos);
+router.post("/photo/:id/like", db.likePhoto);
+
+router.get("/all", db.getAllUsers);
 router.get("/photos", db.getUserPhotos);
-router.get("/photo/likes", db.getPhotoLikes);
+router.get("/photo/:id/likes", db.getPhotoLikes);
+router.get("/photo/:id", db.getPhoto);
+router.get("/followers",db.getUserFollowers);
 router.get("/following", loginRequired, db.getUserFollowing);
 router.get("/feed", loginRequired, db.getFollowingPhotos)
 
