@@ -2,16 +2,16 @@ import React from "react";
 import axios from "axios";
 import { Redirect } from "react-router";
 import { Link } from 'react-router-dom';
-import Home from './Home'
+
 
 class Login extends React.Component {
 
   state = {
-    usernameInput: '',
-    passwordInput: '',
+    usernameInput: this.props.usernameInput || '',
+    passwordInput: this.props.passwordInput || '',
     confirmInput: '',
     message: '',
-    loggedIn: false
+    user: null
   };
 
   handleUsernameChange = e => {
@@ -25,7 +25,14 @@ class Login extends React.Component {
       passwordInput: e.target.value
     });
   };
-
+  getUser = () => {
+    axios.get('/users/getUserInfo')
+    .then(res => {
+        this.setState({
+            user: res.data.data[0]
+        })
+    })
+  }
   submitForm = e => {
     e.preventDefault();
     const { usernameInput, passwordInput } = this.state;
@@ -50,22 +57,26 @@ class Login extends React.Component {
       });
 
   };
-
+  componentDidMount() {
+    this.getUser()
+  }
   render() {
-    const { usernameInput, passwordInput, message, loggedIn } = this.state;
+    const { usernameInput, passwordInput, message, loggedIn, user } = this.state;
+    if (user) {
+      return <Redirect to='/user' />
+    }
     if (loggedIn) {
-      // return <Redirect to="/user" />;
-      return <Home loggedIn = {true} />
+      return <Redirect to="/user" />;
     }
 
     return (
         <div id='parent'>
           <div class='photo-container'>
           <div id='sl1'>
-              <img src='http://www.instagram.com/static/images/homepage/screenshot1.jpg/aafd8c6b005d.jpg' class="slide-number" /> 
-              <img src='http://www.instagram.com/static/images/homepage/screenshot5.jpg/f5ae123ab1e2.jpg' class="slide-number"/> 
-              <img src='http://www.instagram.com/static/images/homepage/screenshot2.jpg/2d9d7248af43.jpg' class="slide-number"/>
-              <img src='http://www.instagram.com/static/images/homepage/screenshot3.jpg/629d23a3c7b2.jpg' class="slide-number"/>
+              <img src='http://www.instagram.com/static/images/homepage/screenshot1.jpg/aafd8c6b005d.jpg' class="slide-number" alt=''/> 
+              <img src='http://www.instagram.com/static/images/homepage/screenshot5.jpg/f5ae123ab1e2.jpg' class="slide-number" alt=''/> 
+              <img src='http://www.instagram.com/static/images/homepage/screenshot2.jpg/2d9d7248af43.jpg' class="slide-number" alt=''/>
+              <img src='http://www.instagram.com/static/images/homepage/screenshot3.jpg/629d23a3c7b2.jpg' class="slide-number" alt=''/>
           </div>
           
           </div>

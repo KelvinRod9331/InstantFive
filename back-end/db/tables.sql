@@ -8,8 +8,7 @@ CREATE TABLE users (
   username VARCHAR,
   password_digest VARCHAR,
   email VARCHAR,
-  full_name VARCHAR,
-  user_photo VARCHAR DEFAULT 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+  full_name VARCHAR
 );
 
 CREATE TABLE photos (
@@ -58,6 +57,9 @@ VALUES ('1','https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/model
 
 
 INSERT INTO follows (user_id, follower_id)
-VALUES ('1','4'),
- ('1','2'),
-('1','3');
+VALUES ('6','3'),
+ ('6','2'),
+('6','4'),
+('2','3'),
+('3','1'),
+('3','2');

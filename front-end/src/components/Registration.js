@@ -47,15 +47,26 @@ class Registration extends React.Component {
   submitForm = e => {
     e.preventDefault();
     const { usernameInput, passwordInput, confirmInput, emailInput, fullNameInput, registered } = this.state;
-
-    if (passwordInput.length <= 6) {
+    if (!usernameInput || !passwordInput || !confirmInput || !emailInput || !fullNameInput) {
       this.setState({
-        message: 'Password length must be at least 7 characters'
+        passwordInput: '',
+        confirmInput: '',
+        message: 'Please complete all required fields'
+      })
+      return;
+    }
+    if (passwordInput.length <= 7) {
+      this.setState({
+        passwordInput: '',
+        confirmInput: '',
+        message: 'Password length must be at least 8 characters'
       });
       return;
     }
     if (passwordInput !== confirmInput) {
       this.setState({
+        passwordInput: '',
+        confirmInput: '',
         message: 'Passwords do not match!'
       });
       return;
@@ -70,11 +81,6 @@ class Registration extends React.Component {
       .then(res => {
         console.log(res.data);
         this.setState({
-          usernameInput: '',
-          passwordInput: '',
-          confirmInput: '',
-          emailInput: '',
-          fullNameInput: '',
           registered: true,
           message: `Welcome to the site ${this.state.usernameInput}`
         });
@@ -90,21 +96,39 @@ class Registration extends React.Component {
           message: 'Error inserting user'
         });
       });
+      
   };
 
   render() {
     const { emailInput, fullNameInput, usernameInput, passwordInput, confirmInput, message, registered } = this.state;
-    // if (registered) {
-    //   return <Redirect to='/user' />
-    // }
+    if (registered) {
+      console.log('foo')
+      axios
+      .post('/users/login', {
+        username: usernameInput,
+        password: passwordInput
+      })
+      .then(res => {
+        this.setState({
+          message: 'success'
+        });
+      })
+      .catch(err => {
+        this.setState({
+          message: 'username/password not found'
+        });
+      });
+      console.log('bar')
+      return <Redirect to='/user' />
+    }
     return (
       <div id='parent'>
         <div class='photo-container'>
           <div id='sl1'>
-              <img src='http://www.instagram.com/static/images/homepage/screenshot1.jpg/aafd8c6b005d.jpg' class="slide-number" /> 
-              <img src='http://www.instagram.com/static/images/homepage/screenshot5.jpg/f5ae123ab1e2.jpg' class="slide-number"/> 
-              <img src='http://www.instagram.com/static/images/homepage/screenshot2.jpg/2d9d7248af43.jpg' class="slide-number"/>
-              <img src='http://www.instagram.com/static/images/homepage/screenshot3.jpg/629d23a3c7b2.jpg' class="slide-number"/>
+              <img src='http://www.instagram.com/static/images/homepage/screenshot1.jpg/aafd8c6b005d.jpg' class="slide-number" alt='' /> 
+              <img src='http://www.instagram.com/static/images/homepage/screenshot5.jpg/f5ae123ab1e2.jpg' class="slide-number" alt=''/> 
+              <img src='http://www.instagram.com/static/images/homepage/screenshot2.jpg/2d9d7248af43.jpg' class="slide-number" alt=''/>
+              <img src='http://www.instagram.com/static/images/homepage/screenshot3.jpg/629d23a3c7b2.jpg' class="slide-number" alt=''/>
           </div>
         </div>
         <div class='login-container'>
