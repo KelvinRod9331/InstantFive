@@ -13,16 +13,18 @@ class Member extends React.Component {
       this.getUser()
 
       axios
-        .get(`/following`)
+        .get(`/users`)
         .then(res => {
             console.log(res.data.data);
         })
         .catch(err => {
             console.log(err)
         })
+
     }
 
     getUser = () => {
+
         let username = this.props.match.params.member;
         axios.get(`/users/${username}`)
         .then(res => {
@@ -39,7 +41,9 @@ class Member extends React.Component {
         })
     }
 
+    //follow user button
     handleFollow = (e) => {
+      console.log()
       axios.get('/users/getUserInfo')
       .then(res => {
         console.log('userID', res.data.data[0].id, 'followid', this.state.user.id)

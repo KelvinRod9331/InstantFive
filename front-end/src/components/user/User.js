@@ -14,7 +14,9 @@ class User extends React.Component {
             userInfo: [],
             userData: [],
             searchInput: '',
-            userWorldWide: []
+            userWorldWide: [],
+            ///added class for modal
+            modalClassNames: 'display'
         };
     }
 
@@ -89,7 +91,7 @@ class User extends React.Component {
 
 
 
-  
+
     getUserByID = (e) => {
         axios
             .get(`/users/getSelectedUserByID/${e.target.value}`)
@@ -119,7 +121,20 @@ class User extends React.Component {
 
     handleFollowing = () => <Redirect to='/user/following' />
 
+///modal to show the modal
+    modalUp = (e) => {
+      console.log(e.target.className)
+      if(this.state.modalClassNames === "display"){
+        this.setState({modalClassNames: 'followModal'})
+      }
+    }
 
+    modalDown = (e) => {
+      console.log()
+      if(e.target.className === "followModal"){
+        this.setState({modalClassNames: 'display'})
+      }
+    }
 
     render() {
         const {  userInfo, searchInput, userWorldWide } = this.state;
@@ -128,12 +143,15 @@ class User extends React.Component {
             "User Who Page Is Showing:",
             userInfo.username,
         );
-       
+          //modal div added
         return (
             <div>
+                <div className={this.state.modalClassNames} onClick={this.modalDown}>
+                  <div className="followsDiv"><button className="buttn" onClick={this.modalOut}>yo</button></div>
+                </div>
                 Search: <input type="text" value={searchInput} onChange={this.renderSearchInput} />
-                <button id="followers" onClick={() => <Redirect to='/user/followers' />}>Followers</button>
-                <button id="following" onClick={() => <Redirect to='/user/following' />}>Following</button>
+                <button id="followers" onClick={this.modalUp}>Followers</button>
+                <button id="following" onClick={this.modalUp}>Following</button>
 
                 <div className="searchResultBox">
                     {userWorldWide.map(user => {

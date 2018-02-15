@@ -32,7 +32,6 @@ class Feed extends Component {
   render(){
     return(
         <div>
-          <button onClick={this.followUser}>follow user 1</button>
           {this.state.feedPhotos.map(v => <img className="feed-img" src={v.url}/>)}
         </div>
     )
