@@ -4,6 +4,7 @@ import { Redirect, Route, Switch, Link } from "react-router-dom";
 // import Home from "../Home";
 import UserProfile from "./UserProfile";
 import Followers from "./Followers";
+import Following from "./Following";
 
 
 class User extends React.Component {
@@ -18,9 +19,9 @@ class User extends React.Component {
     }
 
     /**
-        @function retrieveUserInfo 
-        * This Will Retrieve The Logged In User's Information Such as ID, Username and Hashed Password 
-        @var userInfo 
+        @function retrieveUserInfo
+        * This Will Retrieve The Logged In User's Information Such as ID, Username and Hashed Password
+        @var userInfo
         * Will hold all User's Info in an Array
        */
     retrieveUserInfo = () => {

@@ -136,7 +136,7 @@ function getUserByID(req, res, next) {
 
 function getUserByUsername(req, res, next) {
   db
-    .any("select * from users where username=${username}", req.params)
+    .any("select * from users where LOWER(username)=LOWER(${username})", req.params)
     .then(function (data) {
       res.status(200).json({
         status: "success",
