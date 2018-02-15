@@ -17,10 +17,11 @@ class Followers extends React.Component {
       * Will hold all User's followers in an Array
   */
   retrieveFollowers = () => {
+    console.log(this.props.username)
       axios
-        .get("/users/followers")
+        .get(`/users/followers/`)
         .then(res => {
-          console.log("Followers:",res.data.data);
+          console.log("Followers:",res);
           this.setState({
             userFollowers: [...res.data.data]
           });
@@ -30,7 +31,7 @@ class Followers extends React.Component {
         });
   };
 
-  componentDidMount() {
+  componentWillMount() {
       this.retrieveFollowers();
   }
 

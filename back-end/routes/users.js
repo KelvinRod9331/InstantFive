@@ -7,19 +7,18 @@ const { loginRequired } = require("../auth/helpers");
 router.post("/new", db.registerUser);
 router.post("/login", db.loginUser);
 router.post("/upload", db.uploadPhoto)
-// router.post("/upload", db.uploadPhoto);
 router.post("/follow", db.followUser)
 router.post("/photo/:id/like", db.likePhoto);
 
 router.get("/logout", db.logoutUser);
-router.get("/userData/:username", db.getUserPhotos)
+router.get("/userData", db.getUserPhotos) //Kelvin Rodriguez--Used To Retrieve User's Photos
 router.get("/followers",db.getUserFollowers)
 router.get("/getUserInfo", db.getSingleUser)
-router.get("/getSelectedUserByID/:id", db.getUserByID)
+router.get("/getSelectedUserByID/:id", db.getUserByID) //Kelvin Rodriguez -- Used To Retrieve The Selected User's Id 
 router.get("/:username", db.getUserByUsername)
-router.get("/all", db.getAllUsers);
-router.get("/user/:username", db.getSingleUser);
-router.get("/photos", db.getUserPhotos);
+router.get("/all", db.getAllUsers); // Kelvin Rodriguez-- Used To Retrieve All Users From DB
+router.get("/user/:username", db.getSingleUser); 
+// router.get("/photos", db.getUserPhotos);
 router.get("/photo/:id/likes", db.getPhotoLikes);
 router.get("/photo/:id", db.getPhoto);
 router.get("/followers",db.getUserFollowers);

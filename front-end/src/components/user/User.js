@@ -5,6 +5,7 @@ import { Redirect, Route, Switch, Link } from "react-router-dom";
 import UserProfile from "./UserProfile";
 import Followers from "./Followers";
 import Following from "./Following";
+import { userInfo } from "os";
 
 
 class User extends React.Component {
@@ -43,12 +44,13 @@ class User extends React.Component {
        * This Will Retrieve Targeted User Photos
        * @var userData
         * Will hold all User's Data such as Photos in an Array
-       */
+        *Kelvin Rodriguez
+    */
     retriveUserPhotos = () => {
         const { userInfo } = this.state
         console.log("User Who's Page is Showing:", userInfo.username)
         axios
-            .get(`/users/userData/${userInfo.username}`)
+            .get(`/users/userData`)
             .then(res => {
                 console.log("Photos:", res.data.data);
                 this.setState({
@@ -59,7 +61,13 @@ class User extends React.Component {
                 console.log("Error:", err);
             });
     };
-
+    /**
+           * @func renderSearchEngine
+           * This Will Retrieve All User's In the DB To Use For Search
+           * @var userWorldWide
+            * Will hold all User's Data From DB
+            *Kelvin Rodriguez
+        */
     renderSearchEngine = () => {
         axios
             .get('/users/all')
@@ -74,7 +82,7 @@ class User extends React.Component {
     }
 
 
-    componentDidMount() {
+    componentWillMount() {
         this.retrieveUserInfo();
         this.renderSearchEngine();
         this.retriveUserPhotos();
@@ -90,34 +98,29 @@ class User extends React.Component {
 
 
 
-    getUserByID = (e) => {
-        axios
-            .get(`/users/getSelectedUserByID/${e.target.value}`)
-            .then(res => {
-                this.setState({
-                    userInfo: res.data.data[0]
-                })
-            })
-            .catch(err => {
-                console.log("Error:", err)
-            })
-    }
+    // getUserByID = (e) => {
+    //     axios
+    //         .get(`/users/getSelectedUserByID/${e.target.value}`)
+    //         .then(res => {
+    //             this.setState({
+    //                 userInfo: res.data.data[0]
+    //             })
+    //         })
+    //         .catch(err => {
+    //             console.log("Error:", err)
+    //         })
+    // }
 
     renderUserProfile = () => {
         const { userData, userInfo } = this.state;
 
-        return <UserProfile userData={userData} userInfo={userInfo} retriveUserPhotos={this.retriveUserPhotos} />
+        return <UserProfile userData={userData} userInfo={userInfo} />
 
     }
 
     renderFollowers = () => {
-        return <Followers getUserByID={this.getUserByID} />
+        return <Followers getUserByID={this.getUserByID} username={userInfo} />
     }
-
-
-    handleFollowers = () => <Redirect to='/user/followers' />
-
-    handleFollowing = () => <Redirect to='/user/following' />
 
 
 
@@ -127,21 +130,23 @@ class User extends React.Component {
         console.log(
             "User Who Page Is Showing:",
             userInfo.username,
+            "All User:",
+            userWorldWide
         );
 
         return (
             <div>
-                <input 
-                type="text" 
-                value={searchInput} 
-                onChange={this.renderSearchInput} 
-                placeholder={'Search'} 
+                <input
+                    type="text"
+                    value={searchInput}
+                    onChange={this.renderSearchInput}
+                    placeholder={'Search'}
                 /><br />
 
                 <button> <a href='/user/following' className='follow_links' > Following </a> </button>
                 <button>  <a href='/user/followers' className='follow_links'> Followers </a> </button>
 
-                <div className="searchResultBox">
+                {/* <div className="searchResultBox">
                     {userWorldWide.map(user => {
                         if (user.username.includes(searchInput) && searchInput) {
                             return <button
@@ -150,7 +155,7 @@ class User extends React.Component {
                             >{user.username}</button>
                         }
                     })}
-                </div>
+                </div> */} {/*DO NOT TOUCH ELON!! BY KELVIN*/}
 
 
                 <Switch>
