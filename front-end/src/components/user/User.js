@@ -1,11 +1,11 @@
 import React from "react";
 import axios from "axios";
 import { Redirect, Route, Switch, Link } from "react-router-dom";
-// import Home from "../Home";
+
 import UserProfile from "./UserProfile";
 import Followers from "./Followers";
 import Following from "./Following";
-import { userInfo } from "os";
+
 
 
 class User extends React.Component {
@@ -119,7 +119,7 @@ class User extends React.Component {
     }
 
     renderFollowers = () => {
-        return <Followers getUserByID={this.getUserByID} username={userInfo} />
+        return <Followers getUserByID={this.getUserByID}/>
     }
 
 
