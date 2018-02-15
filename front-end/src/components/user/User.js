@@ -1,10 +1,10 @@
 import React from "react";
 import axios from "axios";
 import { Redirect, Route, Switch, Link } from "react-router-dom";
-import Home from "../Home";
+// import Home from "../Home";
 import UserProfile from "./UserProfile";
 import Followers from "./Followers";
-import { userInfo } from "os";
+
 
 class User extends React.Component {
     constructor() {
@@ -44,8 +44,8 @@ class User extends React.Component {
         * Will hold all User's Data such as Photos in an Array
        */
     retriveUserPhotos = () => {
-        const {userInfo} = this.state
-        console.log(userInfo.username)
+        const { userInfo } = this.state
+        console.log("User Who's Page is Showing:", userInfo.username)
         axios
             .get(`/users/userData/${userInfo.username}`)
             .then(res => {
@@ -79,9 +79,6 @@ class User extends React.Component {
         this.retriveUserPhotos();
     }
 
-    // componentDidUpdate(){
-    //     this.retriveUserPhotos();
-    // }
 
     renderSearchInput = (e) => {
         this.setState({
@@ -89,21 +86,11 @@ class User extends React.Component {
         })
     }
 
-    renderUserProfile = () => {
-        const { userData, userInfo } = this.state;
 
-        return <UserProfile userData={userData} userInfo={userInfo} retriveUserPhotos={this.retriveUserPhotos} />
-
-    }
-
-    renderFollowers = () => {
-        return <Followers />
-    }
 
     getUserSelected = (e) => {
-        console.log("Test")
-            axios
-            .get(`/users/getSelectedUser/${e.target.name}`)
+        axios
+            .get(`/users/getSelectedUser/${e.target.value}`)
             .then(res => {
                 this.setState({
                     userInfo: res.data.data[0]
@@ -114,37 +101,58 @@ class User extends React.Component {
                 console.log("Error:", err)
             })
     }
+    // getUserByID = (id) => {
+    //     axios
+    //         .get(`/users/getSelectedUser/${id}`)
+    //         .then(res => {
+    //             this.setState({
+    //                 userInfo: res.data.data[0]
+    //             })
+    //         })
+    //         .catch(err => {
+    //             console.log("Error:", err)
+    //         })
+    // }
+
+    renderUserProfile = () => {
+        const { userData, userInfo } = this.state;
+
+        return <UserProfile userData={userData} userInfo={userInfo} retriveUserPhotos={this.retriveUserPhotos} />
+
+    }
+
+    renderFollowers = () => {
+        return <Followers getUserSelected={this.getUserSelected} />
+    }
 
 
+    handleFollowers = () => <Redirect to='/user/followers' />
 
+    handleFollowing = () => <Redirect to='/user/following' />
 
 
 
     render() {
-        const { userData, userInfo, loggedIn, searchInput, userWorldWide } = this.state;
+        const {  userInfo, searchInput, userWorldWide } = this.state;
 
         console.log(
-            "User Data:",
-            userData,
-            "User Info:",
+            "User Who Page Is Showing:",
             userInfo.username,
-            "all users",
-            userWorldWide
-
         );
-        var usersArr = userWorldWide.map(users => users.username)
+       
         return (
             <div>
                 Search: <input type="text" value={searchInput} onChange={this.renderSearchInput} />
-
+                <button id="followers" onClick={this.handleFollowers}>Followers</button>
+                <button id="following" onClick={this.handleFollowing}>Following</button>
 
                 <div className="searchResultBox">
-                    {usersArr.map(user => {
-                        if (user.includes(searchInput) && searchInput) {
-                            return <button 
-                            name={user}
-                            onClick={this.getUserSelected}
-                            >{user}</button>
+                    {userWorldWide.map(user => {
+                        if (user.username.includes(searchInput) && searchInput) {
+                            return <button
+                                value={user.id}
+                                onClick={this.getUserSelected}
+                            >{user.username}</button>
                         }
                     })}
                 </div>

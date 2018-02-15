@@ -123,7 +123,7 @@ function getSingleUser(req, res, next) {
 
 function getSelectedUser(req, res, next) {
   db
-    .any("select * from users where username=${username}", req.params)
+    .any("select * from users where id=${id}", req.params)
     .then(function (data) {
       res.status(200).json({
         status: "success",

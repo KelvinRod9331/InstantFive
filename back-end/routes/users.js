@@ -15,7 +15,7 @@ router.get("/logout", db.logoutUser);
 router.get("/userData/:username", db.getUserPhotos)
 router.get("/followers",db.getUserFollowers)
 router.get("/getUserInfo", db.getSingleUser)
-router.get("/getSelectedUser/:username", db.getSelectedUser)
+router.get("/getSelectedUser/:id", db.getSelectedUser)
 router.get("/all", db.getAllUsers);
 router.get("/photos", db.getUserPhotos);
 router.get("/photo/:id/likes", db.getPhotoLikes);

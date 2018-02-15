@@ -1,12 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import axios from "axios";
 
 class Followers extends React.Component {
   constructor() {
     super();
     this.state = {
-      userInfo: []
+      userFollowers: []
     };
   }
   
@@ -20,9 +20,9 @@ class Followers extends React.Component {
       axios
         .get("/users/followers")
         .then(res => {
-          console.log(res.data);
+          console.log("Followers:",res.data.data);
           this.setState({
-            userInfo: res.data
+            userFollowers: [...res.data.data]
           });
         })
         .catch(err => {
@@ -35,13 +35,22 @@ class Followers extends React.Component {
   }
 
   render() {
-    
+    const {userFollowers} = this.state
+    const {getUserSelected }= this.props
+    console.log("Followers:", userFollowers)
     return (
       <div>
         <h1> Followers</h1>
-          <Link to="/user">
+        {userFollowers.map(user => {
+       
+          return (<button value={user.follower_id} onClick={e => getUserSelected(e)}>
+            {user.username}
+          </button>)
+        }
+        )}
+          {/* <Link to="/user">
             <img src="https://vignette.wikia.nocookie.net/universal-crusade/images/a/a5/X.png/revision/latest?cb=20170903062123" height="50" alt="x out"/>
-          </Link>
+          </Link> */}
       </div>
     );
   }
