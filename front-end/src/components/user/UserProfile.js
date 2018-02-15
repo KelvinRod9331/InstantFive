@@ -66,6 +66,7 @@ class UserProfile extends React.Component {
   render() {
     const {userData , userInfo} = this.props
     const { loggedIn, inputURL, uploadClicked, message } = this.state
+    console.log({userInfo: userInfo});
     if (!loggedIn) {
       return <Home loggedIn={false} />;
     }
@@ -102,7 +103,11 @@ class UserProfile extends React.Component {
         </div>
         <p>{message}</p>
 
-        <div id="usernameContainer">{userInfo.username}</div>
+        <div id="userBanner">
+        <img src={userInfo.profile_pic} width={'150px'}/>
+        <span id="username">{userInfo.username}</span>
+        
+        </div>
 
         <div id="photoContainer">
           {userData.map(user => {
