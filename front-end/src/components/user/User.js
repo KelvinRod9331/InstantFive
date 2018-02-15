@@ -88,31 +88,19 @@ class User extends React.Component {
 
 
 
-    getUserSelected = (e) => {
+  
+    getUserByID = (e) => {
         axios
-            .get(`/users/getSelectedUser/${e.target.value}`)
+            .get(`/users/getSelectedUserByID/${e.target.value}`)
             .then(res => {
                 this.setState({
                     userInfo: res.data.data[0]
                 })
-                this.retriveUserPhotos()
             })
             .catch(err => {
                 console.log("Error:", err)
             })
     }
-    // getUserByID = (id) => {
-    //     axios
-    //         .get(`/users/getSelectedUser/${id}`)
-    //         .then(res => {
-    //             this.setState({
-    //                 userInfo: res.data.data[0]
-    //             })
-    //         })
-    //         .catch(err => {
-    //             console.log("Error:", err)
-    //         })
-    // }
 
     renderUserProfile = () => {
         const { userData, userInfo } = this.state;
@@ -122,7 +110,7 @@ class User extends React.Component {
     }
 
     renderFollowers = () => {
-        return <Followers getUserSelected={this.getUserSelected} />
+        return <Followers getUserByID={this.getUserByID} />
     }
 
 
@@ -143,15 +131,15 @@ class User extends React.Component {
         return (
             <div>
                 Search: <input type="text" value={searchInput} onChange={this.renderSearchInput} />
-                <button id="followers" onClick={this.handleFollowers}>Followers</button>
-                <button id="following" onClick={this.handleFollowing}>Following</button>
+                <button id="followers" onClick={() => <Redirect to='/user/followers' />}>Followers</button>
+                <button id="following" onClick={() => <Redirect to='/user/following' />}>Following</button>
 
                 <div className="searchResultBox">
                     {userWorldWide.map(user => {
                         if (user.username.includes(searchInput) && searchInput) {
                             return <button
                                 value={user.id}
-                                onClick={this.getUserSelected}
+                                onClick={this.getUserByID}
                             >{user.username}</button>
                         }
                     })}

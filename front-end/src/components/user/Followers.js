@@ -36,14 +36,14 @@ class Followers extends React.Component {
 
   render() {
     const {userFollowers} = this.state
-    const {getUserSelected }= this.props
+    const {getUserByID }= this.props
     console.log("Followers:", userFollowers)
     return (
       <div>
         <h1> Followers</h1>
         {userFollowers.map(user => {
        
-          return (<button value={user.follower_id} onClick={e => getUserSelected(e)}>
+          return (<button value={user.follower_id} onClick={e => getUserByID(e)}>
             {user.username}
           </button>)
         }

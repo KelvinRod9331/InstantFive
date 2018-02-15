@@ -121,9 +121,22 @@ function getSingleUser(req, res, next) {
     .catch(err => next(err))
 }
 
-function getSelectedUser(req, res, next) {
+function getUserByID(req, res, next) {
   db
     .any("select * from users where id=${id}", req.params)
+    .then(function (data) {
+      res.status(200).json({
+        status: "success",
+        data: data,
+        message: "Retrieved single users"
+      });
+    })
+    .catch(err => next(err))
+}
+
+function getUserByUsername(req, res, next) {
+  db
+    .any("select * from users where username=${username}", req.params)
     .then(function (data) {
       res.status(200).json({
         status: "success",
@@ -211,5 +224,6 @@ module.exports = {
   registerUser,
   loginUser,
   logoutUser,
-  getSelectedUser
+  getUserByID,
+  getUserByUsername
 };
