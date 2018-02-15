@@ -88,7 +88,7 @@ class User extends React.Component {
 
 
 
-  
+
     getUserByID = (e) => {
         axios
             .get(`/users/getSelectedUserByID/${e.target.value}`)
@@ -121,18 +121,24 @@ class User extends React.Component {
 
 
     render() {
-        const {  userInfo, searchInput, userWorldWide } = this.state;
+        const { userInfo, searchInput, userWorldWide } = this.state;
 
         console.log(
             "User Who Page Is Showing:",
             userInfo.username,
         );
-       
+
         return (
             <div>
-                Search: <input type="text" value={searchInput} onChange={this.renderSearchInput} />
-                <button id="followers" onClick={() => <Redirect to='/user/followers' />}>Followers</button>
-                <button id="following" onClick={() => <Redirect to='/user/following' />}>Following</button>
+                <input 
+                type="text" 
+                value={searchInput} 
+                onChange={this.renderSearchInput} 
+                placeholder={'Search'} 
+                /><br />
+
+                <button> <a href='/user/following' className='follow_links' > Following </a> </button>
+                <button>  <a href='/user/followers' className='follow_links'> Followers </a> </button>
 
                 <div className="searchResultBox">
                     {userWorldWide.map(user => {
@@ -148,8 +154,8 @@ class User extends React.Component {
 
                 <Switch>
                     <Route exact path="/user" render={this.renderUserProfile} />
-                    <Route path="/user/followers" render={this.renderFollowers} />
-                    <Route path="/user/following" render={this.renderFollowing} />
+                    <Route exact path="/user/followers" render={this.renderFollowers} />
+                    <Route exact path="/user/following" render={this.renderFollowing} />
                 </Switch>
             </div>
         );

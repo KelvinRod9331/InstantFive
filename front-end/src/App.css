@@ -120,3 +120,7 @@ submit {
 
 
 
+.follow_links{
+  color: inherit;
+  text-decoration: none;
+}
