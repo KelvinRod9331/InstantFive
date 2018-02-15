@@ -8,7 +8,8 @@ CREATE TABLE users (
   username VARCHAR,
   password_digest VARCHAR,
   email VARCHAR,
-  full_name VARCHAR
+  full_name VARCHAR,
+  profile_pic VARCHAR
 );
 
 CREATE TABLE photos (
@@ -28,13 +29,13 @@ CREATE TABLE likes (
 );
 
 
-INSERT INTO users (ID, username, password_digest, email, full_name) 
-VALUES ('1','Kelstar809','$2a$10$brAZfSmByFeZmPZ/MH5zne9YDhugjW9CtsBGgXqGfix0g1tcooZWq', 'kelstar809@instant.five', 'Kel Star'),
-('2','lala809','$2a$10$brAZfSmByFeZmPZ/MH5zne9YDhugjW9CtsBGgXqGfix0g1tcooZWq', 'lala809@instant.five', 'Lala Land'),
-('3','eioncont','$2a$10$LUQarA3IuQ4drG7dR16tDOsq9.SKIo9uCO9NwjH4Az4z0SruD1Zp6', '', ''),
-('4','lev','$2a$10$fVXWijQhWpeF/Nm/3FCYb.MPz107f8MWlHbLrlPxyAKDYuse5iS4q', '', ''),
-('5','Zero','$2a$10$JFKsUWVbw3zj4XGq8KLL.OPLoX9qk3OH876EJzaXPi7ZaXSU6UG8S', 'emperor@in.five', 'Lelouch Vi Brittania'),
-('6','Aang','$2a$10$9W5WEmwEPAfzSMqVgu/agOMHrvFfo7L2uufLz8NN34fy1KdgDO0Ai', 'avatar@in.five', 'Aang of Air Nomads');
+INSERT INTO users (ID, username, password_digest, email, full_name, profile_pic) 
+VALUES ('1','Kelstar809','$2a$10$brAZfSmByFeZmPZ/MH5zne9YDhugjW9CtsBGgXqGfix0g1tcooZWq', 'kelstar809@instant.five', 'Kel Star', 'https://media.licdn.com/media/AAIAAgDGAAAAAQAAAAAAAAtfAAAAJDMyYjYwYzg3LWRmNjMtNGM3Mi05ODIwLTUxYzc3NzQxYmJkMw.jpg'),
+('2','lala809','$2a$10$brAZfSmByFeZmPZ/MH5zne9YDhugjW9CtsBGgXqGfix0g1tcooZWq', 'lala809@instant.five', 'Lala Land', ''),
+('3','eioncont','$2a$10$LUQarA3IuQ4drG7dR16tDOsq9.SKIo9uCO9NwjH4Az4z0SruD1Zp6', '', '', ''),
+('4','lev','$2a$10$fVXWijQhWpeF/Nm/3FCYb.MPz107f8MWlHbLrlPxyAKDYuse5iS4q', '', '', 'https://media.licdn.com/media/p/7/000/223/104/1ee2e97.jpg'),
+('5','Zero','$2a$10$JFKsUWVbw3zj4XGq8KLL.OPLoX9qk3OH876EJzaXPi7ZaXSU6UG8S', 'emperor@in.five', 'Lelouch Vi Brittania', 'http://i.imgur.com/EPn8Zas.png'),
+('6','Aang','$2a$10$9W5WEmwEPAfzSMqVgu/agOMHrvFfo7L2uufLz8NN34fy1KdgDO0Ai', 'avatar@in.five', 'Aang of Air Nomads', 'https://vignette.wikia.nocookie.net/dragonball/images/c/cc/Adult-aang-aang-31587811-290-290.jpg/revision/latest?cb=20130313023637');
 
 INSERT INTO photos (ID, user_ID, url) 
 VALUES ('1','1','https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/model/one-off/centenario/slider/centenario.jpg'),
