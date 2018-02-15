@@ -1,6 +1,8 @@
 import React from "react";
 import axios from "axios"
 import Home from '../Home'
+import {Link} from 'react-router-dom'
+
 class UserProfile extends React.Component {
   state = {
     uploadClicked: false,
@@ -62,16 +64,38 @@ class UserProfile extends React.Component {
   };
 
   render() {
-    const {userData , userInfo} = this.props
+    const {userData , userInfo, userID} = this.props
     const { loggedIn, inputURL, uploadClicked, message } = this.state
     if (!loggedIn) {
       return <Home loggedIn={false} />;
     }
     console.log({userData: this.props.userData})
     return (
-      <div>
+      <div id='userprofile'>
+        <div id='header-bar'>
+          <div id='info-bar'>
+            <div class='icon-ig'><h1> <img src='https://png.icons8.com/ios/1600/instagram-new.png' width='30px' height='30px'/> instagram </h1></div>
+
+            <div class='searchbar'><input class='searchbar' type='text' placeholder='Search...'/></div>
+            <div class='icon-profile'><i class="fa fa-user-o" ></i>{'  .    '}{'   .   '} <i class="fa fa-heart-o"></i> </div>
+          </div>
+        </div>
+
+        
+       
+
+
+
+
+
+
+
+
+
+
+
         <div>
-          <button onClick={this.handleLogOut}>Log Out</button>
+          <button id='logout' onClick={this.handleLogOut}>Log Out</button>
         </div>
 
         <div id="uploadButton">
@@ -99,13 +123,16 @@ class UserProfile extends React.Component {
           )}
         </div>
         <p>{message}</p>
-
-        <div id="usernameContainer">{userInfo.username}</div>
-
+        <div id ='profileHeader'>
+         <div id='profileInfo'>
+            <div class="usernameContainer">{userInfo.username}</div>
+            <div class='following-ers'> Posts   <Link to="/user/following">Following</Link>  <Link to="/user/followers">Followers</Link></div> 
+         </div>    
+        </div>
         <div id="photoContainer">
           {userData.map(user => {
             return (
-              <div className="individualPhotos">
+              <div align='center' className="individualPhotos">
                 <img src={user.url} alt="" width={"300px"} />
               </div>
             );

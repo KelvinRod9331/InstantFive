@@ -2,13 +2,6 @@ html{
   background-color: rgb(242, 242, 242)
 }
 
-#parent{
-  width:820px;
-  margin:0 auto;
-  display: table;
-  padding-top: 90px;
-}
-
 h1{
   font-family: 'Pacifico', cursive;
 }
@@ -20,6 +13,15 @@ input{
   font-family: 'Abel', sans-serif;
 }
 
+#parent{
+  width:820px;
+  margin:0 auto;
+  display: table;
+  padding-top: 90px;
+}
+/* -------------------------------------------------------------------- */
+
+/*  the iphone image on register/login page */
 .photo-container {
    background-image: url('https://www.instagram.com/static/images/homepage/home-phones.png/38825c9d5aa2.png' );
   background-size: 454px 568px; 
@@ -81,16 +83,23 @@ input{
 }
 
 
+
+/* -------------------------------------------------------------------- */
+
+
+/*  box with register/login inputs */
 .login-container {
   height: 471px;
   margin-left: -15px;
-  float:right;
+  /* float:right; */
   max-width: 350px;
   padding-top: 45px;
   float:left;
   
-
 }
+
+
+
 .login-box {
   padding-top: 10px;
   background-color: white;
@@ -101,6 +110,11 @@ input{
   margin-right: 50px;
   max-width: 350px;
 }
+
+
+/* -------------------------------------------------------------------- */
+
+
 
 #top-header{
   background-color: rgb(226, 226, 226);
@@ -119,4 +133,75 @@ submit {
 }
 
 
+/* User profile  */
 
+#logout {
+  position: absolute;
+  bottom:0;   
+  margin-left:980px;
+ 
+ }
+
+ #header-bar{
+  background-color: gray;
+  height: 100px;
+ }
+
+ #info-bar{
+  width: auto;
+  height: auto;
+  margin: 0 auto;
+  padding: 10px;
+  margin-left:130px;
+  position: relative;
+ }
+
+ .searchbar{
+   /* margin: 0 auto; */
+   margin-right: 50px;
+   display:table;
+   height:15px;
+   width: 200px;
+   font-size:16px;
+   text-align: center;
+   display:inline-table;
+ }
+
+ .icon-ig{
+  width: 230px;
+  height: 0px;
+  display:inline-table;
+  margin-right: 160px
+ }
+ 
+
+ .icon-profile{
+  width: 200px; 
+  height: 0px; 
+  margin-left:130px;
+  display:inline-table;
+ }
+
+ #photoContainer {
+  padding-top:100px;
+  box-sizing: border-box;
+  margin-left: 110px;
+ 
+}
+
+ .individualPhotos {
+ position:relative;
+ display: inline-block;
+ float: none;
+ padding:10px;
+ flex:50%;
+}
+
+#profileHeader{
+  margin-top:90px;
+  text-align:center;
+}
+#profileInfo{
+  height: 80px;
+  padding-top: 20px;
+}
