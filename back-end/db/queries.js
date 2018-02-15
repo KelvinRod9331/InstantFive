@@ -28,7 +28,7 @@ const followUser = (req, res, next) => {
 
 const getUserFollowers = (req, res, next) => {
   db
-    .any('select * from users where id = (select follower_id from follows join users on follows.user_id = users.id where username = ${req.user})', req.user)
+    .any('select * from users where id in = (select follower_id from follows join users on follows.user_id = users.id where username = ${req.user})', req.user)
     .then(data => {
       res.status(200).json({
         status: 'success',
