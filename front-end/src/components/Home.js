@@ -9,8 +9,8 @@ class Home extends React.Component {
     render() {
         if (this.props.loggedIn) {
             return <Redirect to="/user" />
-        }else{
-            return <Redirect to="/login" />
+        } else {
+            return <Redirect to='/login' /> 
         }
        
     }

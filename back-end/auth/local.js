@@ -13,7 +13,7 @@ passport.use(
   new LocalStrategy(options, (username, password, done) => {
     console.log("trying to authenticate");
     db
-      .any("SELECT * FROM users WHERE username=$1", [username])
+      .any("SELECT * FROM users WHERE LOWER(username)=$1", [username.toLowerCase()])
       .then(rows => {
         const user = rows[0];
         if (!user) {

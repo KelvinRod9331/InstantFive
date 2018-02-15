@@ -1,17 +1,109 @@
-body {
-  background-image: url('https://cdn.vox-cdn.com/uploads/chorus_image/image/56606893/dseifert_170907_1972_0001.0.jpg');
-  background-size: 100%;
+html{
+  background-color: rgb(242, 242, 242)
 }
+
+#parent{
+  width:820px;
+  margin:0 auto;
+  display: table;
+  padding-top: 90px;
+}
+
+h1{
+  font-family: 'Pacifico', cursive;
+}
+h2, .login-box{
+  font-family: 'Karla', sans-serif;
+}
+
+input{
+  font-family: 'Abel', sans-serif;
+}
+
+.photo-container {
+   background-image: url('https://www.instagram.com/static/images/homepage/home-phones.png/38825c9d5aa2.png' );
+  background-size: 454px 568px; 
+  /* background-color:mistyrose; */
+  align-self: center;
+  background-position: 0 0;
+  flex-basis: 454px;
+  height: 570px;
+  width: 450px;
+  margin:0 auto;
+  float:left;
+  
+}
+
+#sl1 {
+  padding-top: 76px;
+  margin-left: 147px
+ 
+} 
+
+#sl1 img {
+   position:absolute;
+   height:412px;
+   width:250px;
+   animation-name: sl1FadeInOut;
+   animation-timing-function: ease-in-out;
+   animation-iteration-count: infinite;
+   animation-duration: 6s;
+   animation-direction: alternate;
+  }
+
+@keyframes sl1FadeInOut {
+  0% {
+    opacity:.5;
+  }
+  33% {
+    opacity:1;
+  }
+  66% {
+    opacity:0;
+  }
+  100% {
+    opacity:0;
+  }
+}
+
+
+#sl1 img:nth-of-type(1) {
+  animation-delay: 6s;
+}
+#sl1 img:nth-of-type(2) {
+  animation-delay: 4s;
+}
+#sl1 img:nth-of-type(3) {
+  animation-delay: 2s; 
+}
+#sl1 img:nth-of-type(4) {
+  animation-delay: 0; 
+}
+
+
 .login-container {
-  float: right;
+  height: 471px;
+  margin-left: -15px;
+  float:right;
+  max-width: 350px;
+  padding-top: 45px;
+  float:left;
+  
+
 }
 .login-box {
+  padding-top: 10px;
   background-color: white;
-  width: 450px; 
+  width: 335px; 
   text-align: center;
-  border: solid black 2px;
+  border: solid rgb(244, 244, 244) .072px;
   margin: 5px;
   margin-right: 50px;
+  max-width: 350px;
+}
+
+#top-header{
+  background-color: rgb(226, 226, 226);
 }
 
 label {
@@ -25,3 +117,6 @@ input {
 submit {
   font-size: 25px;
 }
+
+
+

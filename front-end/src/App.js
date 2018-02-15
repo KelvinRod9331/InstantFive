@@ -5,6 +5,7 @@ import './App.css';
 import Home from './components/Home';
 import Login from './components/Login';
 import Registration from './components/Registration';
+import axios from 'axios'
 import Feed from './components/user/Feed';
 import User from './components/user/User'
 
