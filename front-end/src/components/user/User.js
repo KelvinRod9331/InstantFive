@@ -17,7 +17,8 @@ class User extends React.Component {
             searchInput: '',
             userWorldWide: [],
             ///added class for modal
-            modalClassNames: 'display'
+            modalClassNames: 'display',
+            modalData: []
         };
     }
 
@@ -131,10 +132,17 @@ class User extends React.Component {
 
 ///modal to show the modal
     modalUp = (e) => {
+      let buttonName = e.target.id
       console.log(e.target.className)
       if(this.state.modalClassNames === "display"){
         this.setState({modalClassNames: 'followModal'})
       }
+
+      axios
+        .get(`users/${buttonName}`)
+        .then(res => {
+          this.setState({modalData: res.data.data})
+        })
     }
 
     modalDown = (e) => {
