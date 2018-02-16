@@ -5,6 +5,7 @@ import axios from 'axios';
 class Member extends React.Component {
     state = {
       user: null,
+      me: null,
       message: '',
       following: false
     }
@@ -21,6 +22,13 @@ class Member extends React.Component {
             console.log(err)
         })
 
+        axios.get('/users/getUserInfo')
+        .then(res => {
+          console.log('userID', res.data.data[0], 'followid', this.state.user.id)
+
+        }).catch(err => {
+            console.log(err)
+        })
     }
 
     getUser = () => {
@@ -44,22 +52,16 @@ class Member extends React.Component {
     //follow user button
     handleFollow = (e) => {
       console.log()
-      axios.get('/users/getUserInfo')
+      axios.post('/users/follow', {userid: this.state.me.id, followid: this.state.user.id})
       .then(res => {
-        console.log('userID', res.data.data[0].id, 'followid', this.state.user.id)
-          axios.post('/users/follow', {userid: res.data.data[0].id, followid: this.state.user.id})
-          .then(res => {
-              res.send('success')
-          }).catch(err => {
-              console.log(err)
-          })
+          res.send('success')
       }).catch(err => {
           console.log(err)
       })
     }
 
     render() {
-        console.log(this.props.match.params.member)
+        console.log('gfdjnslk', this.props.match.params.member)
         let { user, message } = this.state
         if (user === null) {
             return 'loading...'

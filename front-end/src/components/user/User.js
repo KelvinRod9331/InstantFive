@@ -1,11 +1,11 @@
 import React from "react";
 import axios from "axios";
 import { Redirect, Route, Switch, Link } from "react-router-dom";
-// import Home from "../Home";
+
 import UserProfile from "./UserProfile";
 import Followers from "./Followers";
 import Following from "./Following";
-import { userInfo } from "os";
+
 
 
 class User extends React.Component {
@@ -124,7 +124,7 @@ class User extends React.Component {
     }
 
     renderFollowers = () => {
-        return <Followers getUserByID={this.getUserByID} username={userInfo} />
+        return <Followers getUserByID={this.getUserByID}/>
     }
 
 
@@ -160,13 +160,21 @@ class User extends React.Component {
             "User Who Page Is Showing:",
             userInfo.username,
             "All User:",
-            userWorldWide
+            userWorldWide, this.state
         );
           //modal div added
         return (
             <div>
                 <div className={this.state.modalClassNames} onClick={this.modalDown}>
-                  <div className="followsDiv"><button className="buttn" onClick={this.modalOut}>yo</button></div>
+                  <div className="followsDiv">
+                    {this.state.modalData.map(v => (
+                      <div>
+                        <Link to={`/u/${v.username}`}><img class="follow-img" src={v.profile_pic}/>
+                        <p>{v.username}</p></Link>
+                        <p>{v.full_name}</p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
                 Search: <input type="text" value={searchInput} onChange={this.renderSearchInput} />
                 <button id="followers" onClick={this.modalUp}>Followers</button>
