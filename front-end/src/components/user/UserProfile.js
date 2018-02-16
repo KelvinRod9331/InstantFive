@@ -4,7 +4,7 @@ import Home from '../Home'
 import { Link } from 'react-router-dom'
 import User from './User'
 
-// import { Redirect } from "react-router";
+import { Redirect } from "react-router";
 class UserProfile extends React.Component {
   state = {
     uploadClicked: false,
@@ -75,7 +75,7 @@ class UserProfile extends React.Component {
 
 
   render() {
-    const { userData, userInfo, userID } = this.props
+    const { userData, userInfo, userID, modalUp, modalDown,modalClassNames, modalData } = this.props
     const { loggedIn, inputURL, uploadClicked, message } = this.state
     console.log({ userInfo: userInfo });
     if (!loggedIn) {
@@ -99,7 +99,17 @@ class UserProfile extends React.Component {
             <div class='icon-profile'><i class="fa fa-user-o" ></i>{'  .    '}{'   .   '} <i class="fa fa-heart-o"></i> </div>
           </div>
         </div>
-
+        <div className={modalClassNames} onClick={modalDown}>
+          <div className="followsDiv">
+            {modalData.map(v => (
+              <div>
+                <Link to={`/u/${v.username}`}><img class="follow-img" src={v.profile_pic}/>
+                <p>{v.username}</p></Link>
+                <p>{v.full_name}</p>
+              </div>
+            ))}
+          </div>
+        </div>
 
         <div>
           <button id='logoutBtn' onClick={this.handleLogOut}>Log Out</button>
@@ -135,17 +145,13 @@ class UserProfile extends React.Component {
               <div class='icon-profile'><img src={userInfo.profile_pic} width={'90px'} /></div>
               <div id='info-linedup'>
                 <div class="usernameContainer">{userInfo.username} <button class='edit'> Edit Profile </button> </div>
-                <div class='following-ers'> 
-                  {(userData.length)} Posts
+                  <div class='following-ers'> 
+                    {(userData.length)} Posts
 
-
-
-
-
-
-                  
-                  <button id="following" onClick={this.modalUp}> <Link to="/user/following">Following</Link> </button>
-                  <button id="followers" onClick={this.modalUp}> <Link to="/user/followers">Followers</Link></button></div>
+                    
+                    <button id="following" onClick={modalUp}> Following </button>
+                    <button id="followers" onClick={modalUp}> Followers</button>
+                  </div>
                   <span class="userFullname">{userInfo.full_name}</span>
                 </div>
               </div>

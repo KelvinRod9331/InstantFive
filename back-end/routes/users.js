@@ -12,6 +12,7 @@ router.post("/photo/:id/like", db.likePhoto);
 
 router.get("/logout", db.logoutUser);
 router.get("/userData", db.getUserPhotos); //Kelvin Rodriguez--Used To Retrieve User's Photos
+router.get("/getphotosbyuser/:username", db.getPhotosByUser) //Gerson -- Get any user's photos
 router.get("/getUserInfo", db.getSingleUser);
 router.get("/getSelectedUserByID/:id", db.getUserByID); //Kelvin Rodriguez -- Used To Retrieve The Selected User's Id 
 router.get("/all", db.getAllUsers); // Kelvin Rodriguez-- Used To Retrieve All Users From DB

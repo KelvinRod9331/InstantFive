@@ -16,6 +16,24 @@ const getUserPhotos = (req, res, next) => {
     .catch(err => next(err))
 }
 
+/**
+ * Added by Gerson
+ * @func getPhotosByUser gets photos of any user by name
+ * 
+ */
+const getPhotosByUser = (req, res, next) => {
+  db
+    .any('select * from photos full join users on photos.user_ID = users.id where username = ${username}', req.params)
+    .then(data => {
+      res.status(200).json({
+        status: 'success',
+        data: data,
+        message: 'Retrieved all users\'s photos'
+      });
+    })
+    .catch(err => next(err))
+}
+
 const followUser = (req, res, next) => {
   console.log(req.body)
   db
@@ -213,6 +231,7 @@ function registerUser(req, res, next) {
 
 module.exports = {
   getUserPhotos,
+  getPhotosByUser,
   followUser,
   getUserFollowers,
   getUserFollowing,

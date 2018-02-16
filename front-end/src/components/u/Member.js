@@ -4,40 +4,29 @@ import axios from 'axios';
 
 class Member extends React.Component {
     state = {
-      user: null,
+      user: {},
       me: null,
       message: '',
-      following: false
+      following: false,
+      userInfo: [],
+      userData: []
     }
-
-    componentDidMount() {
-      this.getUser()
-
-      axios
-        .get(`/users`)
-        .then(res => {
-            console.log(res.data.data);
-        })
-        .catch(err => {
-            console.log(err)
-        })
-
-        axios.get('/users/getUserInfo')
-        .then(res => {
-          this.setState({me: res.data.data[0]})
-        }).catch(err => {
-            console.log(err)
-        })
-
-        axios.get('/users/following')
-        .then(res => {
-          let follows = res.data.data
-          this.setState({following: !!follows.filter(v => v.username === this.state.user.username)[0]})
-        })
-        .catch(err => {
-            console.log(err)
-        })
-    }
+    
+    retrieveUserPhotos = () => {
+        const { user } = this.state
+        console.log("User Who's Page is Showing:", user.username)
+        axios
+            .get(`/users/getphotosbyuser/${user.username}`)
+            .then(res => {
+                console.log("Photos:", res.data.data);
+                this.setState({
+                    userData: [...res.data.data].reverse()
+                });
+            })
+            .catch(err => {
+                console.log("Error:", err);
+            });
+    };
 
     getUser = () => {
 
@@ -49,6 +38,7 @@ class Member extends React.Component {
             this.setState({
                 user: user
             })
+            this.retrieveUserPhotos();
         })
         .catch(err => {
             this.setState({
@@ -69,9 +59,38 @@ class Member extends React.Component {
       })
     }
 
+    componentDidMount() {
+        this.getUser()
+  
+        axios
+          .get(`/users`)
+          .then(res => {
+              console.log(res.data.data);
+          })
+          .catch(err => {
+              console.log(err)
+          })
+  
+          axios.get('/users/getUserInfo')
+          .then(res => {
+            this.setState({me: res.data.data[0]})
+          }).catch(err => {
+              console.log(err)
+          })
+  
+          axios.get('/users/following')
+          .then(res => {
+            let follows = res.data.data
+            this.setState({following: !!follows.filter(v => v.username === this.state.user.username)[0]})
+          })
+          .catch(err => {
+              console.log(err)
+          })
+    }
+
     render() {
         console.log('gfdjnslk', this.props.match.params.member)
-        let { user, message } = this.state
+        let { user, message, userData } = this.state
         if (user === null) {
             return 'loading...'
         }
@@ -89,7 +108,7 @@ class Member extends React.Component {
 
                     </div>
 
-                    {/* <div id="photoContainer">
+                    <div id="photoContainer">
                     {userData.map(user => {
                         return (
                         <div className="individualPhotos">
@@ -97,7 +116,7 @@ class Member extends React.Component {
                         </div>
                         );
                     })}
-                    </div> */}
+                    </div>
             </div>
         )
     }
