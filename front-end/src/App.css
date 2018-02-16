@@ -136,14 +136,14 @@ submit {
 /* User profile  */
 
 #logout {
-  position: absolute;
+  position: fixed;
   bottom:0;   
-  margin-left:980px;
+  margin-left:1200px;
  
  }
 
  #header-bar{
-  background-color: gray;
+  background-color: rgb(218, 218, 218);
   height: 100px;
  }
 
@@ -183,7 +183,7 @@ submit {
  }
 
  #photoContainer {
-  padding-top:100px;
+  padding-top:40px;
   box-sizing: border-box;
   margin-left: 110px;
  
@@ -198,10 +198,40 @@ submit {
 }
 
 #profileHeader{
+  /* width:400px; */
   margin-top:90px;
   text-align:center;
 }
 #profileInfo{
   height: 80px;
   padding-top: 20px;
+  text-align: center;
+  width:500px;
+  padding-left:330px;
+  
+}
+
+#info-linedup{
+padding-right:65px;
+
+overflow: hidden
+
+  
+}
+.usernameContainer{
+  padding-right:170px;
+  width:70px;
+  margin:0 auto;
+}
+
+
+#profileInfo .icon-profile {
+  /* padding-right:400px; */
+  width:30px;
+  height:30px;
+  font-size:48px;
+  float:left;
+}
+.following-ers{
+  padding-top:10px;
 }

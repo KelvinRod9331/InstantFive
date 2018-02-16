@@ -16,12 +16,10 @@ class App extends Component {
 
         return (
             <div>
-                <nav id='following/ers'>
+                {/* <nav id='following/ers'>
                     <Link to="/">Home</Link>
-                    <Link to="/user/following">Following</Link> {/*Will be Accessed Through Clicking On A Button*/}
-                    <Link to="/user/followers">Followers</Link> {/*Will be Accessed Through Clicking On A Button*/}
-                    <Link to="/feed">Feed</Link> {/*Will be Accessed Through Clicking On A Button*/}
-                </nav>
+                    <Link to="/feed">Feed</Link> /*Will be Accessed Through Clicking On A Button*
+                </nav> */}
                 <Route exact path="/" component={Home}/>
                 <Route exact path="/login" component={Login}/>
                 <Route exact path="/registration" component={Registration}/>
