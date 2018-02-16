@@ -18,16 +18,6 @@ class App extends Component {
 
         return (
             <div>
-                {/* <nav id='following/ers'>
-                    <Link to="/">Home</Link>
-                    <Link to="/feed">Feed</Link> /*Will be Accessed Through Clicking On A Button*
-                </nav> */}
-                <nav>
-                    {/* <Link to="/user/following">Following</Link> 
-                    <Link to="/user/followers">Followers</Link>  */}
-                    <Link to="/feed">Feed</Link> {/*Will be Accessed Through Clicking On A Button*/}
-
-                </nav>
                 <Switch>
                 <Route exact path="/" component={Home}/>
                 <Route exact path="/login" component={Login}/>

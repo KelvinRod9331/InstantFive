@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios"
 import Home from '../Home'
 import { Link } from 'react-router-dom'
+import User from './User'
 
 // import { Redirect } from "react-router";
 class UserProfile extends React.Component {
@@ -79,8 +80,15 @@ class UserProfile extends React.Component {
         <div id='header-bar'>
           <div id='info-bar'>
             <div class='icon-ig'><h1> <img src='https://png.icons8.com/ios/1600/instagram-new.png' width='30px' height='30px' /> instagram </h1></div>
-
-            <div class='searchbar'><input class='searchbar' type='text' placeholder='Search...' /></div>
+            <div class='searchbar'>
+                <input 
+                    class='searchbar' 
+                    type='text' 
+                    value={this.state.searchInput}
+                    onChange={this.renderSearchInput}
+                    placeholder={'Search'}
+                />
+              </div>
             <div class='icon-profile'><i class="fa fa-user-o" ></i>{'  .    '}{'   .   '} <i class="fa fa-heart-o"></i> </div>
           </div>
         </div>
@@ -120,10 +128,11 @@ class UserProfile extends React.Component {
             <div class='icon-profile'><i class="fa fa-user-o" ></i></div>
             <div id='info-linedup'>
             <img src={userInfo.profile_pic} width={'150px'}/>
-              <span id="username">{userInfo.full_name}</span>
-              <div class="usernameContainer">{userInfo.username}</div>
-              <div class='following-ers'> {(userData.length)} Posts   <Link to="/user/following">Following</Link>  <Link to="/user/followers">Followers</Link></div>
-            </div>
+              
+              <div class="usernameContainer">{userInfo.username} <button class='edit'> Edit Profile </button> </div>
+              <div class='following-ers'> {(userData.length)} Posts   <button> <Link to="/user/following">Following</Link> </button> <button> <Link to="/user/followers">Followers</Link></button></div>
+              <span class="userFullname">{userInfo.full_name}</span> 
+           </div>
           </div>
         </div>
         <div id="photoContainer">

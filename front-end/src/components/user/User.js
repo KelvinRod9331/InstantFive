@@ -136,16 +136,12 @@ class User extends React.Component {
 
         return (
             <div>
-                <input
+                {/* <input class='searchbar'
                     type="text"
                     value={searchInput}
                     onChange={this.renderSearchInput}
                     placeholder={'Search'}
-                /><br />
-
-                <button> <a href='/user/following' className='follow_links' > Following </a> </button>
-                <button>  <a href='/user/followers' className='follow_links'> Followers </a> </button>
-
+                /><br /> */}
                 {/* <div className="searchResultBox">
                     {userWorldWide.map(user => {
                         if (user.username.includes(searchInput) && searchInput) {
