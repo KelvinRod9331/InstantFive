@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
 import axios from 'axios'
 
 class Feed extends Component {
@@ -33,7 +34,7 @@ class Feed extends Component {
     console.log('Feed', this.state)
     return(
         <div>
-          {this.state.feedPhotos.map(v => <img className="feed-img" src={v.url}/>)}
+          {this.state.feedPhotos.map(v => <div><Link to={`/u/${v.username}`}><p>{v.username}</p></Link><img className="feed-img" src={v.url}/></div>)}
         </div>
     )
   }
