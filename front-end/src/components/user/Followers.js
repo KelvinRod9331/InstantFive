@@ -17,10 +17,11 @@ class Followers extends React.Component {
       * Will hold all User's followers in an Array
   */
   retrieveFollowers = () => {
+    console.log(this.props.username)
       axios
-        .get("/users/followers")
+        .get(`/users/followers/`)
         .then(res => {
-          console.log("Followers:",res.data.data);
+          console.log("Followers:",res);
           this.setState({
             userFollowers: [...res.data.data]
           });
@@ -30,7 +31,7 @@ class Followers extends React.Component {
         });
   };
 
-  componentDidMount() {
+  componentWillMount() {
       this.retrieveFollowers();
   }
 
@@ -41,13 +42,13 @@ class Followers extends React.Component {
     return (
       <div>
         <h1> Followers</h1>
-        {userFollowers.map(user => {
+        {/* {userFollowers.map(user => {
        
           return (<button value={user.follower_id} onClick={e => getUserByID(e)}>
             {user.username}
           </button>)
         }
-        )}
+        )} */}
           {/* <Link to="/user">
             <img src="https://vignette.wikia.nocookie.net/universal-crusade/images/a/a5/X.png/revision/latest?cb=20170903062123" height="50" alt="x out"/>
           </Link> */}
