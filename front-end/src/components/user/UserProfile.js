@@ -156,7 +156,7 @@ modalDown = (e) => {
               <div class='icon-profile'><img src={userInfo.profile_pic} width={'90px'} /></div>
               <div id='info-linedup'>
                 <div class="usernameContainer">{userInfo.username} <button class='edit'> Edit Profile </button> </div>
-                <div class='following-ers'> 
+                <div class='numFollowing-ers'> 
                   {(userData.length)} Posts
 
                   {/* Elon code for modal */}
