@@ -15,7 +15,9 @@ class User extends React.Component {
             userInfo: [],
             userData: [],
             searchInput: '',
-            userWorldWide: []
+            userWorldWide: [],
+            ///added class for modal
+            modalClassNames: 'display'
         };
     }
 
@@ -119,13 +121,29 @@ class User extends React.Component {
     }
 
     renderFollowers = () => {
-        return <Followers getUserByID={this.getUserByID}/>
+        return <Followers getUserByID={this.getUserByID} />
     }
 
 
 
+    ///modal to show the modal
+    modalUp = (e) => {
+        console.log(e.target.className)
+        if (this.state.modalClassNames === "display") {
+            this.setState({ modalClassNames: 'followModal' })
+        }
+    }
+
+    modalDown = (e) => {
+        console.log()
+        if (e.target.className === "followModal") {
+            this.setState({ modalClassNames: 'display' })
+        }
+    }
+
     render() {
         const { userInfo, searchInput, userWorldWide } = this.state;
+        const {followers} = this.props
 
         console.log(
             "User Who Page Is Showing:",
@@ -133,9 +151,10 @@ class User extends React.Component {
             "All User:",
             userWorldWide
         );
-
+        //modal div added
         return (
             <div>
+
                 <input
                     type="text"
                     value={searchInput}
@@ -143,8 +162,14 @@ class User extends React.Component {
                     placeholder={'Search'}
                 /><br />
 
-                <button> <a href='/user/following' className='follow_links' > Following </a> </button>
-                <button>  <a href='/user/followers' className='follow_links'> Followers </a> </button>
+                <div className={this.state.modalClassNames} onClick={this.modalDown}>
+                {/* {followers.map(user => {
+                    <div className="followsDiv"><button className="buttn" onClick={this.modalOut}>{user}</button></div>
+                })} */}
+                    
+                </div>
+                <button id="followers" onClick={this.modalUp}>Followers</button>
+                <button id="following" onClick={this.modalUp}>Following</button>
 
                 {/* <div className="searchResultBox">
                     {userWorldWide.map(user => {

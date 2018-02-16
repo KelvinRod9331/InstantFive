@@ -29,7 +29,7 @@ const followUser = (req, res, next) => {
 const getUserFollowers = (req, res, next) => {
   console.log("User:", req.user)
   db
-    .any('select * from users where id in (select follower_id from follows join users on follows.user_id = users.id where username = $1)',[req.user] )
+    .any('select * from users where id in (select follower_id from follows join users on follows.user_id = users.id where username = ${username})', req.user)
     .then(data => {
       res.status(200).json({
         status: 'success',
@@ -41,8 +41,9 @@ const getUserFollowers = (req, res, next) => {
 }
 
 const getUserFollowing = (req, res, next) => {
+  console.log(req.user)
   db
-    .any('select * from follows join users on follows.follower_ID = users.id where username = ${username}', req.user)
+    .any('select * from users where id in (select user_id from follows join users on follows.follower_id = users.id where username = ${username})', req.user)
     .then(data => {
       res.status(200).json({
         status: 'success',

@@ -20,8 +20,9 @@ router.get("/user/:username", db.getSingleUser);
 // router.get("/photos", db.getUserPhotos);
 router.get("/photo/:id/likes", db.getPhotoLikes);
 router.get("/photo/:id", db.getPhoto);
-router.get("/followers",db.getUserFollowers);
+router.get("/followers", loginRequired, db.getUserFollowers);
 router.get("/following", loginRequired, db.getUserFollowing);
 router.get("/feed", loginRequired, db.getFollowingPhotos)
+router.get("/:username", db.getUserByUsername)
 
 module.exports = router;
