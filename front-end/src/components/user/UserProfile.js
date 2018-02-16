@@ -3,6 +3,7 @@ import axios from "axios"
 import Home from '../Home'
 import { Link } from 'react-router-dom'
 
+// import { Redirect } from "react-router";
 class UserProfile extends React.Component {
   state = {
     uploadClicked: false,
@@ -32,7 +33,6 @@ class UserProfile extends React.Component {
   };
 
   handleInputUrl = e => {
-    console.log(this.state.inputURL);
     this.setState({
       inputURL: e.target.value
     });
@@ -63,9 +63,13 @@ class UserProfile extends React.Component {
       });
   };
 
+ 
+  
+
   render() {
     const { userData, userInfo, userID } = this.props
     const { loggedIn, inputURL, uploadClicked, message } = this.state
+    console.log({userInfo: userInfo});
     if (!loggedIn) {
       return <Home loggedIn={false} />;
     }
@@ -83,7 +87,7 @@ class UserProfile extends React.Component {
 
 
         <div>
-          <button id='logout' onClick={this.handleLogOut}>Log Out</button>
+          <button id='logoutBtn' onClick={this.handleLogOut}>Log Out</button>
         </div>
 
         <div id="uploadButton">
@@ -115,6 +119,8 @@ class UserProfile extends React.Component {
           <div id='profileInfo'>
             <div class='icon-profile'><i class="fa fa-user-o" ></i></div>
             <div id='info-linedup'>
+            <img src={userInfo.profile_pic} width={'150px'}/>
+              <span id="username">{userInfo.full_name}</span>
               <div class="usernameContainer">{userInfo.username}</div>
               <div class='following-ers'> {(userData.length)} Posts   <Link to="/user/following">Following</Link>  <Link to="/user/followers">Followers</Link></div>
             </div>

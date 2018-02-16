@@ -1,20 +1,37 @@
-import React from 'react'
-import User from './user/User'
-import Registration from './Registration'
-import { Route, Link } from 'react-router-dom'
-import { Redirect } from "react-router"
+import React from 'react';
+import { Redirect } from 'react-router';
+import axios from 'axios';
+
 
 class Home extends React.Component {
-  
+    state = { user: undefined }
+    getUser = () => {
+        axios.get('/users/getUserInfo')
+        .then(res => {
+            this.setState({
+                user: res.data.data[0]
+            })
+        }).catch(err => {
+            this.setState({
+                user: null
+            })
+        })
+    }
+    componentDidMount() {
+        this.getUser();
+    }
     render() {
-
-        console.log(this.props)
-        if (this.props.loggedIn) {
-            return <Redirect to="/user" />
-        }else{
-            return <Redirect to='/registration' /> 
+        const { user } = this.state
+        console.log({state: this.state})
+        if (user) {
+            console.log('User detected')
+            return <Redirect to='/user' />
+        } else if (user === null) {
+            return <Redirect to='/login' />
         }
-       
+        return (
+            <load>loading...</load>
+        )
     }
 }
 

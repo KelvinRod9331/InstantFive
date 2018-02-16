@@ -17,8 +17,9 @@ const getUserPhotos = (req, res, next) => {
 }
 
 const followUser = (req, res, next) => {
+  console.log(req.body)
   db
-    .none('insert into follows (user_ID, follower_ID) values ($userid}, ${followid})', {userid, followid})
+    .none('insert into follows (user_ID, follower_ID) values (${followid}, ${userid})', req.body)
     .then(() => {
       res.send('Follow success')
     })
@@ -26,22 +27,22 @@ const followUser = (req, res, next) => {
 }
 
 const getUserFollowers = (req, res, next) => {
-  console.log('here', req.user)
-  // db
-    // .any('select * from follows where follower_ID = ${id}', req.user)
-    // .then(data => {
-    //   res.status(200).json({
-    //     status: 'success',
-    //     data: data,
-    //     message: 'Retrieved all users\'s followes'
-    //   });
-    // })
-    // .catch(err => next(err))
+  console.log("User:", req.user)
+  db
+    .any('select * from users where id in (select follower_id from follows join users on follows.user_id = users.id where username = $1)',[req.user] )
+    .then(data => {
+      res.status(200).json({
+        status: 'success',
+        data: data,
+        message: 'Retrieved all users\'s followers'
+      });
+    })
+    .catch(err => next(err))
 }
 
 const getUserFollowing = (req, res, next) => {
   db
-    .any('select * from follows where username = ${username}', req.user)
+    .any('select * from follows join users on follows.follower_ID = users.id where username = ${username}', req.user)
     .then(data => {
       res.status(200).json({
         status: 'success',
@@ -56,7 +57,7 @@ const getFollowingPhotos = (req, res, next) => {
   console.log("hi", req.user)
   db
     // .any('select * from photos full join follows on photos.user_ID = follows.user_ID full join users on follows.user_ID = users.id where follower_ID=${userid}', req.user)
-    .any('select * from photos full join follows on photos.user_ID = follows.user_ID full join users on follows.user_ID = users.id', req.user)
+    .any('SELECT * from follows join users on follows.follower_ID = users.id join photos on photos.user_id = follows.user_id where username = ${username}', req.user)
     .then(data => {
       res.status(200).json({
         status: 'success',
@@ -69,7 +70,20 @@ const getFollowingPhotos = (req, res, next) => {
 
 const getPhotoLikes = (req, res, next) => {
   db
-    .any('select * from likes where photo_ID = ${photoid}', { photoid: photo.id })
+    .any('select * from likes where photo_ID = ${id}', req.params)
+    .then(data => {
+      res.status(200).json({
+        status: 'success',
+        data: data,
+        message: 'Retrieved ALL photo likes'
+      })
+    })
+    .catch(err => next(err))
+}
+
+const getPhoto = (req, res, next) => {
+  db
+    .any('select * from photos where id = ${id}', req.params)
     .then(data => {
       res.status(200).json({
         status: 'success',
@@ -99,6 +113,45 @@ const likePhoto = (req, res, next) => {
 function getSingleUser(req, res, next) {
   db
     .any("select * from users where username=${username}", req.user)
+    .then(function (data) {
+      res.status(200).json({
+        status: "success",
+        data: data,
+        message: "Retrieved single users"
+      });
+    })
+    .catch(err => next(err))
+}
+
+function getUserByID(req, res, next) {
+  db
+    .any("select * from users where id=${id}", req.params)
+    .then(function (data) {
+      res.status(200).json({
+        status: "success",
+        data: data,
+        message: "Retrieved single users"
+      });
+    })
+    .catch(err => next(err))
+}
+
+function getUserByUsername(req, res, next) {
+  db
+    .any("select * from users where LOWER(username)=LOWER(${username})", req.params)
+    .then(function (data) {
+      res.status(200).json({
+        status: "success",
+        data: data,
+        message: "Retrieved single users"
+      });
+    })
+    .catch(err => next(err))
+}
+
+function getAllUsers(req, res, next) {
+  db
+    .any("select * from users")
     .then(function (data) {
       res.status(200).json({
         status: "success",
@@ -165,10 +218,14 @@ module.exports = {
   getUserFollowing,
   getFollowingPhotos,
   getPhotoLikes,
+  getPhoto,
   uploadPhoto,
   likePhoto,
   getSingleUser,
+  getAllUsers,
   registerUser,
   loginUser,
   logoutUser,
+  getUserByID,
+  getUserByUsername
 };

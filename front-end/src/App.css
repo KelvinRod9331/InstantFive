@@ -235,3 +235,7 @@ overflow: hidden
 .following-ers{
   padding-top:10px;
 }
+.follow_links{
+  color: inherit;
+  text-decoration: none;
+}
