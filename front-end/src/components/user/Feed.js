@@ -34,7 +34,7 @@ class Feed extends Component {
     console.log('Feed', this.state)
     return(
         <div>
-          {this.state.feedPhotos.map(v => <div><Link to={`/u/${v.username}`}><p>{v.username}</p></Link><img className="feed-img" src={v.url}/></div>)}
+          {this.state.feedPhotos.map(v => <div><Link to={`/u/${v.username}`}><img className="follow-img" src={v.profile_pic}/><p>{v.username}</p></Link><img className="feed-img" src={v.url}/></div>)}
         </div>
     )
   }

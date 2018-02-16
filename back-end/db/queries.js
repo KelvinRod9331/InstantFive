@@ -19,7 +19,7 @@ const getUserPhotos = (req, res, next) => {
 /**
  * Added by Gerson
  * @func getPhotosByUser gets photos of any user by name
- * 
+ *
  */
 const getPhotosByUser = (req, res, next) => {
   db
@@ -75,7 +75,7 @@ const getUserFollowing = (req, res, next) => {
 const getFollowingPhotos = (req, res, next) => {
   console.log("hi", req.user)
   db
-    .any('select users.username, url from photos join users on users.id = user_id where user_id in (select photos.user_id from follows join users on follows.follower_id = users.id join photos on photos.user_id = follows.user_id WHERE username = ${username})', req.user)
+    .any('select users.username, users.profile_pic, url from photos join users on users.id = user_id where user_id in (select photos.user_id from follows join users on follows.follower_id = users.id join photos on photos.user_id = follows.user_id WHERE username = ${username})', req.user)
     .then(data => {
       res.status(200).json({
         status: 'success',
