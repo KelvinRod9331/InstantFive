@@ -14,7 +14,7 @@ class Feed extends Component {
     axios
       .get('/users/feed')
       .then(res => {
-        this.setState({feedPhotos: res.data.data})
+        this.setState({feedPhotos: res.data.data.reverse()})
       })
       .catch(err => console.log("err", err))
   }
