@@ -15,7 +15,10 @@ class User extends React.Component {
             userInfo: [],
             userData: [],
             searchInput: '',
-            userWorldWide: []
+            userWorldWide: [],
+            ///added class for modal
+            modalClassNames: 'display',
+            modalData: []
         };
     }
 
@@ -98,6 +101,7 @@ class User extends React.Component {
 
 
 
+
     // getUserByID = (e) => {
     //     axios
     //         .get(`/users/getSelectedUserByID/${e.target.value}`)
@@ -110,6 +114,7 @@ class User extends React.Component {
     //             console.log("Error:", err)
     //         })
     // }
+
 
     renderUserProfile = () => {
         const { userData, userInfo } = this.state;
@@ -124,6 +129,30 @@ class User extends React.Component {
 
 
 
+
+///modal to show the modal
+    modalUp = (e) => {
+      let buttonName = e.target.id
+      console.log(e.target.className)
+      if(this.state.modalClassNames === "display"){
+        this.setState({modalClassNames: 'followModal'})
+      }
+
+      axios
+        .get(`users/${buttonName}`)
+        .then(res => {
+          this.setState({modalData: res.data.data})
+        })
+    }
+
+    modalDown = (e) => {
+      console.log()
+      if(e.target.className === "followModal"){
+        this.setState({modalClassNames: 'display'})
+      }
+    }
+
+
     render() {
         const { userInfo, searchInput, userWorldWide } = this.state;
 
@@ -131,9 +160,9 @@ class User extends React.Component {
             "User Who Page Is Showing:",
             userInfo.username,
             "All User:",
-            userWorldWide
+            userWorldWide, this.state
         );
-
+          //modal div added
         return (
             <div>
                 {/* <input class='searchbar'
@@ -142,6 +171,21 @@ class User extends React.Component {
                     onChange={this.renderSearchInput}
                     placeholder={'Search'}
                 /><br /> */}
+                {/* <div className={this.state.modalClassNames} onClick={this.modalDown}>
+                  <div className="followsDiv">
+                    {this.state.modalData.map(v => (
+                      <div>
+                        <Link to={`/u/${v.username}`}><img class="follow-img" src={v.profile_pic}/>
+                        <p>{v.username}</p></Link>
+                        <p>{v.full_name}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                Search: <input type="text" value={searchInput} onChange={this.renderSearchInput} />
+                <button id="followers" onClick={this.modalUp}>Followers</button>
+                <button id="following" onClick={this.modalUp}>Following</button> */}
+
                 {/* <div className="searchResultBox">
                     {userWorldWide.map(user => {
                         if (user.username.includes(searchInput) && searchInput) {

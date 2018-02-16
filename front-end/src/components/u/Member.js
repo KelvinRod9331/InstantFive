@@ -5,6 +5,7 @@ import axios from 'axios';
 class Member extends React.Component {
     state = {
       user: null,
+      me: null,
       message: '',
       following: false
     }
@@ -13,9 +14,25 @@ class Member extends React.Component {
       this.getUser()
 
       axios
-        .get(`/following`)
+        .get(`/users`)
         .then(res => {
             console.log(res.data.data);
+        })
+        .catch(err => {
+            console.log(err)
+        })
+
+        axios.get('/users/getUserInfo')
+        .then(res => {
+          this.setState({me: res.data.data[0]})
+        }).catch(err => {
+            console.log(err)
+        })
+
+        axios.get('/users/following')
+        .then(res => {
+          let follows = res.data.data
+          this.setState({following: !!follows.filter(v => v.username === this.state.user.username)[0]})
         })
         .catch(err => {
             console.log(err)
@@ -23,6 +40,7 @@ class Member extends React.Component {
     }
 
     getUser = () => {
+
         let username = this.props.match.params.member;
         axios.get(`/users/${username}`)
         .then(res => {
@@ -39,23 +57,20 @@ class Member extends React.Component {
         })
     }
 
+    //follow user button
     handleFollow = (e) => {
-      axios.get('/users/getUserInfo')
+      console.log('userid:', this.state.me.id, 'followid:', this.state.user.id)
+      axios.post('/users/follow', {userid: this.state.me.id, followid: this.state.user.id})
       .then(res => {
-        console.log('userID', res.data.data[0].id, 'followid', this.state.user.id)
-          axios.post('/users/follow', {userid: res.data.data[0].id, followid: this.state.user.id})
-          .then(res => {
-              res.send('success')
-          }).catch(err => {
-              console.log(err)
-          })
+          this.setState({following: true})
+          res.send('success')
       }).catch(err => {
           console.log(err)
       })
     }
 
     render() {
-        console.log(this.props.match.params.member)
+        console.log('gfdjnslk', this.props.match.params.member)
         let { user, message } = this.state
         if (user === null) {
             return 'loading...'
@@ -63,13 +78,14 @@ class Member extends React.Component {
         if (user === undefined) {
             return '404 Page not found'
         }
+        console.log('member', this.state)
         return (
             <div>
                 <div>{message}</div>
                     <div id="userBanner">
                     <img src={user.profile_pic} width={'150px'}/>
                     <span id="username">{user.username}</span>
-                    <button onClick={this.handleFollow}>follow</button>
+                    <button onClick={this.handleFollow} disabled={this.state.following}>follow</button>
 
                     </div>
 

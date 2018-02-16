@@ -180,6 +180,7 @@ submit {
   height: 0px; 
   margin-left:130px;
   display:inline-table;
+  /* padding-bottom: 50px; */
  }
 
  #photoContainer {
@@ -203,7 +204,7 @@ submit {
   text-align:center;
 }
 #profileInfo{
-  height: 70px;
+  height: 200px;
   padding-top: 10px;
   width:500px;
   padding-left:330px;
@@ -211,10 +212,8 @@ submit {
 }
 
 #info-linedup{
-
-margin-top:-35px;
+/* margin-top:15px; */
 overflow: hidden;
-
   
 }
 
@@ -228,34 +227,35 @@ overflow: hidden;
   height:30px;
   font-size:48px;
   float:left;
+
 }
 
 /* -------------------------------------------- */
 
 .usernameContainer{
-  padding-left:33px;
-  width:200px;
+  padding-left:26px;
+  width:230px;
   /* margin:0 auto; */
   
 }
 .edit{
   /* float:right; */
-  padding-left:12px;
+  padding-left:10px;
   padding-right:10px;
-  margin-left: 83px;
+  margin-left: 80px;
 }
 
 
 .following-ers{
   padding-top:10px;
   padding-bottom:10px;
-  width:200px;
-  padding-left:32px;
+  width:230px;
+  padding-left:20px;
 
 }
 .userFullname{
   width:200px;
-  padding-left: 37px;
+  padding-left: 43px;
   float:left;
   text-align: left;
   

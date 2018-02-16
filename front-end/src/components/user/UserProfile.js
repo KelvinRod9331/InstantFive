@@ -64,13 +64,20 @@ class UserProfile extends React.Component {
       });
   };
 
- 
-  
+// ----------------------------------------
+
+
+
+// -------------------------------------------  
+
+
+
+
 
   render() {
     const { userData, userInfo, userID } = this.props
     const { loggedIn, inputURL, uploadClicked, message } = this.state
-    console.log({userInfo: userInfo});
+    console.log({ userInfo: userInfo });
     if (!loggedIn) {
       return <Home loggedIn={false} />;
     }
@@ -81,14 +88,14 @@ class UserProfile extends React.Component {
           <div id='info-bar'>
             <div class='icon-ig'><h1> <img src='https://png.icons8.com/ios/1600/instagram-new.png' width='30px' height='30px' /> instagram </h1></div>
             <div class='searchbar'>
-                <input 
-                    class='searchbar' 
-                    type='text' 
-                    value={this.state.searchInput}
-                    onChange={this.renderSearchInput}
-                    placeholder={'Search'}
-                />
-              </div>
+              <input
+                class='searchbar'
+                type='text'
+                value={this.state.searchInput}
+                onChange={this.renderSearchInput}
+                placeholder={'Search'}
+              />
+            </div>
             <div class='icon-profile'><i class="fa fa-user-o" ></i>{'  .    '}{'   .   '} <i class="fa fa-heart-o"></i> </div>
           </div>
         </div>
@@ -125,16 +132,24 @@ class UserProfile extends React.Component {
         <p>{message}</p>
         <div id='profileHeader'>
           <div id='profileInfo'>
-            <div class='icon-profile'><i class="fa fa-user-o" ></i></div>
-            <div id='info-linedup'>
-            <img src={userInfo.profile_pic} width={'150px'}/>
-              
-              <div class="usernameContainer">{userInfo.username} <button class='edit'> Edit Profile </button> </div>
-              <div class='following-ers'> {(userData.length)} Posts   <button> <Link to="/user/following">Following</Link> </button> <button> <Link to="/user/followers">Followers</Link></button></div>
-              <span class="userFullname">{userInfo.full_name}</span> 
-           </div>
+              <div class='icon-profile'><img src={userInfo.profile_pic} width={'90px'} /></div>
+              <div id='info-linedup'>
+                <div class="usernameContainer">{userInfo.username} <button class='edit'> Edit Profile </button> </div>
+                <div class='following-ers'> 
+                  {(userData.length)} Posts
+
+
+
+
+
+
+                  
+                  <button id="following" onClick={this.modalUp}> <Link to="/user/following">Following</Link> </button>
+                  <button id="followers" onClick={this.modalUp}> <Link to="/user/followers">Followers</Link></button></div>
+                  <span class="userFullname">{userInfo.full_name}</span>
+                </div>
+              </div>
           </div>
-        </div>
         <div id="photoContainer">
           {userData.map(user => {
             return (
