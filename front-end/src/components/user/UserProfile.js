@@ -11,6 +11,8 @@ class UserProfile extends React.Component {
     inputURL: '',
     loggedIn: true,
     message: '',
+    modalClassNames: 'display',
+    modalData: []
   }
 
 
@@ -66,7 +68,26 @@ class UserProfile extends React.Component {
 
 // ----------------------------------------
 
+modalUp = (e) => {
+  let buttonName = e.target.id
+  console.log(e.target.className)
+  if(this.state.modalClassNames === "display"){
+    this.setState({modalClassNames: 'followModal'})
+  }
 
+  axios
+    .get(`users/${buttonName}`)
+    .then(res => {
+      this.setState({modalData: res.data.data})
+    })
+}
+
+modalDown = (e) => {
+  console.log()
+  if(e.target.className === "followModal"){
+    this.setState({modalClassNames: 'display'})
+  }
+}
 
 // -------------------------------------------  
 
@@ -138,14 +159,25 @@ class UserProfile extends React.Component {
                 <div class='following-ers'> 
                   {(userData.length)} Posts
 
-
-
-
-
+                  {/* Elon code for modal */}
+                
+                  <div className={this.state.modalClassNames} onClick={this.modalDown}>
+                  <div className="followModalDiv" >
+                    {this.state.modalData.map(v => (
+                      <div>
+                        <Link to={`/u/${v.username}`}><img class="follow-img" src={v.profile_pic}/>
+                        <p>{v.username}</p></Link>
+                        <p>{v.full_name}</p>
+                  
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                {/* ----------------------- */}
 
                   
-                  <button id="following" onClick={this.modalUp}> <Link to="/user/following">Following</Link> </button>
-                  <button id="followers" onClick={this.modalUp}> <Link to="/user/followers">Followers</Link></button></div>
+                  <button id="following" onClick={this.modalUp}>Following </button>
+                  <button id="followers" onClick={this.modalUp}>Followers</button></div>
                   <span class="userFullname">{userInfo.full_name}</span>
                 </div>
               </div>
