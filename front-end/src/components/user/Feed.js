@@ -30,6 +30,7 @@ class Feed extends Component {
   }
 
   render(){
+    console.log('Feed', this.state)
     return(
         <div>
           {this.state.feedPhotos.map(v => <img className="feed-img" src={v.url}/>)}

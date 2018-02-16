@@ -28,11 +28,13 @@ class Member extends React.Component {
         }).catch(err => {
             console.log(err)
         })
-        
-        axios.get('/users/getUserInfo')
+
+        axios.get('/users/following')
         .then(res => {
-          this.setState({me: res.data.data[0]})
-        }).catch(err => {
+          let follows = res.data.data
+          this.setState({following: !!follows.filter(v => v.username === this.state.user.username)[0]})
+        })
+        .catch(err => {
             console.log(err)
         })
     }
@@ -57,9 +59,10 @@ class Member extends React.Component {
 
     //follow user button
     handleFollow = (e) => {
-      console.log()
+      console.log('userid:', this.state.me.id, 'followid:', this.state.user.id)
       axios.post('/users/follow', {userid: this.state.me.id, followid: this.state.user.id})
       .then(res => {
+          this.setState({following: true})
           res.send('success')
       }).catch(err => {
           console.log(err)
@@ -82,7 +85,7 @@ class Member extends React.Component {
                     <div id="userBanner">
                     <img src={user.profile_pic} width={'150px'}/>
                     <span id="username">{user.username}</span>
-                    <button onClick={this.handleFollow}>follow</button>
+                    <button onClick={this.handleFollow} disabled={this.state.following}>follow</button>
 
                     </div>
 

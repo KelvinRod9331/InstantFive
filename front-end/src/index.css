@@ -26,3 +26,9 @@ body {
 .follow-img {
   width: 20%;
 }
+
+.feed-img {
+  width: 50%;
+  display: block;
+  margin: 5% 25%;
+}
