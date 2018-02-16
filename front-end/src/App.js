@@ -12,13 +12,17 @@ import U from './components/u/U';
 
 
 
+
 class App extends Component {
     render() {
 
         return (
             <div>
-                <nav>
+                {/* <nav id='following/ers'>
                     <Link to="/">Home</Link>
+                    <Link to="/feed">Feed</Link> /*Will be Accessed Through Clicking On A Button*
+                </nav> */}
+                <nav>
                     {/* <Link to="/user/following">Following</Link> 
                     <Link to="/user/followers">Followers</Link>  */}
                     <Link to="/feed">Feed</Link> {/*Will be Accessed Through Clicking On A Button*/}
