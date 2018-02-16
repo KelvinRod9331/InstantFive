@@ -24,8 +24,14 @@ class Member extends React.Component {
 
         axios.get('/users/getUserInfo')
         .then(res => {
-          console.log('userID', res.data.data[0], 'followid', this.state.user.id)
-
+          this.setState({me: res.data.data[0]})
+        }).catch(err => {
+            console.log(err)
+        })
+        
+        axios.get('/users/getUserInfo')
+        .then(res => {
+          this.setState({me: res.data.data[0]})
         }).catch(err => {
             console.log(err)
         })
@@ -69,6 +75,7 @@ class Member extends React.Component {
         if (user === undefined) {
             return '404 Page not found'
         }
+        console.log('member', this.state)
         return (
             <div>
                 <div>{message}</div>
