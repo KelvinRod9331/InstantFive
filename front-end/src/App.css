@@ -283,6 +283,7 @@ overflow: hidden;
 }
 .search_user_div{
   width: 280px;
+  height: 60px;
   border-bottom: 0.2px solid gainsboro;
   margin-top: 2%;
 
