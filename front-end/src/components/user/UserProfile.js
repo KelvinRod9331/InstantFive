@@ -42,7 +42,7 @@ class UserProfile extends React.Component {
   handlePhotoSubmit = e => {
     e.preventDefault()
     const { inputURL } = this.state;
-    const { userInfo, retriveUserPhotos } = this.props
+    const { userInfo,  retriveUserPhotos} = this.props
     console.log({ URL: inputURL });
     axios
       .post("/users/upload", {
@@ -54,7 +54,7 @@ class UserProfile extends React.Component {
           inputURL: "",
           message: "You're Photo Has Been Uploaded"
         });
-        retriveUserPhotos()
+        retriveUserPhotos() //This will re-render the user's photo once user upload photo
       })
       .catch(err => {
         this.setState({

@@ -123,19 +123,19 @@ class User extends React.Component {
                 modalData={modalData}
                 modalClassNames={modalClassNames}
                 renderFollowers={renderFollowers}
+                retriveUserPhotos={this.retriveUserPhotos}
             />
         )
 
     }
 
     renderFollowers = () => {
-        return <Followers getUserByID={this.getUserByID}/>
+        return <Followers getUserByID={this.getUserByID} />
     }
 
 
 
-
-///modal to show the modal
+    ///modal to show the modal
     modalUp = (e) => {
       let buttonName = e.target.id
       console.log(e.target.className)
@@ -151,10 +151,10 @@ class User extends React.Component {
     }
 
     modalDown = (e) => {
-      console.log()
-      if(e.target.className === "followModal"){
-        this.setState({modalClassNames: 'display'})
-      }
+        console.log()
+        if (e.target.className === "followModal") {
+            this.setState({ modalClassNames: 'display' })
+        }
     }
 
     componentWillMount() {

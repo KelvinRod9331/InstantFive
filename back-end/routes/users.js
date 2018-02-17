@@ -3,10 +3,9 @@ var express = require("express");
 var router = express.Router();
 const { loginRequired } = require("../auth/helpers");
 
-
+router.post("/upload", db.uploadPhoto); 
 router.post("/new", db.registerUser);
 router.post("/login", db.loginUser);
-router.post("/upload", db.uploadPhoto);
 router.post("/follow", db.followUser);
 router.post("/photo/:id/like", db.likePhoto);
 
