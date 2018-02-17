@@ -132,7 +132,7 @@ class UserProfile extends React.Component {
             <div id='info-linedup'>
               <div class="usernameContainer">{userInfo.username} 
               <button class='edit'> Edit Profile </button> 
-              <button className='gear_btn'></button>
+              <button className='option_btn'></button>
               </div>
               <div class='following-ers'>
                 {(userData.length)} Posts
