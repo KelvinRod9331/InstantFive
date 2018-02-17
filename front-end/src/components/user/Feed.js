@@ -30,11 +30,18 @@ class Feed extends Component {
       .catch(err => console.log("err", err))
   }
 
-  render(){
+  render() {
+    const {feedPhotos} = this.state;
     console.log('Feed', this.state)
-    return(
+    return (
         <div>
-          {this.state.feedPhotos.map(v => <div><Link to={`/u/${v.username}`}><img className="follow-img" src={v.profile_pic}/><p>{v.username}</p></Link><img className="feed-img" src={v.url}/></div>)}
+          {feedPhotos.map(v => 
+          <div>
+            <Link to={`/u/${v.username}`}>
+              <img className="follow-img" src={v.profile_pic}/>
+              <p>{v.username}</p>
+            </Link>
+            <img className="feed-img" src={v.url}/></div>)}
         </div>
     )
   }

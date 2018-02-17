@@ -62,6 +62,8 @@ class Login extends React.Component {
   }
   render() {
     const { usernameInput, passwordInput, message, loggedIn, user } = this.state;
+    const { submitForm } = this;
+    
     if (user) {
       return <Redirect to='/user' />
     }
