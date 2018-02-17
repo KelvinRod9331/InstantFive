@@ -84,21 +84,7 @@ class UserProfile extends React.Component {
     console.log({ userData: this.props.userData })
     return (
       <div id='userprofile'>
-        <div id='header-bar'>
-          <div id='info-bar'>
-            <div class='icon-ig'><h1> <img src='https://png.icons8.com/ios/1600/instagram-new.png' width='30px' height='30px' /> instagram </h1></div>
-            <div class='searchbar'>
-              <input
-                class='searchbar'
-                type='text'
-                value={this.state.searchInput}
-                onChange={this.renderSearchInput}
-                placeholder={'Search'}
-              />
-            </div>
-            <div class='icon-profile'><i class="fa fa-user-o" ></i>{'  .    '}{'   .   '} <i class="fa fa-heart-o"></i> </div>
-          </div>
-        </div>
+
         <div className={modalClassNames} onClick={modalDown}>
           <div className="followsDiv">
             {modalData.map(v => (

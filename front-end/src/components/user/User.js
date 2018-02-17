@@ -113,12 +113,12 @@ class User extends React.Component {
 
     renderUserProfile = () => {
         const { userData, userInfo, modalData, modalClassNames } = this.state;
-        const { modalUp, modalDown, renderFollowers} = this;
+        const { modalUp, modalDown, renderFollowers } = this;
         return (
-            <UserProfile 
-                userData={userData} 
-                userInfo={userInfo} 
-                modalUp={modalUp} 
+            <UserProfile
+                userData={userData}
+                userInfo={userInfo}
+                modalUp={modalUp}
                 modalDown={modalDown}
                 modalData={modalData}
                 modalClassNames={modalClassNames}
@@ -137,17 +137,17 @@ class User extends React.Component {
 
     ///modal to show the modal
     modalUp = (e) => {
-      let buttonName = e.target.id
-      console.log(e.target.className)
-      if(this.state.modalClassNames === "display"){
-        this.setState({modalClassNames: 'followModal'})
-      }
+        let buttonName = e.target.id
+        console.log(e.target.className)
+        if (this.state.modalClassNames === "display") {
+            this.setState({ modalClassNames: 'followModal' })
+        }
 
-      axios
-        .get(`users/${buttonName}`)
-        .then(res => {
-          this.setState({modalData: res.data.data})
-        })
+        axios
+            .get(`users/${buttonName}`)
+            .then(res => {
+                this.setState({ modalData: res.data.data })
+            })
     }
 
     modalDown = (e) => {
@@ -162,37 +162,32 @@ class User extends React.Component {
         this.renderSearchEngine();
         this.retriveUserPhotos();
     }
-    
+
     render() {
-        const { 
-            userInfo, 
-            searchInput, 
-            userWorldWide, 
-            modalData, 
+        const {
+            userInfo,
+            searchInput,
+            userWorldWide,
+            modalData,
             modalClassNames,
             followURL
         } = this.state;
 
         const { modalUp, modalDown, routeFollowPage } = this;
 
-    if (followURL) {
-        return <Redirect to={followURL}/>
-    };
+        if (followURL) {
+            return <Redirect to={followURL} />
+        };
         console.log(
             "User Who Page Is Showing:",
             userInfo.username,
             "All User:",
             userWorldWide, this.state
         );
-          //modal div added
+        //modal div added
         return (
             <div>
-                {/* <input class='searchbar'
-                    type="text"
-                    value={searchInput}
-                    onChange={this.renderSearchInput}
-                    placeholder={'Search'}
-                /><br /> */}
+
                 {/* <div className={modalClassNames} onClick={modalDown}>
                   <div className="followsDiv">
                     {modalData.map(v => (
@@ -204,11 +199,42 @@ class User extends React.Component {
                     ))}
                   </div>
                 </div> */}
-                Search: <input type="text" value={searchInput} onChange={this.renderSearchInput} />
-                {/* <button id="followers" onClick={this.modalUp}>Followers</button>
-                <button id="following" onClick={this.modalUp}>Following</button> */}
 
-                <div className="searchResultBox">
+                <div id='header-bar'>
+                    <div id='info-bar'>
+                        <div class='icon-ig'><h1> <img src='https://png.icons8.com/ios/1600/instagram-new.png' width='30px' height='30px' /> instagram </h1></div>
+                        <div class='searchbar'>
+                            <input
+                                class='searchbar'
+                                type='text'
+                                value={this.state.searchInput}
+                                onChange={this.renderSearchInput}
+                                placeholder={'Search'}
+                            />
+                        </div>
+                        <div class='icon-profile'><i class="fa fa-user-o" ></i>{'  .    '}{'   .   '} <i class="fa fa-heart-o"></i> </div>
+                    </div>
+                    <div className="searchResultBox">
+                        {userWorldWide.map(user => {
+                            if (user.username.toLowerCase().includes(searchInput.toLowerCase()) && searchInput) {
+                                return <a className="search_links"
+                                href={`/u/${user.username.toLowerCase()}`}
+                            > {<div className="search_user_div">
+                                    <span>
+                                        <img src={user.profile_pic} width={'50px'} />
+                                    </span>
+                                    <span className='username_header'>
+                                        {user.username}
+                                    </span>
+
+                            </div>}</a>
+                            }
+                        })}
+                    </div> {/*DO NOT TOUCH ELON!! BY KELVIN*/}
+                </div>
+
+
+                {/* <div className="searchResultBox">
                     {userWorldWide.map(user => {
                         if (user.username.toLowerCase().includes(searchInput.toLowerCase()) && searchInput) {
                             return <button
@@ -216,8 +242,17 @@ class User extends React.Component {
                                 onClick={this.setFollowURL}
                             >{user.username}</button>
                         }
+                    })} */}
+                {/* <div className="searchResultBox">
+                    {userWorldWide.map(user => {
+                        if (user.username.toLowerCase().includes(searchInput.toLowerCase()) && searchInput) {
+                            return <div className="search_user_div">
+                                <a
+                                    href={`/u/${user.username.toLowerCase()}`}
+                                >{user.username}</a></div>
+                        }
                     })}
-                </div> {/*DO NOT TOUCH ELON!! BY KELVIN*/}
+                </div> DO NOT TOUCH ELON!! BY KELVIN */}
 
 
                 <Switch>
