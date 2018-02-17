@@ -42,7 +42,7 @@ class UserProfile extends React.Component {
   handlePhotoSubmit = e => {
     e.preventDefault()
     const { inputURL } = this.state;
-    const { userInfo,  retriveUserPhotos} = this.props
+    const { userInfo, retriveUserPhotos } = this.props
     console.log({ URL: inputURL });
     axios
       .post("/users/upload", {
@@ -64,18 +64,18 @@ class UserProfile extends React.Component {
       });
   };
 
-// ----------------------------------------
+  // ----------------------------------------
 
 
 
-// -------------------------------------------  
+  // -------------------------------------------  
 
 
 
 
 
   render() {
-    const { userData, userInfo, userID, modalUp, modalDown,modalClassNames, modalData } = this.props
+    const { userData, userInfo, userID, modalUp, modalDown, modalClassNames, modalData } = this.props
     const { loggedIn, inputURL, uploadClicked, message } = this.state
     console.log({ userInfo: userInfo });
     if (!loggedIn) {
@@ -89,8 +89,8 @@ class UserProfile extends React.Component {
           <div className="followsDiv">
             {modalData.map(v => (
               <div>
-                <Link to={`/u/${v.username}`}><img class="follow-img" src={v.profile_pic}/>
-                <p>{v.username}</p></Link>
+                <Link to={`/u/${v.username}`}><img class="follow-img" src={v.profile_pic} />
+                  <p>{v.username}</p></Link>
                 <p>{v.full_name}</p>
               </div>
             ))}
@@ -128,20 +128,22 @@ class UserProfile extends React.Component {
         <p>{message}</p>
         <div id='profileHeader'>
           <div id='profileInfo'>
-              <div class='icon-profile'><img src={userInfo.profile_pic} width={'90px'} /></div>
-              <div id='info-linedup'>
-                <div class="usernameContainer">{userInfo.username} <button class='edit'> Edit Profile </button> </div>
-                  <div class='following-ers'> 
-                    {(userData.length)} Posts
-
-                    
-                    <button id="following" onClick={modalUp}> Following </button>
-                    <button id="followers" onClick={modalUp}> Followers</button>
-                  </div>
-                  <span class="userFullname">{userInfo.full_name}</span>
-                </div>
+            <div class='icon-profile'><img src={userInfo.profile_pic} width={'90px'} /></div>
+            <div id='info-linedup'>
+              <div class="usernameContainer">{userInfo.username} 
+              <button class='edit'> Edit Profile </button> 
+              <button className='gear_btn'></button>
               </div>
+              <div class='following-ers'>
+                {(userData.length)} Posts
+
+                     <button id="followers" onClick={modalUp}> followers</button>
+                     <button id="following" onClick={modalUp}> following </button>
+              </div>
+              <span class="userFullname">{userInfo.full_name}</span>
+            </div>
           </div>
+        </div>
         <div id="photoContainer">
           {userData.map(user => {
             return (

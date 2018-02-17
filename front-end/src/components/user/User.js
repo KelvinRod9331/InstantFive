@@ -5,7 +5,7 @@ import { Redirect, Route, Switch, Link } from "react-router-dom";
 import UserProfile from "./UserProfile";
 import Followers from "./Followers";
 import Following from "./Following";
-
+import Feed from "./Feed"
 
 
 class User extends React.Component {
@@ -202,7 +202,7 @@ class User extends React.Component {
 
                 <div id='header-bar'>
                     <div id='info-bar'>
-                        <div class='icon-ig'><h1> <img src='https://png.icons8.com/ios/1600/instagram-new.png' width='30px' height='30px' /> instagram </h1></div>
+                        <div class='icon-ig'><h1> < a id='ig-icon-link' href={'/feed'} > {<img src='https://png.icons8.com/ios/1600/instagram-new.png' width='30px' height='30px' />} </a> Instagram </h1></div>
                         <div class='searchbar'>
                             <input
                                 class='searchbar'
@@ -212,50 +212,32 @@ class User extends React.Component {
                                 placeholder={'Search'}
                             />
                         </div>
-                        <div class='icon-profile'><i class="fa fa-user-o" ></i>{'  .    '}{'   .   '} <i class="fa fa-heart-o"></i> </div>
+                        <div class='icon-profile'>< a id='ig-icon-link' href={'/user'}>{<i class="fa fa-user-o" ></i>}</a>{'  .    '}{'   .   '} <i class="fa fa-heart-o"></i> </div>
                     </div>
                     <div className="searchResultBox">
                         {userWorldWide.map(user => {
                             if (user.username.toLowerCase().includes(searchInput.toLowerCase()) && searchInput) {
                                 return <a className="search_links"
-                                href={`/u/${user.username.toLowerCase()}`}
-                            > {<div className="search_user_div">
-                                    <span>
+                                    href={`/u/${user.username.toLowerCase()}`}
+                                > {<div className="search_user_div">
+                                    <span className='search_profilepic'>
                                         <img src={user.profile_pic} width={'50px'} />
                                     </span>
                                     <span className='username_header'>
                                         {user.username}
                                     </span>
+                                    <span className="fullname">
+                                        {user.full_name}
+                                    </span>
 
-                            </div>}</a>
+                                </div>}</a>
                             }
                         })}
                     </div> {/*DO NOT TOUCH ELON!! BY KELVIN*/}
                 </div>
 
-
-                {/* <div className="searchResultBox">
-                    {userWorldWide.map(user => {
-                        if (user.username.toLowerCase().includes(searchInput.toLowerCase()) && searchInput) {
-                            return <button
-                                value={user.username}
-                                onClick={this.setFollowURL}
-                            >{user.username}</button>
-                        }
-                    })} */}
-                {/* <div className="searchResultBox">
-                    {userWorldWide.map(user => {
-                        if (user.username.toLowerCase().includes(searchInput.toLowerCase()) && searchInput) {
-                            return <div className="search_user_div">
-                                <a
-                                    href={`/u/${user.username.toLowerCase()}`}
-                                >{user.username}</a></div>
-                        }
-                    })}
-                </div> DO NOT TOUCH ELON!! BY KELVIN */}
-
-
                 <Switch>
+                    <Route path="/feed" component={Feed} />
                     <Route exact path="/user" render={this.renderUserProfile} />
                     <Route exact path="/user/followers" render={this.renderFollowers} />
                     <Route exact path="/user/following" render={this.renderFollowing} />
