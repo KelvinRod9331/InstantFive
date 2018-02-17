@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
 import axios from 'axios'
 
 class Feed extends Component {
@@ -13,7 +14,7 @@ class Feed extends Component {
     axios
       .get('/users/feed')
       .then(res => {
-        this.setState({feedPhotos: res.data.data})
+        this.setState({feedPhotos: res.data.data.reverse()})
       })
       .catch(err => console.log("err", err))
   }
@@ -30,9 +31,10 @@ class Feed extends Component {
   }
 
   render(){
+    console.log('Feed', this.state)
     return(
         <div>
-          {this.state.feedPhotos.map(v => <img className="feed-img" src={v.url}/>)}
+          {this.state.feedPhotos.map(v => <div><Link to={`/u/${v.username}`}><img className="follow-img" src={v.profile_pic}/><p>{v.username}</p></Link><img className="feed-img" src={v.url}/></div>)}
         </div>
     )
   }

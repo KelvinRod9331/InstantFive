@@ -17,7 +17,9 @@ class User extends React.Component {
             searchInput: '',
             userWorldWide: [],
             ///added class for modal
-            modalClassNames: 'display'
+            modalClassNames: 'display',
+            modalData: [],
+            followURL: ''
         };
     }
 
@@ -83,23 +85,18 @@ class User extends React.Component {
             });
     }
 
-
-    componentWillMount() {
-        this.retrieveUserInfo();
-        this.renderSearchEngine();
-        this.retriveUserPhotos();
-    }
-
-
     renderSearchInput = (e) => {
         this.setState({
             searchInput: e.target.value
         })
     }
 
-
-
-
+    setFollowURL = e => {
+        let followName = e.target.value;
+        this.setState({
+            followURL: `u/${followName.toLowerCase()}`
+        })
+    }
     // getUserByID = (e) => {
     //     axios
     //         .get(`/users/getSelectedUserByID/${e.target.value}`)
@@ -113,10 +110,22 @@ class User extends React.Component {
     //         })
     // }
 
-    renderUserProfile = () => {
-        const { userData, userInfo } = this.state;
 
-        return <UserProfile userData={userData} userInfo={userInfo} />
+    renderUserProfile = () => {
+        const { userData, userInfo, modalData, modalClassNames } = this.state;
+        const { modalUp, modalDown, renderFollowers} = this;
+        return (
+            <UserProfile 
+                userData={userData} 
+                userInfo={userInfo} 
+                modalUp={modalUp} 
+                modalDown={modalDown}
+                modalData={modalData}
+                modalClassNames={modalClassNames}
+                renderFollowers={renderFollowers}
+                retriveUserPhotos={this.retriveUserPhotos}
+            />
+        )
 
     }
 
@@ -128,10 +137,17 @@ class User extends React.Component {
 
     ///modal to show the modal
     modalUp = (e) => {
-        console.log(e.target.className)
-        if (this.state.modalClassNames === "display") {
-            this.setState({ modalClassNames: 'followModal' })
-        }
+      let buttonName = e.target.id
+      console.log(e.target.className)
+      if(this.state.modalClassNames === "display"){
+        this.setState({modalClassNames: 'followModal'})
+      }
+
+      axios
+        .get(`users/${buttonName}`)
+        .then(res => {
+          this.setState({modalData: res.data.data})
+        })
     }
 
     modalDown = (e) => {
@@ -141,46 +157,67 @@ class User extends React.Component {
         }
     }
 
+    componentWillMount() {
+        this.retrieveUserInfo();
+        this.renderSearchEngine();
+        this.retriveUserPhotos();
+    }
+    
     render() {
-        const { userInfo, searchInput, userWorldWide } = this.state;
-        const {followers} = this.props
+        const { 
+            userInfo, 
+            searchInput, 
+            userWorldWide, 
+            modalData, 
+            modalClassNames,
+            followURL
+        } = this.state;
 
+        const { modalUp, modalDown, routeFollowPage } = this;
+
+    if (followURL) {
+        return <Redirect to={followURL}/>
+    };
         console.log(
             "User Who Page Is Showing:",
             userInfo.username,
             "All User:",
-            userWorldWide
+            userWorldWide, this.state
         );
-        //modal div added
+          //modal div added
         return (
             <div>
-
-                <input
+                {/* <input class='searchbar'
                     type="text"
                     value={searchInput}
                     onChange={this.renderSearchInput}
                     placeholder={'Search'}
-                /><br />
+                /><br /> */}
+                {/* <div className={modalClassNames} onClick={modalDown}>
+                  <div className="followsDiv">
+                    {modalData.map(v => (
+                      <div>
+                        <Link to={`/u/${v.username}`}><img class="follow-img" src={v.profile_pic}/>
+                        <p>{v.username}</p></Link>
+                        <p>{v.full_name}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div> */}
+                Search: <input type="text" value={searchInput} onChange={this.renderSearchInput} />
+                {/* <button id="followers" onClick={this.modalUp}>Followers</button>
+                <button id="following" onClick={this.modalUp}>Following</button> */}
 
-                <div className={this.state.modalClassNames} onClick={this.modalDown}>
-                {/* {followers.map(user => {
-                    <div className="followsDiv"><button className="buttn" onClick={this.modalOut}>{user}</button></div>
-                })} */}
-                    
-                </div>
-                <button id="followers" onClick={this.modalUp}>Followers</button>
-                <button id="following" onClick={this.modalUp}>Following</button>
-
-                {/* <div className="searchResultBox">
+                <div className="searchResultBox">
                     {userWorldWide.map(user => {
-                        if (user.username.includes(searchInput) && searchInput) {
+                        if (user.username.toLowerCase().includes(searchInput.toLowerCase()) && searchInput) {
                             return <button
-                                value={user.id}
-                                onClick={this.getUserByID}
+                                value={user.username}
+                                onClick={this.setFollowURL}
                             >{user.username}</button>
                         }
                     })}
-                </div> */} {/*DO NOT TOUCH ELON!! BY KELVIN*/}
+                </div> {/*DO NOT TOUCH ELON!! BY KELVIN*/}
 
 
                 <Switch>

@@ -18,6 +18,7 @@ class Following extends React.Component {
   render() {
     return (
       <div>
+
         <div className={this.state.modalClassNames} onClick={this.modalOut}>
           <div className="followsDiv"><button className="buttn" onClick={this.modalOut}>yo</button></div>
         </div>

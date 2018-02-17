@@ -9,6 +9,7 @@ body {
   height: 100vh;
   background-color: rgba(0,0,0,.3);
   position: absolute;
+  z-index: 2;
 }
 
 .followsDiv {
@@ -20,4 +21,14 @@ body {
 
 .display {
   display: none;
+}
+
+.follow-img {
+  width: 5vw;
+}
+
+.feed-img {
+  width: 50%;
+  display: block;
+  margin: 5% 25%;
 }

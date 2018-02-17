@@ -12,18 +12,12 @@ import U from './components/u/U';
 
 
 
+
 class App extends Component {
     render() {
 
         return (
             <div>
-                <nav>
-                    <Link to="/">Home</Link>
-                    {/* <Link to="/user/following">Following</Link> 
-                    <Link to="/user/followers">Followers</Link>  */}
-                    <Link to="/feed">Feed</Link> {/*Will be Accessed Through Clicking On A Button*/}
-
-                </nav>
                 <Switch>
                 <Route exact path="/" component={Home}/>
                 <Route exact path="/login" component={Login}/>
