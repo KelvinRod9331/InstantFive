@@ -90,7 +90,8 @@ class Member extends React.Component {
 
     render() {
         console.log('gfdjnslk', this.props.match.params.member)
-        let { user, message, userData } = this.state
+        const { user, message, userData, following } = this.state
+        const { handleFollow } = this;
         if (user === null) {
             return 'loading...'
         }
@@ -104,7 +105,7 @@ class Member extends React.Component {
                     <div id="userBanner">
                     <img src={user.profile_pic} width={'150px'}/>
                     <span id="username">{user.username}</span>
-                    <button onClick={this.handleFollow} disabled={this.state.following}>follow</button>
+                    <button onClick={this.handleFollow} disabled={following}>follow</button>
 
                     </div>
 

@@ -184,6 +184,7 @@ submit {
  }
 
  #photoContainer {
+  width: 980px;
   padding-top:40px;
   box-sizing: border-box;
   margin-left: 110px;
