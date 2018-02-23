@@ -9,7 +9,10 @@ class Member extends React.Component {
         message: '',
         following: false,
         userInfo: [],
-        userData: []
+        userData: [],
+        userWorldWide: [],
+        searchInput: '',
+
     }
 
     retrieveUserPhotos = () => {
@@ -59,8 +62,77 @@ class Member extends React.Component {
             })
     }
 
+    /**
+           * @func renderSearchEngine
+           * This Will Retrieve All User's In the DB To Use For Search
+           * @var userWorldWide
+            * Will hold all User's Data From DB
+            *Kelvin Rodriguez
+        */
+        renderSearchEngine = () => {
+            axios
+                .get('/users/all')
+                .then(res => {
+                    this.setState({
+                        userWorldWide: [...res.data.data]
+                    })
+                })
+                .catch(err => {
+                    console.log("Error:", err);
+                });
+        }
+    
+        renderSearchInput = (e) => {
+            this.setState({
+                searchInput: e.target.value
+            })
+        }
+
+    pageBanner = () => {
+        const {userWorldWide, searchInput, } = this.state
+        console.log(userWorldWide)
+        return (
+            <div id='header-bar'>
+                    <div id='info-bar'>
+                        <div class='icon-ig'><h1> < a id='ig-icon-link' href={'/feed'} > {<img src='https://png.icons8.com/ios/1600/instagram-new.png' width='30px' height='30px' />} </a> Instagram </h1></div>
+                        <div class='searchbar'>
+                            <input
+                                class='searchbar'
+                                type='text'
+                                value={searchInput}
+                                onChange={this.renderSearchInput}
+                                placeholder={'Search'}
+                            />
+                        </div>
+                        <div class='icon-profile'>< a id='ig-icon-link' href={'/user'}>{<i class="fa fa-user-o" ></i>}</a>{'  .    '}{'   .   '} <i class="fa fa-heart-o"></i> </div>
+                    </div>
+                    <div className="searchResultBox">
+                        {userWorldWide.map(user => {
+                            if (user.username.toLowerCase().includes(searchInput.toLowerCase()) && searchInput) {
+                                return <a className="search_links"
+                                    href={`/u/${user.username.toLowerCase()}`}
+                                > {<div className="search_user_div">
+                                    <span className='search_profilepic'>
+                                        <img src={user.profile_pic} width={'50px'} />
+                                    </span>
+                                    <span className='username_header'>
+                                        {user.username}
+                                    </span>
+                                    <span className="fullname">
+                                        {user.full_name}
+                                    </span>
+
+                                </div>}</a>
+                            }
+                        })}
+                    </div>
+                </div>
+        )
+    }
+
     componentDidMount() {
-        this.getUser()
+        this.renderSearchEngine();
+        this.getUser();
 
         axios
             .get(`/users`)
@@ -92,6 +164,7 @@ class Member extends React.Component {
         console.log('gfdjnslk', this.props.match.params.member)
         const { user, message, userData, following } = this.state
         const { handleFollow } = this;
+        const {pageBanner} = this.props
         if (user === null) {
             return 'loading...'
         }
@@ -101,6 +174,7 @@ class Member extends React.Component {
         console.log('member', this.state)
         return (
             <div>
+                {this.pageBanner()}
                 <div id='profileHeader'>
                     <div id='profileInfo'>
                         <div class='icon-profile'><img src={user.profile_pic} width={'90px'} /></div>

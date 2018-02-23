@@ -64,6 +64,11 @@ class UserProfile extends React.Component {
       });
   };
 
+
+  profilePicOptions = () => {
+    return
+  }
+
   // ----------------------------------------
 
 
@@ -87,12 +92,21 @@ class UserProfile extends React.Component {
 
         <div className={modalClassNames} onClick={modalDown}>
           <div className="followsDiv">
-            {modalData.map(v => (
-              <div>
-                <Link to={`/u/${v.username}`}><img class="follow-img" src={v.profile_pic} />
-                  <p>{v.username}</p></Link>
-                <p>{v.full_name}</p>
-              </div>
+            {modalData.map(user => (
+              <a className="follows_links"
+                href={`/u/${user.username.toLowerCase()}`}
+              > {<div className="follows_user_div">
+                <span className='follows_profilepic'>
+                  <img src={user.profile_pic} width={'50px'} />
+                </span>
+                <span className='follows_header'>
+                  {user.username}
+                </span>
+                <span className="follows_fullname">
+                  {user.full_name}
+                </span>
+
+              </div>}</a>
             ))}
           </div>
         </div>
@@ -128,17 +142,20 @@ class UserProfile extends React.Component {
         <p>{message}</p>
         <div id='profileHeader'>
           <div id='profileInfo'>
-            <div class='icon-profile'><img src={userInfo.profile_pic} width={'90px'} /></div>
+            <div className='icon-profile' onClick={modalUp}>
+            <img src={userInfo.profile_pic} width={'90px'}/>
+            
+            </div>
             <div id='info-linedup'>
-              <div class="usernameContainer">{userInfo.username} 
-              <button class='edit'> Edit Profile </button> 
-              <button className='option_btn'></button>
+              <div class="usernameContainer">{userInfo.username}
+                <button class='edit'> Edit Profile </button>
+                <button className='option_btn'></button>
               </div>
               <div class='following-ers'>
                 {(userData.length)} Posts
 
-                     <button id="followers" onClick={modalUp}> followers</button>
-                     <button id="following" onClick={modalUp}> following </button>
+                <button id="followers" onClick={modalUp}> followers</button>
+                <button id="following" onClick={modalUp}> following </button>
               </div>
               <span class="userFullname">{userInfo.full_name}</span>
             </div>
