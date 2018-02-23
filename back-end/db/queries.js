@@ -183,7 +183,7 @@ function getAllUsers(req, res, next) {
 function updateUser(req, res, next) {
   console.log(req);
   db
-    .none("UPDATE users SET {params.column}=${params.newvalue} WHERE username=${user.username}", req)
+    .none("UPDATE users SET ${params.column}=${params.newvalue} WHERE username=${user.username}", req)
     .then(function (data) {
       res.status(200).json({
         status: "success",
