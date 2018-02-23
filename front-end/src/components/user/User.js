@@ -8,6 +8,7 @@ import Following from "./Following";
 import Feed from "./Feed"
 
 
+
 class User extends React.Component {
     constructor() {
         super();
@@ -97,19 +98,7 @@ class User extends React.Component {
             followURL: `u/${followName.toLowerCase()}`
         })
     }
-    // getUserByID = (e) => {
-    //     axios
-    //         .get(`/users/getSelectedUserByID/${e.target.value}`)
-    //         .then(res => {
-    //             this.setState({
-    //                 userInfo: res.data.data[0]
-    //             })
-    //         })
-    //         .catch(err => {
-    //             console.log("Error:", err)
-    //         })
-    // }
-
+   
 
     renderUserProfile = () => {
         const { userData, userInfo, modalData, modalClassNames } = this.state;
@@ -138,7 +127,7 @@ class User extends React.Component {
     ///modal to show the modal
     modalUp = (e) => {
         let buttonName = e.target.id
-        console.log(e.target.className)
+        console.log("className:", e.target.className)
         if (this.state.modalClassNames === "display") {
             this.setState({ modalClassNames: 'followModal' })
         }
@@ -157,6 +146,8 @@ class User extends React.Component {
         }
     }
 
+  
+ 
     componentWillMount() {
         this.retrieveUserInfo();
         this.renderSearchEngine();
@@ -233,7 +224,7 @@ class User extends React.Component {
                                 </div>}</a>
                             }
                         })}
-                    </div> {/*DO NOT TOUCH ELON!! BY KELVIN*/}
+                    </div>
                 </div>
 
                 <Switch>
