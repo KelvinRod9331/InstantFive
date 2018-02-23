@@ -180,6 +180,19 @@ function getAllUsers(req, res, next) {
     .catch(err => next(err))
 }
 
+function updateUser(req, res, next) {
+  console.log(req);
+  db
+    .none("UPDATE users SET {params.column}=${params.newvalue} WHERE username=${user.username}", req)
+    .then(function (data) {
+      res.status(200).json({
+        status: "success",
+        data: data,
+        message: "Updated user"
+      })
+    })
+}
+
 function loginUser(req, res, next) {
     passport.authenticate("local", (err, user, info) => {
       if (err) {
@@ -242,6 +255,7 @@ module.exports = {
   likePhoto,
   getSingleUser,
   getAllUsers,
+  updateUser,
   registerUser,
   loginUser,
   logoutUser,
