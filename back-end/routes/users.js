@@ -9,6 +9,7 @@ router.post("/login", db.loginUser);
 router.post("/follow", db.followUser);
 router.post("/photo/:id/like", db.likePhoto);
 
+router.patch("/updateuser/:column/:newvalue", loginRequired, db.updateUser);
 router.get("/logout", db.logoutUser);
 router.get("/userData", db.getUserPhotos); //Kelvin Rodriguez--Used To Retrieve User's Photos
 router.get("/getphotosbyuser/:username", db.getPhotosByUser) //Gerson -- Get any user's photos
@@ -23,5 +24,6 @@ router.get("/followers",db.getUserFollowers);
 router.get("/following", loginRequired, db.getUserFollowing);
 router.get("/feed", loginRequired, db.getFollowingPhotos);
 router.get("/:username", db.getUserByUsername);
+
 
 module.exports = router;
