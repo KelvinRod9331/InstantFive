@@ -1,4 +1,3 @@
-
 const db = require("./index");
 const authHelpers = require("../auth/helpers");
 const passport = require("../auth/local");
@@ -181,7 +180,7 @@ function getAllUsers(req, res, next) {
 }
 
 function updateUser(req, res, next) {
-  console.log(req);
+  console.log({req:req, column:req.column, value: req.newvalue, username: req.username});
   db
     .none("UPDATE users SET ${params.column}=${params.newvalue} WHERE username=${user.username}", req)
     .then(function (data) {
