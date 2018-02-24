@@ -243,7 +243,7 @@ overflow: hidden;
   /* float:right; */
   padding-left:10px;
   padding-right:10px;
-  margin-left: 80px;
+  margin-left: 20px; 
 }
 
 
@@ -262,27 +262,88 @@ overflow: hidden;
   
 }
 
-.follow_links, .search_links{
+/*Kelvin Added The Following Bellow To Create The Search Result Box*/
+/*----------------------------------------------------------------------*/
+.follow_links, 
+.search_links,
+.follows_links, 
+#ig-icon-link{
   color: inherit;
   text-decoration: none;
+  cursor: pointer;
 }
 
 
 
 .searchResultBox{
-  margin-left: 38%;
-  /* border: 2px solid black; */
-  width: 280px;
+  margin-left: 40%;
+  width: 260px;
   background-color: white;
   position: relative;
 }
 .search_user_div{
-  width: 280px;
+  width: 260px;
+  height: 60px;
   border-bottom: 0.2px solid gainsboro;
   margin-top: 2%;
+
+}
+
+.follows_user_div{
+  width: 530px;
+  height: 60px;
+  border-bottom: 0.2px solid gainsboro;
+  margin-top: 2%;
+}
+
+
+.username_header,
+.fullname{
+  margin-left: 8%;
+  position: absolute;
+}
+.fullname{
+  margin-top: 8%;
+  color: #AEAEAE;
+  font-family: 'Times New Roman', Times, serif
+
+}
+
+.follows_header{
+  margin-left: 8%;
+  position: absolute;
+}
+.follows_fullname{
+  /* margin-top: 40%; */
+  margin-left: 15%;
+  color: #AEAEAE;
+  font-family: 'Times New Roman', Times, serif
 
 }
 
 .search_user_div:hover{
   background-color: #FAFAFA
 }
+
+.search_profilepic{
+  margin-left: 6%;
+}
+
+#following, #followers{
+  font-size: 16.5px;
+  border:none;
+  background-color: rgb(242, 242, 242);
+  cursor: pointer;
+}
+
+.option_btn{
+  background-image: url('https://www.shareicon.net/data/2017/05/30/886552_settings_512x512.png');
+  background-size: 55px;
+  background-repeat: no-repeat;
+  background-color: rgb(242, 242, 242);
+  background-position: center;
+  width: 30px;
+  height: 30px;
+  border: none;
+}
+/*----------------------------------------------------------------------*/
