@@ -180,15 +180,23 @@ function getAllUsers(req, res, next) {
 }
 
 function updateUser(req, res, next) {
-  console.log({req:req, column:req.column, value: req.newvalue, username: req.username});
+  console.log({req:req.body, column: req.body.column,  value: req.body.newValue, username: req.user.username, user: req.user});
   db
-    .none("UPDATE users SET ${params.column}=${params.newvalue} WHERE username=${user.username}", req)
+    .none("UPDATE users SET username = ${newValue} WHERE username = ${username}", 
+    {
+      newValue: req.body.newValue,
+      username: req.user.username
+    }
+  )
     .then(function (data) {
       res.status(200).json({
         status: "success",
         data: data,
         message: "Updated user"
       })
+      .catch(function(err) {
+        return next(err);
+      });
     })
 }
 
