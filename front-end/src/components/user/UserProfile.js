@@ -11,6 +11,7 @@ class UserProfile extends React.Component {
     inputURL: '',
     loggedIn: true,
     message: '',
+    optionClicked: false,
   }
 
 
@@ -42,7 +43,7 @@ class UserProfile extends React.Component {
   handlePhotoSubmit = e => {
     e.preventDefault()
     const { inputURL } = this.state;
-    const { userInfo, retriveUserPhotos } = this.props
+    const { userInfo, retrieveUserPhotos } = this.props
     console.log({ URL: inputURL });
     axios
       .post("/users/upload", {
@@ -54,7 +55,7 @@ class UserProfile extends React.Component {
           inputURL: "",
           message: "You're Photo Has Been Uploaded"
         });
-        retriveUserPhotos() //This will re-render the user's photo once user upload photo
+        retrieveUserPhotos() //This will re-render the user's photo once user upload photo
       })
       .catch(err => {
         this.setState({
@@ -65,13 +66,13 @@ class UserProfile extends React.Component {
   };
 
 
-  profilePicOptions = () => {
-    return
-  }
-
   // ----------------------------------------
 
-
+  displayOptions = () => {
+    this.setState({
+      optionClicked: true
+    })
+  }
 
   // -------------------------------------------  
 
@@ -149,7 +150,7 @@ class UserProfile extends React.Component {
             <div id='info-linedup'>
               <div class="usernameContainer">{userInfo.username}
                 <button class='edit'> Edit Profile </button>
-                <button className='option_btn'></button>
+                <button className='option_btn' onClick={modalUp}></button>
               </div>
               <div class='following-ers'>
                 {(userData.length)} Posts

@@ -45,13 +45,13 @@ class User extends React.Component {
     }
 
     /**
-       * @func retriveUserPhotos
+       * @func retrieveUserPhotos
        * This Will Retrieve Targeted User Photos
        * @var userData
         * Will hold all User's Data such as Photos in an Array
         *Kelvin Rodriguez
     */
-    retriveUserPhotos = () => {
+    retrieveUserPhotos = () => {
         const { userInfo } = this.state
         console.log("User Who's Page is Showing:", userInfo.username)
         axios
@@ -112,7 +112,7 @@ class User extends React.Component {
                 modalData={modalData}
                 modalClassNames={modalClassNames}
                 renderFollowers={renderFollowers}
-                retriveUserPhotos={this.retriveUserPhotos}
+                retrieveUserPhotos={this.retrieveUserPhotos}
             />
         )
 
@@ -151,7 +151,7 @@ class User extends React.Component {
     componentWillMount() {
         this.retrieveUserInfo();
         this.renderSearchEngine();
-        this.retriveUserPhotos();
+        this.retrieveUserPhotos();
     }
 
     render() {
