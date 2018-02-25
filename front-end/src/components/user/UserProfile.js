@@ -10,7 +10,8 @@ class UserProfile extends React.Component {
     uploadClicked: false,
     inputURL: '',
     loggedIn: true,
-    message: '',
+    message: ''
+
   }
 
 
@@ -54,7 +55,7 @@ class UserProfile extends React.Component {
           inputURL: "",
           message: "You're Photo Has Been Uploaded"
         });
-        retriveUserPhotos()
+        retriveUserPhotos() //This will re-render the user's photo once user upload photo
       })
       .catch(err => {
         this.setState({
@@ -64,50 +65,51 @@ class UserProfile extends React.Component {
       });
   };
 
-// ----------------------------------------
-
-
-
-// -------------------------------------------  
-
-
-
-
+  profileMenuCancel = () => {
+    this.props.modalDown('cancel');
+  }
 
   render() {
-    const { userData, userInfo, userID, modalUp, modalDown,modalClassNames, modalData } = this.props
+    const { userData, userInfo, userID, modalUp, modalDown, modalClassNames, modalData, handleUploadUrl, renderUploadInput, removeProfilePic, changeProfilePic, profilePicClassName } = this.props
     const { loggedIn, inputURL, uploadClicked, message } = this.state
     console.log({ userInfo: userInfo });
     if (!loggedIn) {
       return <Home loggedIn={false} />;
     }
-    console.log({ userData: this.props.userData })
     return (
       <div id='userprofile'>
-        <div id='header-bar'>
-          <div id='info-bar'>
-            <div class='icon-ig'><h1> <img src='https://png.icons8.com/ios/1600/instagram-new.png' width='30px' height='30px' /> instagram </h1></div>
-            <div class='searchbar'>
-              <input
-                class='searchbar'
-                type='text'
-                value={this.state.searchInput}
-                onChange={this.renderSearchInput}
-                placeholder={'Search'}
-              />
-            </div>
-            <div class='icon-profile'><i class="fa fa-user-o" ></i>{'  .    '}{'   .   '} <i class="fa fa-heart-o"></i> </div>
-          </div>
-        </div>
+
         <div className={modalClassNames} onClick={modalDown}>
           <div className="followsDiv">
-            {modalData.map(v => (
+            {
+              modalData ?
+                modalData.map(user => (
+                <a className="follows_links"
+                  href={`/u/${user.username.toLowerCase()}`}
+                > {<div className="follows_user_div">
+                  <span className='follows_profilepic'>
+                    <img src={user.profile_pic} width={'50px'} />
+                  </span>
+                  <span className='follows_header'>
+                    {user.username}
+                  </span>
+                  <span className="follows_fullname">
+                    {user.full_name}
+                  </span>
+
+                </div>}</a>
+              )) :
               <div>
-                <Link to={`/u/${v.username}`}><img class="follow-img" src={v.profile_pic}/>
-                <p>{v.username}</p></Link>
-                <p>{v.full_name}</p>
+                <div className="profile-pic-menu-header">Change Profile Photo</div>
+                <div className="profile-pic-menu-item" onClick={removeProfilePic}>Remove Current Photo</div>
+                <div className="profile-pic-menu-item" onClick={renderUploadInput}>Upload Photo</div>
+                <div className={profilePicClassName}>
+                  <input onChange={handleUploadUrl}/>
+                  <input type="submit" onClick={changeProfilePic}/>
+                </div>
+                <div className="profile-pic-menu-item" id="cancel" onClick={this.profileMenuCancel}>Cancel</div>
               </div>
-            ))}
+          }
           </div>
         </div>
 
@@ -142,20 +144,25 @@ class UserProfile extends React.Component {
         <p>{message}</p>
         <div id='profileHeader'>
           <div id='profileInfo'>
-              <div class='icon-profile'><img src={userInfo.profile_pic} width={'90px'} /></div>
-              <div id='info-linedup'>
-                <div class="usernameContainer">{userInfo.username} <button class='edit'> Edit Profile </button> </div>
-                  <div class='following-ers'> 
-                    {(userData.length)} Posts
+            <div className='icon-profile' onClick={modalUp}>
+            <img id ="profile-icon" src={userInfo.profile_pic} width={'90px'}/>
 
-                    
-                    <button id="following" onClick={modalUp}> Following </button>
-                    <button id="followers" onClick={modalUp}> Followers</button>
-                  </div>
-                  <span class="userFullname">{userInfo.full_name}</span>
-                </div>
+            </div>
+            <div id='info-linedup'>
+              <div class="usernameContainer">{userInfo.username}
+                <button class='edit'> Edit Profile </button>
+                <button className='option_btn'></button>
               </div>
+              <div class='following-ers'>
+                {(userData.length)} Posts
+
+                <button id="followers" onClick={modalUp}> followers</button>
+                <button id="following" onClick={modalUp}> following </button>
+              </div>
+              <span class="userFullname">{userInfo.full_name}</span>
+            </div>
           </div>
+        </div>
         <div id="photoContainer">
           {userData.map(user => {
             return (

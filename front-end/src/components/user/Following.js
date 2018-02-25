@@ -16,11 +16,13 @@ class Following extends React.Component {
   }
 
   render() {
+    const { modalClassNames } = this.state;
+    const { modalOut } = this
     return (
       <div>
 
-        <div className={this.state.modalClassNames} onClick={this.modalOut}>
-          <div className="followsDiv"><button className="buttn" onClick={this.modalOut}>yo</button></div>
+        <div className={modalClassNames} onClick={modalOut}>
+          <div className="followsDiv"><button className="buttn" onClick={modalOut}>yo</button></div>
         </div>
       </div>
     );

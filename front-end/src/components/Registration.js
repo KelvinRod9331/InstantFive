@@ -101,8 +101,8 @@ class Registration extends React.Component {
 
   render() {
     const { emailInput, fullNameInput, usernameInput, passwordInput, confirmInput, message, registered } = this.state;
+    const { submitForm, handleEmailChange, handleFullNameChange, handleUsernameChange } = this;
     if (registered) {
-      console.log('foo')
       axios
       .post('/users/login', {
         username: usernameInput,
@@ -118,7 +118,6 @@ class Registration extends React.Component {
           message: 'username/password not found'
         });
       });
-      console.log('bar')
       return <Redirect to='/user' />
     }
     return (
@@ -133,7 +132,7 @@ class Registration extends React.Component {
         </div>
         <div class='login-container'>
           <div class='login-box'>
-            <form onSubmit={this.submitForm}>
+            <form onSubmit={submitForm}>
             <h1>Instant Five</h1>
             <h2>Sign up to see photos from your friends.</h2>
             <label>
@@ -142,7 +141,7 @@ class Registration extends React.Component {
                   name='Email'
                   placeholder='Email'
                   value={emailInput}
-                  onChange={this.handleEmailChange}
+                  onChange={handleEmailChange}
                 />
               </label>
               <label>
@@ -151,7 +150,7 @@ class Registration extends React.Component {
                   name='Full name'
                   placeholder='Full name'
                   value={fullNameInput}
-                  onChange={this.handleFullNameChange}
+                  onChange={handleFullNameChange}
                 />
               </label>
               <label>
@@ -160,7 +159,7 @@ class Registration extends React.Component {
                   name='username'
                   placeholder='Username'
                   value={usernameInput}
-                  onChange={this.handleUsernameChange}
+                  onChange={handleUsernameChange}
                 />
               </label>
               <label>

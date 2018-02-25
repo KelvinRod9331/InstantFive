@@ -5,6 +5,7 @@ import { Redirect, Route, Switch, Link } from "react-router-dom";
 import UserProfile from "./UserProfile";
 import Followers from "./Followers";
 import Following from "./Following";
+import Feed from "./Feed"
 
 
 
@@ -19,7 +20,10 @@ class User extends React.Component {
             ///added class for modal
             modalClassNames: 'display',
             modalData: [],
-            followURL: ''
+            followURL: '',
+            inputURL: '',
+            profilePicChanged: false,
+            profilePicClassName: 'display'
         };
     }
 
@@ -97,102 +101,153 @@ class User extends React.Component {
             followURL: `u/${followName.toLowerCase()}`
         })
     }
-    // getUserByID = (e) => {
-    //     axios
-    //         .get(`/users/getSelectedUserByID/${e.target.value}`)
-    //         .then(res => {
-    //             this.setState({
-    //                 userInfo: res.data.data[0]
-    //             })
-    //         })
-    //         .catch(err => {
-    //             console.log("Error:", err)
-    //         })
-    // }
+
+    // profile pic functions
+
+    renderUploadInput = () => {
+      this.setState({profilePicClassName: ''})
+    }
+
+    handleUploadUrl = e => {
+      this.setState({
+        inputURL: e.target.value
+      });
+    };
+
+    removeProfilePic = () => {
+      console.log('Remove')
+      axios
+        .patch("/users/removeProfilePic")
+        .then(res => {
+          this.setState({
+            profilePicChanged: true
+          })
+          this.modalDown('cancel')
+        })
+        .catch(err => {
+        });
+    }
+
+    changeProfilePic = () => {
+      axios
+        .patch("/users/changeProfilePic", {
+          newProfilePic: this.state.inputURL
+        })
+        .then(res => {
+          this.setState({
+            inputURL: '',
+            profilePicChanged: true
+          });
+          this.modalDown('cancel')
+        })
+        .catch(err => {
+          this.setState({
+            inputURL: '',
+            message: "Error"
+          });
+        });
+    }
 
 
     renderUserProfile = () => {
         const { userData, userInfo, modalData, modalClassNames } = this.state;
-        const { modalUp, modalDown, renderFollowers} = this;
+        const { modalUp, modalDown, renderFollowers, handleUploadUrl, renderUploadInput, removeProfilePic, changeProfilePic } = this;
         return (
-            <UserProfile 
-                userData={userData} 
-                userInfo={userInfo} 
-                modalUp={modalUp} 
+            <UserProfile
+                userData={userData}
+                userInfo={userInfo}
+                modalUp={modalUp}
                 modalDown={modalDown}
                 modalData={modalData}
                 modalClassNames={modalClassNames}
                 renderFollowers={renderFollowers}
+                retriveUserPhotos={this.retriveUserPhotos}
+                handleUploadUrl={this.handleUploadUrl}
+                renderUploadInput={renderUploadInput}
+                removeProfilePic={removeProfilePic}
+                changeProfilePic={changeProfilePic}
+                profilePicClassName={this.state.profilePicClassName}
             />
         )
 
     }
 
     renderFollowers = () => {
-        return <Followers getUserByID={this.getUserByID}/>
+        return <Followers getUserByID={this.getUserByID} />
     }
 
 
 
-
-///modal to show the modal
+    ///modal to show the modal
     modalUp = (e) => {
       let buttonName = e.target.id
-      console.log(e.target.className)
-      if(this.state.modalClassNames === "display"){
-        this.setState({modalClassNames: 'followModal'})
+      console.log('buttonName', buttonName)
+      if (this.state.modalClassNames === "display") {
+          this.setState({ modalClassNames: 'followModal' })
+
+          if(e.target.id === 'profile-icon') {
+            this.setState({modalData: false})
+            console.log('jfdsad')
+            return
+          }
+
+          axios
+          .get(`users/${buttonName}`)
+          .then(res => {
+            this.setState({ modalData: res.data.data })
+          })
       }
 
-      axios
-        .get(`users/${buttonName}`)
-        .then(res => {
-          this.setState({modalData: res.data.data})
-        })
     }
 
     modalDown = (e) => {
-      console.log()
-      if(e.target.className === "followModal"){
-        this.setState({modalClassNames: 'display'})
+      if (e === 'cancel' || e.target.className === "followModal" || e.target.id === 'cancel') {
+          this.setState({
+            modalClassNames: 'display',
+            modalData: [],
+            profilePicClassName: 'display'
+          })
       }
     }
+
+
 
     componentWillMount() {
         this.retrieveUserInfo();
         this.renderSearchEngine();
         this.retriveUserPhotos();
     }
-    
+
     render() {
-        const { 
-            userInfo, 
-            searchInput, 
-            userWorldWide, 
-            modalData, 
+        const {
+            userInfo,
+            searchInput,
+            userWorldWide,
+            modalData,
             modalClassNames,
             followURL
         } = this.state;
 
         const { modalUp, modalDown, routeFollowPage } = this;
 
-    if (followURL) {
-        return <Redirect to={followURL}/>
-    };
+        if (followURL) {
+            return <Redirect to={followURL} />
+        };
         console.log(
             "User Who Page Is Showing:",
             userInfo.username,
             "All User:",
             userWorldWide, this.state
         );
-          //modal div added
+
+        if(this.state.profilePicChanged){
+          this.retrieveUserInfo();
+          this.setState({profilePicChanged: false})
+        }
+        //modal div added
         return (
             <div>
-                {/* <input class='searchbar'
-                    type="text"
-                    value={searchInput}
-                    onChange={this.renderSearchInput}
-                    placeholder={'Search'}
-                /><br /> */}
+
                 {/* <div className={modalClassNames} onClick={modalDown}>
                   <div className="followsDiv">
                     {modalData.map(v => (
@@ -204,23 +259,45 @@ class User extends React.Component {
                     ))}
                   </div>
                 </div> */}
-                Search: <input type="text" value={searchInput} onChange={this.renderSearchInput} />
-                {/* <button id="followers" onClick={this.modalUp}>Followers</button>
-                <button id="following" onClick={this.modalUp}>Following</button> */}
 
-                <div className="searchResultBox">
-                    {userWorldWide.map(user => {
-                        if (user.username.toLowerCase().includes(searchInput.toLowerCase()) && searchInput) {
-                            return <button
-                                value={user.username}
-                                onClick={this.setFollowURL}
-                            >{user.username}</button>
-                        }
-                    })}
-                </div> {/*DO NOT TOUCH ELON!! BY KELVIN*/}
+                <div id='header-bar'>
+                    <div id='info-bar'>
+                        <div class='icon-ig'><h1> < a id='ig-icon-link' href={'/feed'} > {<img src='https://png.icons8.com/ios/1600/instagram-new.png' width='30px' height='30px' />} </a> Instagram </h1></div>
+                        <div class='searchbar'>
+                            <input
+                                class='searchbar'
+                                type='text'
+                                value={this.state.searchInput}
+                                onChange={this.renderSearchInput}
+                                placeholder={'Search'}
+                            />
+                        </div>
+                        <div class='icon-profile'>< a id='ig-icon-link' href={'/user'}>{<i class="fa fa-user-o" ></i>}</a>{'  .    '}{'   .   '} <i class="fa fa-heart-o"></i> </div>
+                    </div>
+                    <div className="searchResultBox">
+                        {userWorldWide.map(user => {
+                            if (user.username.toLowerCase().includes(searchInput.toLowerCase()) && searchInput) {
+                                return <a className="search_links"
+                                    href={`/u/${user.username.toLowerCase()}`}
+                                > {<div className="search_user_div">
+                                    <span className='search_profilepic'>
+                                        <img src={user.profile_pic} width={'50px'} />
+                                    </span>
+                                    <span className='username_header'>
+                                        {user.username}
+                                    </span>
+                                    <span className="fullname">
+                                        {user.full_name}
+                                    </span>
 
+                                </div>}</a>
+                            }
+                        })}
+                    </div>
+                </div>
 
                 <Switch>
+                    <Route path="/feed" component={Feed} />
                     <Route exact path="/user" render={this.renderUserProfile} />
                     <Route exact path="/user/followers" render={this.renderFollowers} />
                     <Route exact path="/user/following" render={this.renderFollowing} />
