@@ -1,4 +1,3 @@
-
 const db = require("./index");
 const authHelpers = require("../auth/helpers");
 const passport = require("../auth/local");
@@ -181,15 +180,23 @@ function getAllUsers(req, res, next) {
 }
 
 function updateUser(req, res, next) {
-  console.log('req.params.column:', req.params.column);
+  console.log({req:req.body, column: req.body.column,  value: req.body.newValue, username: req.user.username, user: req.user});
   db
-    .none("UPDATE users SET username = $1 WHERE username=$2", [ req.params.newvalue, req.user.username])
+    .none("UPDATE users SET username = ${newValue} WHERE username = ${username}", 
+    {
+      newValue: req.body.newValue,
+      username: req.user.username
+    }
+  )
     .then(function (data) {
       res.status(200).json({
         status: "success",
         data: data,
         message: "Updated user"
       })
+      .catch(function(err) {
+        return next(err);
+      });
     })
 }
 
