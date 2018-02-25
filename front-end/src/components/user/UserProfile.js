@@ -1,24 +1,18 @@
 import React from "react";
-import axios from "axios"
-import Home from '../Home'
-import { Link } from 'react-router-dom'
-import User from './User'
+import axios from "axios";
+import Home from "../Home";
+import { Link } from "react-router-dom";
+import User from "./User";
 
 import { Redirect } from "react-router";
 class UserProfile extends React.Component {
   state = {
     uploadClicked: false,
-    inputURL: '',
+    inputURL: "",
     loggedIn: true,
-<<<<<<< HEAD
-    message: '',
-    optionClicked: false,
-=======
-    message: ''
-
->>>>>>> d99a25310bd957dcad8a9bd2dc61133d0a3abc06
-  }
-
+    message: "",
+    optionClicked: false
+  };
 
   handleLogOut = () => {
     axios
@@ -46,9 +40,9 @@ class UserProfile extends React.Component {
   };
 
   handlePhotoSubmit = e => {
-    e.preventDefault()
+    e.preventDefault();
     const { inputURL } = this.state;
-    const { userInfo, retrieveUserPhotos } = this.props
+    const { userInfo, retrieveUserPhotos } = this.props;
     console.log({ URL: inputURL });
     axios
       .post("/users/upload", {
@@ -60,11 +54,7 @@ class UserProfile extends React.Component {
           inputURL: "",
           message: "You're Photo Has Been Uploaded"
         });
-<<<<<<< HEAD
-        retrieveUserPhotos() //This will re-render the user's photo once user upload photo
-=======
-        retriveUserPhotos() //This will re-render the user's photo once user upload photo
->>>>>>> d99a25310bd957dcad8a9bd2dc61133d0a3abc06
+        retrieveUserPhotos(); //This will re-render the user's photo once user upload photo
       })
       .catch(err => {
         this.setState({
@@ -75,63 +65,96 @@ class UserProfile extends React.Component {
   };
 
   profileMenuCancel = () => {
-    this.props.modalDown('cancel');
-  }
+    this.props.modalDown("cancel");
+  };
 
   render() {
-    const { userData, userInfo, userID, modalUp, modalDown, modalClassNames, modalData, handleUploadUrl, renderUploadInput, removeProfilePic, changeProfilePic, profilePicClassName } = this.props
-    const { loggedIn, inputURL, uploadClicked, message } = this.state
+    const {
+      userData,
+      userInfo,
+      userID,
+      modalUp,
+      modalDown,
+      modalClassNames,
+      modalData,
+      handleUploadUrl,
+      renderUploadInput,
+      removeProfilePic,
+      changeProfilePic,
+      profilePicClassName
+    } = this.props;
+    const { loggedIn, inputURL, uploadClicked, message } = this.state;
     console.log({ userInfo: userInfo });
     if (!loggedIn) {
       return <Home loggedIn={false} />;
     }
     return (
-      <div id='userprofile'>
-
+      <div id="userprofile">
         <div className={modalClassNames} onClick={modalDown}>
           <div className="followsDiv">
-            {
-              modalData ?
-                modalData.map(user => (
-                <a className="follows_links"
+            {modalData ? (
+              modalData.map(user => (
+                <a
+                  className="follows_links"
                   href={`/u/${user.username.toLowerCase()}`}
-                > {<div className="follows_user_div">
-                  <span className='follows_profilepic'>
-                    <img src={user.profile_pic} width={'50px'} />
-                  </span>
-                  <span className='follows_header'>
-                    {user.username}
-                  </span>
-                  <span className="follows_fullname">
-                    {user.full_name}
-                  </span>
-
-                </div>}</a>
-              )) :
+                >
+                  {" "}
+                  {
+                    <div className="follows_user_div">
+                      <span className="follows_profilepic">
+                        <img src={user.profile_pic} width={"50px"} />
+                      </span>
+                      <span className="follows_header">{user.username}</span>
+                      <span className="follows_fullname">{user.full_name}</span>
+                    </div>
+                  }
+                </a>
+              ))
+            ) : (
               <div>
-                <div className="profile-pic-menu-header">Change Profile Photo</div>
-                <div className="profile-pic-menu-item" onClick={removeProfilePic}>Remove Current Photo</div>
-                <div className="profile-pic-menu-item" onClick={renderUploadInput}>Upload Photo</div>
-                <div className={profilePicClassName}>
-                  <input onChange={handleUploadUrl}/>
-                  <input type="submit" onClick={changeProfilePic}/>
+                <div className="profile-pic-menu-header">
+                  Change Profile Photo
                 </div>
-                <div className="profile-pic-menu-item" id="cancel" onClick={this.profileMenuCancel}>Cancel</div>
+                <div
+                  className="profile-pic-menu-item"
+                  onClick={removeProfilePic}
+                >
+                  Remove Current Photo
+                </div>
+                <div
+                  className="profile-pic-menu-item"
+                  onClick={renderUploadInput}
+                >
+                  Upload Photo
+                </div>
+                <div className={profilePicClassName}>
+                  <input onChange={handleUploadUrl} />
+                  <input type="submit" onClick={changeProfilePic} />
+                </div>
+                <div
+                  className="profile-pic-menu-item"
+                  id="cancel"
+                  onClick={this.profileMenuCancel}
+                >
+                  Cancel
+                </div>
               </div>
-          }
+            )}
           </div>
         </div>
 
         <div>
-          <button id='logoutBtn' onClick={this.handleLogOut}>Log Out</button>
+          <button id="logoutBtn" onClick={this.handleLogOut}>
+            Log Out
+          </button>
         </div>
 
         <div id="uploadButton">
           {!uploadClicked ? (
             <button onClick={this.handleButtonClicked}>Upload</button>
           ) : (
-              ""
-            )}
+            ""
+          )}
         </div>
 
         <div id="inputURL">
@@ -147,26 +170,35 @@ class UserProfile extends React.Component {
               <input type="submit" />
             </form>
           ) : (
-              ""
-            )}
+            ""
+          )}
         </div>
         <p>{message}</p>
-        <div id='profileHeader'>
-          <div id='profileInfo'>
-            <div className='icon-profile' onClick={modalUp}>
-            <img id ="profile-icon" src={userInfo.profile_pic} width={'90px'}/>
-
+        <div id="profileHeader">
+          <div id="profileInfo">
+            <div className="icon-profile" onClick={modalUp}>
+              <img
+                id="profile-icon"
+                src={userInfo.profile_pic}
+                width={"90px"}
+              />
             </div>
-            <div id='info-linedup'>
-              <div class="usernameContainer">{userInfo.username}
-                <button class='edit'> Edit Profile </button>
-                <button className='option_btn'></button>
+            <div id="info-linedup">
+              <div class="usernameContainer">
+                {userInfo.username}
+                <button class="edit"> Edit Profile </button>
+                <button className="option_btn" />
               </div>
-              <div class='following-ers'>
-                {(userData.length)} Posts
-
-                <button id="followers" onClick={modalUp}> followers</button>
-                <button id="following" onClick={modalUp}> following </button>
+              <div class="following-ers">
+                {userData.length} Posts
+                <button id="followers" onClick={modalUp}>
+                  {" "}
+                  followers
+                </button>
+                <button id="following" onClick={modalUp}>
+                  {" "}
+                  following{" "}
+                </button>
               </div>
               <span class="userFullname">{userInfo.full_name}</span>
             </div>
@@ -175,8 +207,8 @@ class UserProfile extends React.Component {
         <div id="photoContainer">
           {userData.map(user => {
             return (
-              <div align='center' className="individualPhotos">
-                <img src={user.url} alt="" width={"300px"} height={'225px'} />
+              <div align="center" className="individualPhotos">
+                <img src={user.url} alt="" width={"300px"} height={"225px"} />
               </div>
             );
           })}
