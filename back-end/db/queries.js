@@ -1,4 +1,3 @@
-
 const db = require("./index");
 const authHelpers = require("../auth/helpers");
 const passport = require("../auth/local");
@@ -180,6 +179,27 @@ function getAllUsers(req, res, next) {
     .catch(err => next(err))
 }
 
+function updateUser(req, res, next) {
+  console.log({req:req.body, column: req.body.column,  value: req.body.newValue, username: req.user.username, user: req.user});
+  db
+    .none("UPDATE users SET username = ${newValue} WHERE username = ${username}",
+    {
+      newValue: req.body.newValue,
+      username: req.user.username
+    }
+  )
+    .then(function (data) {
+      res.status(200).json({
+        status: "success",
+        data: data,
+        message: "Updated user"
+      })
+      .catch(function(err) {
+        return next(err);
+      });
+    })
+}
+
 function loginUser(req, res, next) {
     passport.authenticate("local", (err, user, info) => {
       if (err) {
@@ -229,6 +249,39 @@ function registerUser(req, res, next) {
     });
 }
 
+/*profile_pic chnages
+added by ~ELON*/
+
+removeProfilePic = (req, res, next) => {
+  db
+    .none("UPDATE users SET profile_pic = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png' WHERE username = ${username}", req.user)
+    .then(function (data) {
+      res.status(200).json({
+        status: "success",
+        data: data,
+        message: "Removed profile_pic"
+      })
+      .catch(function(err) {
+        return next(err);
+      });
+    })
+}
+
+changeProfilePic = (req, res, next) => {
+  db
+    .none("UPDATE users SET profile_pic = ${newProfilePic} WHERE username = ${username}", {username: req.user.username, newProfilePic: req.body.newProfilePic})
+    .then(function (data) {
+      res.status(200).json({
+        status: "success",
+        data: data,
+        message: "Removed profile_pic"
+      })
+      .catch(function(err) {
+        return next(err);
+      });
+    })
+}
+
 module.exports = {
   getUserPhotos,
   getPhotosByUser,
@@ -242,9 +295,12 @@ module.exports = {
   likePhoto,
   getSingleUser,
   getAllUsers,
+  updateUser,
   registerUser,
   loginUser,
   logoutUser,
   getUserByID,
-  getUserByUsername
+  getUserByUsername,
+  removeProfilePic,
+  changeProfilePic
 };

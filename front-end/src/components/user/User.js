@@ -20,7 +20,10 @@ class User extends React.Component {
             ///added class for modal
             modalClassNames: 'display',
             modalData: [],
-            followURL: ''
+            followURL: '',
+            inputURL: '',
+            profilePicChanged: false,
+            profilePicClassName: 'display'
         };
     }
 
@@ -98,11 +101,57 @@ class User extends React.Component {
             followURL: `u/${followName.toLowerCase()}`
         })
     }
-   
+
+    // profile pic functions
+
+    renderUploadInput = () => {
+      this.setState({profilePicClassName: ''})
+    }
+
+    handleUploadUrl = e => {
+      this.setState({
+        inputURL: e.target.value
+      });
+    };
+
+    removeProfilePic = () => {
+      console.log('Remove')
+      axios
+        .patch("/users/removeProfilePic")
+        .then(res => {
+          this.setState({
+            profilePicChanged: true
+          })
+          this.modalDown('cancel')
+        })
+        .catch(err => {
+        });
+    }
+
+    changeProfilePic = () => {
+      axios
+        .patch("/users/changeProfilePic", {
+          newProfilePic: this.state.inputURL
+        })
+        .then(res => {
+          this.setState({
+            inputURL: '',
+            profilePicChanged: true
+          });
+          this.modalDown('cancel')
+        })
+        .catch(err => {
+          this.setState({
+            inputURL: '',
+            message: "Error"
+          });
+        });
+    }
+
 
     renderUserProfile = () => {
         const { userData, userInfo, modalData, modalClassNames } = this.state;
-        const { modalUp, modalDown, renderFollowers } = this;
+        const { modalUp, modalDown, renderFollowers, handleUploadUrl, renderUploadInput, removeProfilePic, changeProfilePic } = this;
         return (
             <UserProfile
                 userData={userData}
@@ -113,6 +162,11 @@ class User extends React.Component {
                 modalClassNames={modalClassNames}
                 renderFollowers={renderFollowers}
                 retrieveUserPhotos={this.retrieveUserPhotos}
+                handleUploadUrl={this.handleUploadUrl}
+                renderUploadInput={renderUploadInput}
+                removeProfilePic={removeProfilePic}
+                changeProfilePic={changeProfilePic}
+                profilePicClassName={this.state.profilePicClassName}
             />
         )
 
@@ -126,28 +180,38 @@ class User extends React.Component {
 
     ///modal to show the modal
     modalUp = (e) => {
-        let buttonName = e.target.id
-        console.log("className:", e.target.className)
-        if (this.state.modalClassNames === "display") {
-            this.setState({ modalClassNames: 'followModal' })
-        }
+      let buttonName = e.target.id
+      console.log('buttonName', buttonName)
+      if (this.state.modalClassNames === "display") {
+          this.setState({ modalClassNames: 'followModal' })
 
-        axios
-            .get(`users/${buttonName}`)
-            .then(res => {
-                this.setState({ modalData: res.data.data })
-            })
+          if(e.target.id === 'profile-icon') {
+            this.setState({modalData: false})
+            console.log('jfdsad')
+            return
+          }
+
+          axios
+          .get(`users/${buttonName}`)
+          .then(res => {
+            this.setState({ modalData: res.data.data })
+          })
+      }
+
     }
 
     modalDown = (e) => {
-        console.log()
-        if (e.target.className === "followModal") {
-            this.setState({ modalClassNames: 'display' })
-        }
+      if (e === 'cancel' || e.target.className === "followModal" || e.target.id === 'cancel') {
+          this.setState({
+            modalClassNames: 'display',
+            modalData: [],
+            profilePicClassName: 'display'
+          })
+      }
     }
 
-  
- 
+
+
     componentWillMount() {
         this.retrieveUserInfo();
         this.renderSearchEngine();
@@ -175,6 +239,11 @@ class User extends React.Component {
             "All User:",
             userWorldWide, this.state
         );
+
+        if(this.state.profilePicChanged){
+          this.retrieveUserInfo();
+          this.setState({profilePicChanged: false})
+        }
         //modal div added
         return (
             <div>

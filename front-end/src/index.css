@@ -7,6 +7,7 @@ body {
 .followModal {
   width: 100vw;
   height: 100vh;
+  margin-top: -100px;
   background-color: rgba(0,0,0,.3);
   position: absolute;
   z-index: 2;
@@ -31,4 +32,12 @@ body {
   width: 50%;
   display: block;
   margin: 5% 25%;
+}
+
+.profile-pic-menu-item {
+  display: block;
+}
+
+.profile-pic-menu-item:hover {
+  background-color: #eee;
 }
