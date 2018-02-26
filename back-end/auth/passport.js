@@ -3,12 +3,12 @@ const db = require("../db/index");
 
 module.exports = () => {
   passport.serializeUser((user, done) => {
-    done(null, user.username);
+    done(null, user);
   });
 
   passport.deserializeUser((username, done) => {
     db
-      .one("SELECT * FROM users WHERE username=$1", [username])
+      .one("SELECT * FROM users WHERE id=$1", [username.id])
       .then(user => {
         done(null, user);
       })
