@@ -8,7 +8,7 @@ import Following from "./components/user/Following"
 import Feed from './components/user/Feed';
 import User from './components/user/User';
 import U from './components/u/U';
-
+import Settings from './components/Settings';
 
 class App extends Component {
     render() {
@@ -20,6 +20,7 @@ class App extends Component {
                     <Route exact path="/login" component={Login}/>
                     <Route exact path="/registration" component={Registration}/>
                     <Route exact path="/feed" component={Feed}/>
+                    <Route exact path="/settings" component={Settings}/>
                     <Route path="/user" component={User} />
                     <Route path="/u" component={U} />
                 </Switch>
