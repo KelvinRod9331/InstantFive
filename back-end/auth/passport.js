@@ -6,9 +6,9 @@ module.exports = () => {
     done(null, user);
   });
 
-  passport.deserializeUser((username, done) => {
+  passport.deserializeUser((user, done) => {
     db
-      .one("SELECT * FROM users WHERE id=$1", [username.id])
+      .one("SELECT * FROM users WHERE id=$1", [user.id])
       .then(user => {
         done(null, user);
       })
