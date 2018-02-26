@@ -28,4 +28,5 @@ router.patch("/changeProfilePic", loginRequired, db.changeProfilePic); // ~ELON
 
 router.get("/:username", db.getUserByUsername);
 
+
 module.exports = router;
