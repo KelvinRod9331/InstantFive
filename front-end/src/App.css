@@ -1,5 +1,5 @@
 html{
-  background-color: rgb(242, 242, 242)
+  background-color: #FAFAFA
 }
 
 h1{
@@ -143,8 +143,13 @@ submit {
  }
 
  #header-bar{
-  background-color: rgb(218, 218, 218);
+  top:0;
+  background-color: #FFFFFF;
   height: 100px;
+  width: 100%;
+  position: fixed;
+  z-index: 1;
+  border-bottom: 1px solid #E6E6E6;
  }
 
  #info-bar{
@@ -228,7 +233,7 @@ overflow: hidden;
   height:30px;
   font-size:48px;
   float:left;
-
+  cursor: pointer;
 }
 
 /* -------------------------------------------- */
@@ -280,6 +285,8 @@ overflow: hidden;
   width: 260px;
   background-color: white;
   position: relative;
+  z-index: 1;
+  overflow-y: scroll;
 }
 .search_user_div{
   width: 260px;
@@ -296,7 +303,6 @@ overflow: hidden;
   margin-top: 2%;
 }
 
-
 .username_header,
 .fullname{
   margin-left: 8%;
@@ -306,9 +312,16 @@ overflow: hidden;
   margin-top: 8%;
   color: #AEAEAE;
   font-family: 'Times New Roman', Times, serif
-
 }
 
+.follows_profilepic{
+  margin-left: 3%;
+}
+
+.user_thumbnail{
+  -moz-border-radius: 50px;
+  -webkit-border-radius: 50px;
+}
 .follows_header{
   margin-left: 8%;
   position: absolute;
@@ -338,12 +351,82 @@ overflow: hidden;
 
 .option_btn{
   background-image: url('https://www.shareicon.net/data/2017/05/30/886552_settings_512x512.png');
-  background-size: 55px;
+  background-size: 60px;
   background-repeat: no-repeat;
   background-color: rgb(242, 242, 242);
   background-position: center;
   width: 30px;
   height: 30px;
   border: none;
+  cursor: pointer;
 }
+
+#uploadBtn_Container{
+  margin: 20% 0 0 50%;
+  position: absolute;
+}
+
+#uploadButton{
+  background-image: url('https://images.sftcdn.net/images/t_optimized,f_auto/p/2b811500-aa6c-477a-b42d-9bdf9e416017/3839491056/instamaster-upload-photos-videos-for-instagram-logo.png');
+  background-size: 50px;
+  background-color: rgb(242, 242, 242);
+  background-repeat: no-repeat;
+  background-position: center;
+  -moz-border-radius: 50px;
+  -webkit-border-radius: 50px;
+  border: 2px solid lightblue;
+	border-radius: 50px;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  
+}
+
+#uploadButton:hover{
+  border-color: gold;
+}
+
+#inputURL{
+  margin: 20% 0 0 35%;
+  position: absolute
+}
+.users_feed_profile_info{border-bottom: 2px solid #E6E6E6; height: 70px; background-color: #FFFFFF;}
+
+.profile-thumbnail{
+  margin-left: 3%;
+  -moz-border-radius: 50px;
+  -webkit-border-radius: 50px;
+}
+
+.users_feed_container{
+  margin-left: 20%;
+  margin-top: 13%;
+  width: 600px;
+  height: 986.44px;
+  border: 2px solid #E6E6E6;
+  background-color: #FFFFFF
+}
+
+.feed-img-container{
+  width: 600px;
+  height: 600px;
+
+}
+
+.feed-img{
+  width: 600px;
+  height: 600px;
+  position: absolute;
+}
+
+#feed_span{
+  position: absolute;
+}
+
+.username_span{
+  margin-left: 1%;
+  position: absolute;
+}
+
+.profilePic-username{padding-top: 2%}
 /*----------------------------------------------------------------------*/

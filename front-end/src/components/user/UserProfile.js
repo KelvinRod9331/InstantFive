@@ -44,29 +44,42 @@ class UserProfile extends React.Component {
     const { inputURL } = this.state;
     const { userInfo, retrieveUserPhotos } = this.props;
     console.log({ URL: inputURL });
-    axios
-      .post("/users/upload", {
-        userID: userInfo.id,
-        url: inputURL
-      })
-      .then(res => {
-        this.setState({
-          inputURL: "",
-          message: "You're Photo Has Been Uploaded"
+    if (inputURL) {
+      axios
+        .post("/users/upload", {
+          userID: userInfo.id,
+          url: inputURL
+        })
+        .then(res => {
+          this.setState({
+            inputURL: "",
+            message: "You're Photo Has Been Uploaded"
+          });
+          retrieveUserPhotos(); //This will re-render the user's photo once user upload photo
+        })
+        .catch(err => {
+          this.setState({
+            inputURL: "",
+            message: "Error"
+          });
         });
-        retrieveUserPhotos(); //This will re-render the user's photo once user upload photo
-      })
-      .catch(err => {
-        this.setState({
-          inputURL: "",
-          message: "Error"
-        });
+    } else {
+      this.setState({
+        message: "Insert A URL To Upload A Photo"
       });
+    }
   };
 
   profileMenuCancel = () => {
     this.props.modalDown("cancel");
   };
+
+  renderCancel = () => {
+    this.setState({
+      uploadClicked: false,
+      message: ''
+    })
+  }
 
   render() {
     const {
@@ -81,10 +94,12 @@ class UserProfile extends React.Component {
       renderUploadInput,
       removeProfilePic,
       changeProfilePic,
-      profilePicClassName
+      profilePicClassName,
+      followers,
+      following
     } = this.props;
     const { loggedIn, inputURL, uploadClicked, message } = this.state;
-    console.log({ userInfo: userInfo });
+
     if (!loggedIn) {
       return <Home loggedIn={false} />;
     }
@@ -102,7 +117,7 @@ class UserProfile extends React.Component {
                   {
                     <div className="follows_user_div">
                       <span className="follows_profilepic">
-                        <img src={user.profile_pic} width={"50px"} />
+                        <img className='user_thumbnail' src={user.profile_pic} width={"50px"} height={"50px"} />
                       </span>
                       <span className="follows_header">{user.username}</span>
                       <span className="follows_fullname">{user.full_name}</span>
@@ -149,9 +164,9 @@ class UserProfile extends React.Component {
           </button>
         </div>
 
-        <div id="uploadButton">
+        <div id="uploadBtn_Container">
           {!uploadClicked ? (
-            <button onClick={this.handleButtonClicked}>Upload</button>
+            <button id="uploadButton" onClick={this.handleButtonClicked}/>
           ) : (
             ""
           )}
@@ -168,19 +183,22 @@ class UserProfile extends React.Component {
                 onChange={this.handleInputUrl}
               />
               <input type="submit" />
+              <button onClick={this.renderCancel}>Cancel</button>
             </form>
           ) : (
             ""
           )}
+          <p>{message}</p>
         </div>
-        <p>{message}</p>
         <div id="profileHeader">
           <div id="profileInfo">
             <div className="icon-profile" onClick={modalUp}>
               <img
                 id="profile-icon"
+                className='profile-thumbnail'
                 src={userInfo.profile_pic}
                 width={"90px"}
+                height={"90px"}
               />
             </div>
             <div id="info-linedup">
@@ -193,11 +211,11 @@ class UserProfile extends React.Component {
                 {userData.length} Posts
                 <button id="followers" onClick={modalUp}>
                   {" "}
-                  followers
+                  {followers.length} followers
                 </button>
                 <button id="following" onClick={modalUp}>
                   {" "}
-                  following{" "}
+                  {following.length} following{" "}
                 </button>
               </div>
               <span class="userFullname">{userInfo.full_name}</span>
