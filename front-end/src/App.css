@@ -214,6 +214,7 @@ submit {
   padding-top: 10px;
   width:500px;
   padding-left:330px;
+  margin-top: 15%
   
 }
 
@@ -390,7 +391,7 @@ overflow: hidden;
   margin: 20% 0 0 35%;
   position: absolute
 }
-.users_feed_profile_info{border-bottom: 2px solid #E6E6E6; height: 70px; background-color: #FFFFFF;}
+.users_feed_profile_info{border-bottom: 2px solid #E6E6E6; height: 70px; background-color: #FFFFFF; }
 
 .profile-thumbnail{
   margin-left: 3%;
@@ -429,4 +430,6 @@ overflow: hidden;
 }
 
 .profilePic-username{padding-top: 2%}
+
+
 /*----------------------------------------------------------------------*/

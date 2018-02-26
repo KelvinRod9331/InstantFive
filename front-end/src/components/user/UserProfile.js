@@ -77,9 +77,9 @@ class UserProfile extends React.Component {
   renderCancel = () => {
     this.setState({
       uploadClicked: false,
-      message: ''
-    })
-  }
+      message: ""
+    });
+  };
 
   render() {
     const {
@@ -117,7 +117,12 @@ class UserProfile extends React.Component {
                   {
                     <div className="follows_user_div">
                       <span className="follows_profilepic">
-                        <img className='user_thumbnail' src={user.profile_pic} width={"50px"} height={"50px"} />
+                        <img
+                          className="user_thumbnail"
+                          src={user.profile_pic}
+                          width={"50px"}
+                          height={"50px"}
+                        />
                       </span>
                       <span className="follows_header">{user.username}</span>
                       <span className="follows_fullname">{user.full_name}</span>
@@ -159,14 +164,14 @@ class UserProfile extends React.Component {
         </div>
 
         <div>
-          <button id="logoutBtn" onClick={this.handleLogOut}>
+          {/* <button id="logoutBtn" onClick={this.handleLogOut}>
             Log Out
-          </button>
+          </button> */}
         </div>
 
         <div id="uploadBtn_Container">
           {!uploadClicked ? (
-            <button id="uploadButton" onClick={this.handleButtonClicked}/>
+            <button id="uploadButton" onClick={this.handleButtonClicked} />
           ) : (
             ""
           )}
@@ -195,7 +200,7 @@ class UserProfile extends React.Component {
             <div className="icon-profile" onClick={modalUp}>
               <img
                 id="profile-icon"
-                className='profile-thumbnail'
+                className="profile-thumbnail"
                 src={userInfo.profile_pic}
                 width={"90px"}
                 height={"90px"}
@@ -205,6 +210,9 @@ class UserProfile extends React.Component {
               <div class="usernameContainer">
                 {userInfo.username}
                 <button class="edit"> Edit Profile </button>
+                <button id="logoutBtn" onClick={this.handleLogOut}>
+                  Log Out
+                </button>
                 <button className="option_btn" />
               </div>
               <div class="following-ers">
