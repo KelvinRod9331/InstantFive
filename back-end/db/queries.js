@@ -180,24 +180,31 @@ function getAllUsers(req, res, next) {
 }
 
 function updateUser(req, res, next) {
-  console.log({req:req.body, column: req.body.column,  value: req.body.newValue, username: req.user.username, user: req.user});
+  console.log({body: req.body, user: req.user});
+  let { newUsername, newEmail, newFullName } = req.body;
+  let query = `UPDATE users SET username = ${newUsername ? '${newUsername}' : '${username}'}, email = ${newEmail ? '${newEmail}' : '${email}'}, full_name = ${newFullName ? '${newFullName}' : '${fullName}'} WHERE id = ${'${id}'}`
+
   db
-    .none("UPDATE users SET username = ${newValue} WHERE username = ${username}", 
+    .none(query, 
     {
-      newValue: req.body.newValue,
-      username: req.user.username
+      id: req.user.id,
+      username: req.user.username,
+      email: req.user.email,
+      fullName: req.user.full_name,
+      newUsername: req.body.newUsername,
+      newEmail: req.body.newEmail,
+      newFullName: req.body.newFullName,
     }
-  )
-    .then(function (data) {
+  ).then(function (data) {
       res.status(200).json({
         status: "success",
         data: data,
         message: "Updated user"
       })
-      .catch(function(err) {
-        return next(err);
-      });
-    })
+    }).catch(function(err) {
+      return next(err);
+    }
+  );
 }
 
 function loginUser(req, res, next) {
