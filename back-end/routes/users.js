@@ -8,6 +8,7 @@ router.post("/new", db.registerUser);
 router.post("/login", db.loginUser);
 router.post("/follow", db.followUser);
 router.post("/photo/:id/like", db.likePhoto);
+router.post("/addPost", db.addPost)
 
 router.patch("/updateUser", loginRequired, db.updateUser);
 router.get("/logout", db.logoutUser);
@@ -23,6 +24,7 @@ router.get("/photo/:id", db.getPhoto);
 router.get("/followers",db.getUserFollowers);
 router.get("/following", loginRequired, db.getUserFollowing);
 router.get("/feed", loginRequired, db.getFollowingPhotos);
+router.get("/getPost", db.getPost)
 router.patch("/removeProfilePic", loginRequired, db.removeProfilePic); // ~ELON
 router.patch("/changeProfilePic", loginRequired, db.changeProfilePic); // ~ELON
 

@@ -289,6 +289,44 @@ changeProfilePic = (req, res, next) => {
     })
 }
 
+/**
+ * Added By Kelvin
+ * @func addPost
+ * Will add Comments and likes to user Photo's
+ */
+
+function addPost(req,res,next){
+  db
+    .none("INSERT INTO post(user_ID, photo_ID, comment, likes) VALUES (${user_ID}, ${photo_ID}, ${comment}, ${likes})",
+    req.body
+  )
+  .then(function (data) {
+    res.status(200).json({
+      status: "success",
+      data: data,
+      message: "Added A Post"
+    })
+    .catch(function(err) {
+      return next(err);
+    });
+  })
+}
+
+function getPost(req,res,next){
+  db
+    .any('SELECT * FROM post')
+    .then(function (data) {
+      res.status(200).json({
+        status: "success",
+        data: data,
+        message: "Got User's Post"
+      })
+      .catch(function(err) {
+        return next(err);
+      });
+    })
+}
+
 module.exports = {
   getUserPhotos,
   getPhotosByUser,
@@ -309,5 +347,7 @@ module.exports = {
   getUserByID,
   getUserByUsername,
   removeProfilePic,
-  changeProfilePic
+  changeProfilePic,
+  addPost,
+  getPost
 };

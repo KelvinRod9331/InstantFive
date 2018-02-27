@@ -23,9 +23,11 @@ CREATE TABLE follows (
   follower_ID  INTEGER REFERENCES users
 );
 
-CREATE TABLE likes (
+CREATE TABLE post (
   user_ID INTEGER REFERENCES users,
-  photo_ID  INTEGER REFERENCES photos
+  photo_ID  INTEGER REFERENCES photos,
+  comment VARCHAR,
+  likes INTEGER
 );
 
 
@@ -64,3 +66,8 @@ VALUES ('6','3'),
 ('2','3'),
 ('3','1'),
 ('3','2');
+
+
+INSERT INTO post (user_ID, photo_ID, comment, likes)
+
+VALUES (6, 5, 'Hello World', 3)
